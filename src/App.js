@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css'
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
+import { HashRouter, Switch, Route, Link } from 'react-router-dom'
 import Home from './components/Home';
 import Error404 from './components/Error404';
 import About from './components/About';
@@ -70,7 +70,7 @@ class App extends Component {
     return (
       this.state.loading ? <h1>loading</h1> :
       <div className="App">
-      <BrowserRouter>
+      <HashRouter>
       
       <div className='header'><Menu fontSize='large' onClick={this.toggleDrawer} /></div>
 
@@ -84,7 +84,7 @@ class App extends Component {
         <Drawer anchor='left' open={this.state.drawer} onClose={this.toggleDrawer}>
             {list('left')}
           </Drawer>
-      </BrowserRouter>
+      </HashRouter>
     </div>
     )
   }
