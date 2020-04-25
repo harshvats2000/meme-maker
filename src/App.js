@@ -1,26 +1,93 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import './App.css'
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
+import Home from './components/Home';
+import Error404 from './components/Error404';
+import About from './components/About';
+import Menu from '@material-ui/icons/Menu';
+import Drawer from '@material-ui/core/Drawer';
+import HomeIcon from '@material-ui/icons/Home'
+import InfoIcon from '@material-ui/icons/Info'
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import TagPage from './components/TagPage';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+class App extends Component {
+  constructor(){
+    super()
+    this.state = {
+        tags: [],
+        drawer: false,
+        loading: true
+    }
+  }
+
+  componentDidMount() {
+    fetch('https://jsonplaceholder.typicode.com/users')
+        .then(response => response.json())
+        .then(json => {
+          this.setState({
+            loading: false
+          })
+          var tagsArray = [];
+          json.forEach(user => {
+            tagsArray.push(user.name)
+          })
+          this.setState({
+            tags: tagsArray
+          })
+        })
+  }
+
+  toggleDrawer = () => {
+    this.setState({
+      drawer: !this.state.drawer
+    })
+  }
+
+  render() {
+    const list = (anchor) => (
+      <div
+        role="presentation"
+        onClick={() => this.toggleDrawer(anchor, false)}
+        onKeyDown={() => this.toggleDrawer(anchor, false)}
+      >
+        <List>
+            <ListItem button>
+              <ListItemIcon><HomeIcon/> </ListItemIcon>
+              <ListItemText><Link to='/' className='drawerTextLink'>Home</Link></ListItemText>
+            </ListItem>
+            <ListItem button>
+            <ListItemIcon><InfoIcon/> </ListItemIcon>
+              <ListItemText><Link to='/about' className='drawerTextLink'>About Us</Link></ListItemText>
+            </ListItem>
+        </List>
+      </div>
+    );
+
+    return (
+      this.state.loading ? <h1>loading</h1> :
+      <div className="App">
+      <BrowserRouter>
+      
+      <div className='header'><Menu fontSize='large' onClick={this.toggleDrawer} /></div>
+
+        <Switch>
+          <Route exact path='/' render={props => <Home tags={this.state.tags} />} />
+          <Route path='/:tag' render={props => <TagPage tag={props.match.params.tag} />} />
+          <Route path='/about' component={About} />
+          <Route path='*' component={Error404} />
+        </Switch>
+
+        <Drawer anchor='left' open={this.state.drawer} onClose={this.toggleDrawer}>
+            {list('left')}
+          </Drawer>
+      </BrowserRouter>
     </div>
-  );
+    )
+  }
 }
 
 export default App;

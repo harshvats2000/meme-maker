@@ -1,0 +1,8 @@
+.tagCards {
+    padding: 30px;
+    text-align: center;
+    font-family: monospace;
+    font-size: 15px;
+    border: 1px solid black;
+    margin: 15px;
+}
