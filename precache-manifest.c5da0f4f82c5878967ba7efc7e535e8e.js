@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "1710a6eaedcd08e0d03e2b96ea1fc48f",
+    "revision": "a49b98f29b895423e4a6650a17b1ab93",
     "url": "/bestshayari/index.html"
   },
   {
-    "revision": "0bca41fcc0107d362c81",
-    "url": "/bestshayari/static/css/main.6d8efb46.chunk.css"
+    "revision": "55b03180ee4ca8189385",
+    "url": "/bestshayari/static/css/main.06e8872a.chunk.css"
   },
   {
     "revision": "ca5e0afe5e184140dd2c",
     "url": "/bestshayari/static/js/2.f1b5f176.chunk.js"
   },
   {
-    "revision": "0bca41fcc0107d362c81",
-    "url": "/bestshayari/static/js/main.ca871109.chunk.js"
+    "revision": "55b03180ee4ca8189385",
+    "url": "/bestshayari/static/js/main.0e231c97.chunk.js"
   },
   {
     "revision": "bf2691f990cf7869623c",
