@@ -10,8 +10,7 @@ class Home extends Component {
             <React.Fragment>
                 {tags.map(tag => (
                     <div className='tagCards' 
-                    key={tag} 
-                    onClick={() => console.log(tag)}>
+                    key={tag}>
                     <Link to={`/${tag}`}>{tag}</Link>
                     </div>
                 ))}

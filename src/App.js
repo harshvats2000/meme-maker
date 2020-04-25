@@ -20,7 +20,7 @@ class App extends Component {
     this.state = {
         tags: [],
         drawer: false,
-        loading: true
+        loading: true,
     }
   }
 
@@ -29,7 +29,7 @@ class App extends Component {
         .then(response => response.json())
         .then(json => {
           this.setState({
-            loading: false
+            loading: false,
           })
           var tagsArray = [];
           json.forEach(user => {
@@ -48,11 +48,11 @@ class App extends Component {
   }
 
   render() {
-    const list = (anchor) => (
+    const list = () => (
       <div
         role="presentation"
-        onClick={() => this.toggleDrawer(anchor, false)}
-        onKeyDown={() => this.toggleDrawer(anchor, false)}
+        onClick={() => this.toggleDrawer()}
+        onKeyDown={() => this.toggleDrawer()}
       >
         <List>
             <ListItem button>
@@ -81,8 +81,8 @@ class App extends Component {
           <Route path='*' component={Error404} />
         </Switch>
 
-        <Drawer anchor='left' open={this.state.drawer} onClose={this.toggleDrawer}>
-            {list('left')}
+        <Drawer anchor='top' open={this.state.drawer} onClose={this.toggleDrawer}>
+            {list()}
           </Drawer>
       </HashRouter>
     </div>
