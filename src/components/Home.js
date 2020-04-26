@@ -8,12 +8,14 @@ class Home extends Component {
         const { tags } = this.props;
         return (
             <React.Fragment>
-                {tags.map(tag => (
+                {
+                    tags.map(tag => (
                     <div className='tagCards' 
                     key={tag}>
                     <Link to={`/${tag}`}>{tag}</Link>
                     </div>
-                ))}
+                    ))
+                }
             </React.Fragment>
         )
     }

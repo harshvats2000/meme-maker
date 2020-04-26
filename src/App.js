@@ -12,6 +12,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import firebase from 'firebase'
 import TagPage from './components/TagPage';
 
 class App extends Component {
@@ -21,24 +22,35 @@ class App extends Component {
         tags: [],
         drawer: false,
         loading: true,
+        shayariObject: {},
     }
   }
 
   componentDidMount() {
-    fetch('https://jsonplaceholder.typicode.com/users')
-        .then(response => response.json())
-        .then(json => {
-          this.setState({
-            loading: false,
-          })
-          var tagsArray = [];
-          json.forEach(user => {
-            tagsArray.push(user.name)
-          })
-          this.setState({
-            tags: tagsArray
-          })
-        })
+    firebase.firestore().collection('tags').get()
+    .then(snap => {
+      var tagsArray = [];
+      var shayariObject = {};
+
+      snap.forEach(doc => {
+        var tag = doc.id;
+        var title = doc.data().title;
+        var content = doc.data().content;
+        tagsArray.push(tag);
+        var tempObject = {
+          [tag]: {
+            title: [title],
+            content: [content]
+          }
+        }
+        Object.assign(shayariObject, tempObject)
+      })
+      this.setState({
+        loading: false,
+        tags: tagsArray,
+        shayariObject: shayariObject
+      })
+    })
   }
 
   toggleDrawer = () => {
@@ -76,8 +88,14 @@ class App extends Component {
 
         <Switch>
           <Route exact path='/' render={props => <Home tags={this.state.tags} />} />
-          <Route path='/:tag' render={props => <TagPage tag={props.match.params.tag} />} />
+
+          <Route path='/:tag' render={props => 
+          <TagPage 
+          tag={props.match.params.tag} 
+          shayariObject={this.state.shayariObject} />} />
+
           <Route path='/about' component={About} />
+
           <Route path='*' component={Error404} />
         </Switch>
 
