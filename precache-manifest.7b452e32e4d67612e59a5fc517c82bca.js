@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f6fb948a496b38a51e1ee789d7c5e72e",
+    "revision": "fb6153a7384af4e72c79f76d5ee50522",
     "url": "/bestshayari/index.html"
   },
   {
-    "revision": "8f3fe32122636a745529",
+    "revision": "45dc6cb8d78eedfa109b",
     "url": "/bestshayari/static/css/main.06e8872a.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/bestshayari/static/js/2.d1c78601.chunk.js"
   },
   {
-    "revision": "8f3fe32122636a745529",
-    "url": "/bestshayari/static/js/main.ba3bac36.chunk.js"
+    "revision": "45dc6cb8d78eedfa109b",
+    "url": "/bestshayari/static/js/main.c6a0d19e.chunk.js"
   },
   {
     "revision": "bf2691f990cf7869623c",
