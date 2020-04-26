@@ -6,14 +6,14 @@ import * as serviceWorker from './serviceWorker';
 import firebase from 'firebase'
 
 var firebaseConfig = {
-    apiKey: "AIzaSyBsnFSb7My_vFvacFd0339ox6A5bUPFce4",
-    authDomain: "bestshayari-5488b.firebaseapp.com",
-    databaseURL: "https://bestshayari-5488b.firebaseio.com",
-    projectId: "bestshayari-5488b",
-    storageBucket: "bestshayari-5488b.appspot.com",
-    messagingSenderId: "511754199348",
-    appId: "1:511754199348:web:a21087e96521cbb2458561",
-    measurementId: "G-CREGF47K5K"
+    apiKey: "AIzaSyDNUqtCtU8vr7ureS57yQ7k6iuJoP4rtz0",
+    authDomain: "bestshayari-d83c1.firebaseapp.com",
+    databaseURL: "https://bestshayari-d83c1.firebaseio.com",
+    projectId: "bestshayari-d83c1",
+    storageBucket: "bestshayari-d83c1.appspot.com",
+    messagingSenderId: "354801526205",
+    appId: "1:354801526205:web:740bd271ebe3e3cf4a1ed4",
+    measurementId: "G-BQWN4W2VND"
 };
 firebase.initializeApp(firebaseConfig);
 

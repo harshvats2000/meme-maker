@@ -11,7 +11,7 @@ class TagPage extends Component {
                 <hr/>
                 {
                     titleArray.slice(0).reverse().map((title, i) => (
-                    <div>
+                    <div key={title}>
                         <div>{title}</div>
                         <div>{contentArray[contentArray.length-i-1]}</div><hr/>
                     </div>
