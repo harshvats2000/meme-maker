@@ -6,16 +6,17 @@ import * as serviceWorker from './serviceWorker';
 import firebase from 'firebase'
 
 var firebaseConfig = {
-    apiKey: "AIzaSyDNUqtCtU8vr7ureS57yQ7k6iuJoP4rtz0",
-    authDomain: "bestshayari-d83c1.firebaseapp.com",
-    databaseURL: "https://bestshayari-d83c1.firebaseio.com",
-    projectId: "bestshayari-d83c1",
-    storageBucket: "bestshayari-d83c1.appspot.com",
-    messagingSenderId: "354801526205",
-    appId: "1:354801526205:web:740bd271ebe3e3cf4a1ed4",
-    measurementId: "G-BQWN4W2VND"
+    apiKey: "AIzaSyCEMfOB5_j1hIdpxVXOduBuUMTwj5txVZo",
+    authDomain: "bestshayari-7f672.firebaseapp.com",
+    databaseURL: "https://bestshayari-7f672.firebaseio.com",
+    projectId: "bestshayari-7f672",
+    storageBucket: "bestshayari-7f672.appspot.com",
+    messagingSenderId: "1001640034721",
+    appId: "1:1001640034721:web:251a9065628579fe518be0",
+    measurementId: "G-EQP9800NT3"
 };
 firebase.initializeApp(firebaseConfig);
+firebase.analytics();
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

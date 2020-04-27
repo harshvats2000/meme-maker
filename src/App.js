@@ -3,17 +3,16 @@ import './App.css'
 import { HashRouter, Switch, Route, Link } from 'react-router-dom'
 import Home from './components/Home';
 import Error404 from './components/Error404';
-import About from './components/About';
 import Menu from '@material-ui/icons/Menu';
 import Drawer from '@material-ui/core/Drawer';
-import HomeIcon from '@material-ui/icons/Home'
-import InfoIcon from '@material-ui/icons/Info'
+import HomeIcon from '@material-ui/icons/Home';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import firebase from 'firebase'
 import TagPage from './components/TagPage';
+import Upload from './container/Upload';
 
 class App extends Component {
   constructor(){
@@ -22,35 +21,40 @@ class App extends Component {
         tags: [],
         drawer: false,
         loading: true,
-        shayariObject: {},
+        shayariObject: {}
     }
   }
 
   componentDidMount() {
+    var tagsArray = [];
+    var tempShayariObject = {};
     firebase.firestore().collection('tags').get()
     .then(snap => {
-      var tagsArray = [];
-      var shayariObject = {};
-
       snap.forEach(doc => {
-        var tag = doc.id;
-        var title = doc.data().title;
-        var content = doc.data().content;
-        tagsArray.push(tag);
-        var tempObject = {
-          [tag]: {
-            title: [title],
-            content: [content]
-          }
+        var tag =  doc.id;
+        tagsArray.push(tag)
+        tempShayariObject[tag] = {
+          titleArray: [],
+          contentArray: []
         }
-        Object.assign(shayariObject, tempObject)
       })
-      this.setState({
-        loading: false,
+      this.setState(prev => ({
         tags: tagsArray,
-        shayariObject: shayariObject
-      })
+        loading: false,
+        shayariObject: Object.assign({}, prev.shayariObject, tempShayariObject)
+      }))
     })
+    .catch(error => {
+      alert(error)
+    })
+  }
+
+  putIntoShayariObject = (shayariObject) => {
+    console.log(shayariObject);
+    console.log(this.state.shayariObject)
+    this.setState(prev => ({
+      shayariObject: Object.assign(prev.shayariObject, shayariObject)
+    }))
   }
 
   toggleDrawer = () => {
@@ -71,10 +75,6 @@ class App extends Component {
               <ListItemIcon><HomeIcon/> </ListItemIcon>
               <ListItemText><Link to='/' className='drawerTextLink'>Home</Link></ListItemText>
             </ListItem>
-            <ListItem button>
-            <ListItemIcon><InfoIcon/> </ListItemIcon>
-              <ListItemText><Link to='/about' className='drawerTextLink'>About Us</Link></ListItemText>
-            </ListItem>
         </List>
       </div>
     );
@@ -89,12 +89,13 @@ class App extends Component {
         <Switch>
           <Route exact path='/' render={props => <Home tags={this.state.tags} />} />
 
-          <Route path='/:tag' render={props => 
+          <Route path='/tags/:tag' render={props => 
           <TagPage 
-          tag={props.match.params.tag} 
-          shayariObject={this.state.shayariObject} />} />
+          tag={props.match.params.tag}
+          shayariObject={this.state.shayariObject}
+          putIntoShayariObject={this.putIntoShayariObject} />} />
 
-          <Route path='/about' component={About} />
+          <Route exact path='/upload' render={props => <Upload tags={this.state.tags} />} />
 
           <Route path='*' component={Error404} />
         </Switch>

@@ -12,7 +12,7 @@ class Home extends Component {
                     tags.map(tag => (
                     <div className='tagCards' 
                     key={tag}>
-                    <Link to={`/${tag}`}>{tag}</Link>
+                    <Link to={`/tags/${tag}`}>{tag}</Link>
                     </div>
                     ))
                 }
