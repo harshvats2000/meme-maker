@@ -12,7 +12,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import firebase from 'firebase'
 import TagPage from './components/TagPage';
-import Upload from './container/Upload';
+import Upload from './components/Upload';
 
 class App extends Component {
   constructor(){
@@ -21,7 +21,8 @@ class App extends Component {
         tags: [],
         drawer: false,
         loading: true,
-        shayariObject: {}
+        shayariObject: {},
+        searching: false
     }
   }
 
@@ -95,7 +96,15 @@ class App extends Component {
         <Menu fontSize='large' onClick={this.toggleDrawer}
         className='headerMenuIcon' />
         <span className='headerName'><Link to='/' className='link'>𝓫𝓮𝓼𝓽𝓼𝓱𝓪𝔂𝓪𝓻𝓲𝓼.𝓬𝓸𝓶</Link></span>
+        <input className='headerSearch' placeholder='search'></input>
       </div>
+      
+      {
+        !this.state.searching ? null :
+        <div>
+          hello
+        </div> 
+      }
 
       <Switch>
         <Route exact path='/' render={props => <Home tags={this.state.tags} />} />

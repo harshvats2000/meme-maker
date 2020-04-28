@@ -23,3 +23,8 @@
     text-decoration: none;
     color: black;
 }
+
+.headerSearch {
+    order: 2;
+    margin-left: 10px;
+}
