@@ -1,0 +1,9 @@
+.shayariCard {
+    margin: 5px;
+    padding: 5px;
+}
+
+.shayariCardHeader {
+    display: flex;
+    justify-content: flex-end;
+}

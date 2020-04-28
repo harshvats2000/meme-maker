@@ -4,8 +4,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "clipboard": "^2.0.6",
     "firebase": "^7.14.2",
     "react": "^16.8.6",
+    "react-clipboard.js": "^2.0.16",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.0.0"

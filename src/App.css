@@ -6,5 +6,20 @@
     position: sticky;
     top: 0;
     background-color: white;
-    text-align: center;
+    display: flex;
+}
+
+.headerMenuIcon {
+    order: 0;
+}
+
+.headerName {
+    order: 1;
+    font-size: 28px;
+    margin-left: 10px;
+}
+
+.link {
+    text-decoration: none;
+    color: black;
 }

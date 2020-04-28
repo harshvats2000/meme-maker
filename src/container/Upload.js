@@ -41,14 +41,45 @@ class Upload extends Component {
         var tags = this.state.tags;
         var title = this.state.title;
         var content = this.state.content;
-        if(!tags){
-            if(!title){
-                if(!content){
+        if(tags){
+            if(title){
+                if(content){
+                    var incrementStatus = false;
+                    var uploadStatus = false;
                     //upload
-                    this.state.tags.forEach(tag => {
+                    this.state.tags.forEach((tag, i) => {
+                        firebase.firestore().collection('tags').doc(tag).update({
+                            totalShayaris: firebase.firestore.FieldValue.increment(1)
+                        })
+                        .then(() => {
+                            incrementStatus = true;
+                        })
+                        .catch(err => {
+                            incrementStatus = false;
+                        })
+
                         firebase.firestore().collection('tags').doc(tag).collection('shayaris').doc().set({
                             title: title,
-                            content: content
+                            content: content,
+                            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                            tags: this.state.tags
+                        })
+                        .then(() => {
+                            uploadStatus = true;
+                            if(i === this.state.tags.length-1){
+                                if(uploadStatus && incrementStatus){
+                                    this.setState({
+                                        title: '',
+                                        content: '',
+                                        tags: []
+                                    })
+                                    alert('uploaded')
+                                }
+                            }
+                        })
+                        .catch(err => {
+                            uploadStatus = false;
+                            alert('cannot upload due to some error.' + err.message)
                         })
                     })
                 }else {

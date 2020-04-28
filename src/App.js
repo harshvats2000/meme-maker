@@ -28,14 +28,22 @@ class App extends Component {
   componentDidMount() {
     var tagsArray = [];
     var tempShayariObject = {};
+    var totalShayaris = 0;
     firebase.firestore().collection('tags').get()
     .then(snap => {
       snap.forEach(doc => {
         var tag =  doc.id;
+        totalShayaris = doc.data().totalShayaris;
         tagsArray.push(tag)
         tempShayariObject[tag] = {
           titleArray: [],
-          contentArray: []
+          contentArray: [],
+        }
+      })
+      tagsArray.forEach(tag => {
+        tempShayariObject[tag].relatedTagsObject = {};
+        for(let i=0; i<totalShayaris; i++){
+          tempShayariObject[tag].relatedTagsObject[i] = [];
         }
       })
       this.setState(prev => ({
@@ -45,13 +53,11 @@ class App extends Component {
       }))
     })
     .catch(error => {
-      alert(error)
+      alert(error.message)
     })
   }
 
   putIntoShayariObject = (shayariObject) => {
-    console.log(shayariObject);
-    console.log(this.state.shayariObject)
     this.setState(prev => ({
       shayariObject: Object.assign(prev.shayariObject, shayariObject)
     }))
@@ -84,25 +90,30 @@ class App extends Component {
       <div className="App">
       <HashRouter>
       
-      <div className='header'><Menu fontSize='large' onClick={this.toggleDrawer} /></div>
+      <div 
+      className='header'>
+        <Menu fontSize='large' onClick={this.toggleDrawer}
+        className='headerMenuIcon' />
+        <span className='headerName'><Link to='/' className='link'>𝓫𝓮𝓼𝓽𝓼𝓱𝓪𝔂𝓪𝓻𝓲𝓼.𝓬𝓸𝓶</Link></span>
+      </div>
 
-        <Switch>
-          <Route exact path='/' render={props => <Home tags={this.state.tags} />} />
+      <Switch>
+        <Route exact path='/' render={props => <Home tags={this.state.tags} />} />
 
-          <Route path='/tags/:tag' render={props => 
-          <TagPage 
-          tag={props.match.params.tag}
-          shayariObject={this.state.shayariObject}
-          putIntoShayariObject={this.putIntoShayariObject} />} />
+        <Route path='/tags/:tag' render={props => 
+        <TagPage 
+        tag={props.match.params.tag}
+        shayariObject={this.state.shayariObject}
+        putIntoShayariObject={this.putIntoShayariObject} />} />
 
-          <Route exact path='/upload' render={props => <Upload tags={this.state.tags} />} />
+        <Route exact path='/upload' render={props => <Upload tags={this.state.tags} />} />
 
-          <Route path='*' component={Error404} />
-        </Switch>
+        <Route path='*' component={Error404} />
+      </Switch>
 
-        <Drawer anchor='top' open={this.state.drawer} onClose={this.toggleDrawer}>
-            {list()}
-          </Drawer>
+      <Drawer anchor='left' open={this.state.drawer} onClose={this.toggleDrawer}>
+          {list()}
+        </Drawer>
       </HashRouter>
     </div>
     )
