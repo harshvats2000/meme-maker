@@ -12,15 +12,14 @@
     color: crimson;
     font-weight: 600;
     font-family: monospace;
-    text-transform: capitalize;
     font-size: 20px;
 }
 
 .shayariCardContent {
     font-family: monospace;
-    text-transform: capitalize;
     font-size: 16px;
     margin-bottom: 1rem;
+    white-space: pre-wrap;
 }
 
 .shayariCardLinks {

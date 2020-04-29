@@ -102,16 +102,16 @@ class TagPage extends Component {
                                 </Clipboard>
                             </div>
                             <div className={`div${i} shayariCardTitle`}>
-                                {title}
+                                {title.charAt(0).toUpperCase() + title.slice(1)}
                             </div>
                             <div className={`div${i} shayariCardContent`} onClick={e => this.handleContentClick(e, contentArray[i])}>
-                                {contentArray[i].length > 200 ? contentArray[i].substring(0,200)+'....' : contentArray[i]}
+                                {contentArray[i].length > 200 ? contentArray[i].substring(0,200) + '....' : contentArray[i]}
                             </div>
                             <div className='shayariCardLinks'>
                                 <LabelSharpIcon style={labelIconStyle} />
                                 {tagsObject[i].map((tag, i) => (
                                     <React.Fragment key={tag}>
-                                        <Link to={`./${tag}`} className='relatedLinks'>{i === 0 ? null : ', '}{tag}</Link>
+                                        <Link to={`./${tag}`} className='relatedLinks'>{i === 0 ? null : ','}{tag}</Link>
                                     </React.Fragment>
                                 ))}
                             </div>
