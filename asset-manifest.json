@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/bestshayari/static/css/main.84ab388c.chunk.css",
-    "main.js": "/bestshayari/static/js/main.1eedb820.chunk.js",
-    "main.js.map": "/bestshayari/static/js/main.1eedb820.chunk.js.map",
+    "main.css": "/bestshayari/static/css/main.4b4acefe.chunk.css",
+    "main.js": "/bestshayari/static/js/main.c9578fb0.chunk.js",
+    "main.js.map": "/bestshayari/static/js/main.c9578fb0.chunk.js.map",
     "runtime~main.js": "/bestshayari/static/js/runtime~main.f0341ecf.js",
     "runtime~main.js.map": "/bestshayari/static/js/runtime~main.f0341ecf.js.map",
     "static/js/2.c324b5e7.chunk.js": "/bestshayari/static/js/2.c324b5e7.chunk.js",
     "static/js/2.c324b5e7.chunk.js.map": "/bestshayari/static/js/2.c324b5e7.chunk.js.map",
     "index.html": "/bestshayari/index.html",
-    "precache-manifest.91c71cfa53c8ebaebb96a3750e363022.js": "/bestshayari/precache-manifest.91c71cfa53c8ebaebb96a3750e363022.js",
+    "precache-manifest.5ec21ec913836c29234f93d3f458e69f.js": "/bestshayari/precache-manifest.5ec21ec913836c29234f93d3f458e69f.js",
     "service-worker.js": "/bestshayari/service-worker.js",
-    "static/css/main.84ab388c.chunk.css.map": "/bestshayari/static/css/main.84ab388c.chunk.css.map"
+    "static/css/main.4b4acefe.chunk.css.map": "/bestshayari/static/css/main.4b4acefe.chunk.css.map"
   }
 }
