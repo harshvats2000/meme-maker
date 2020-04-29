@@ -83,7 +83,7 @@ class TagPage extends Component {
         }
         return (
             <div id='tagPage'>
-                <h2 style={{textAlign: 'center'}}>{tag}</h2>
+                <h2 style={{textAlign: 'center', textTransform: 'capitalize'}}>{tag}</h2>
                 <hr/>
                 {
                     shayariObject[tag].titleArray.length ?
@@ -112,13 +112,13 @@ class TagPage extends Component {
                                 {tagsObject[i].map((tag, i) => (
                                     <React.Fragment key={tag}>
                                         <Link to={`./${tag}`} className='relatedLinks'>{tag}</Link>
-                                        &ensp;
                                     </React.Fragment>
                                 ))}
-                                <div className='shayariCardPoet'>
-                                    {poetArray[i]}
-                                </div>
                             </div>
+                            <div className='shayariCardPoet'>
+                                {poetArray[i]}
+                            </div>
+                            &ensp;
                         </div>
                         <hr/>
                         </React.Fragment>
