@@ -6,25 +6,19 @@
     position: sticky;
     top: 0;
     background-color: white;
-    display: flex;
 }
 
 .headerMenuIcon {
-    order: 0;
+    
 }
 
 .headerName {
-    order: 1;
     font-size: 28px;
+    vertical-align: top;
     margin-left: 10px;
 }
 
 .link {
     text-decoration: none;
     color: black;
-}
-
-.headerSearch {
-    order: 2;
-    margin-left: 10px;
 }

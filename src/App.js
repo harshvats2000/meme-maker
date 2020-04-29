@@ -13,6 +13,7 @@ import ListItem from '@material-ui/core/ListItem';
 import firebase from 'firebase'
 import TagPage from './components/TagPage';
 import Upload from './components/Upload';
+import Search from './components/Search';
 
 class App extends Component {
   constructor(){
@@ -22,7 +23,8 @@ class App extends Component {
         drawer: false,
         loading: true,
         shayariObject: {},
-        searching: false
+        searching: '',
+        searchingList: []
     }
   }
 
@@ -50,7 +52,8 @@ class App extends Component {
       this.setState(prev => ({
         tags: tagsArray,
         loading: false,
-        shayariObject: Object.assign({}, prev.shayariObject, tempShayariObject)
+        shayariObject: Object.assign({}, prev.shayariObject, tempShayariObject),
+        searchingList: tagsArray
       }))
     })
     .catch(error => {
@@ -79,7 +82,7 @@ class App extends Component {
       >
         <List>
             <ListItem button>
-              <ListItemIcon><HomeIcon/> </ListItemIcon>
+              <ListItemIcon><HomeIcon/></ListItemIcon>
               <ListItemText><Link to='/' className='drawerTextLink'>Home</Link></ListItemText>
             </ListItem>
         </List>
@@ -90,21 +93,13 @@ class App extends Component {
       this.state.loading ? <h1>loading</h1> :
       <div className="App">
       <HashRouter>
-      
       <div 
       className='header'>
         <Menu fontSize='large' onClick={this.toggleDrawer}
         className='headerMenuIcon' />
         <span className='headerName'><Link to='/' className='link'>𝓫𝓮𝓼𝓽𝓼𝓱𝓪𝔂𝓪𝓻𝓲𝓼.𝓬𝓸𝓶</Link></span>
-        <input className='headerSearch' placeholder='search'></input>
+        <Search tags={this.state.tags} />
       </div>
-      
-      {
-        !this.state.searching ? null :
-        <div>
-          hello
-        </div> 
-      }
 
       <Switch>
         <Route exact path='/' render={props => <Home tags={this.state.tags} />} />
@@ -122,7 +117,7 @@ class App extends Component {
 
       <Drawer anchor='left' open={this.state.drawer} onClose={this.toggleDrawer}>
           {list()}
-        </Drawer>
+      </Drawer>
       </HashRouter>
     </div>
     )
