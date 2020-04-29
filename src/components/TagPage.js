@@ -104,6 +104,7 @@ class TagPage extends Component {
                             <div className={`div${i} shayariCardTitle`}>
                                 {title.charAt(0).toUpperCase() + title.slice(1)}
                             </div>
+                            <br/>
                             <div className={`div${i} shayariCardContent`} onClick={e => this.handleContentClick(e, contentArray[i])}>
                                 {contentArray[i].length > 200 ? contentArray[i].substring(0,200) + '....' : contentArray[i]}
                             </div>

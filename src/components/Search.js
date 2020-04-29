@@ -29,15 +29,17 @@ class Search extends Component {
 
     render() {
       const focusStyle = {
+        position: 'absolute',
+        border: 'none',
         left: '0',
         width: '100%',
         margin: '0',
-        position: 'fixed',
         height: '35px',
+
       }
       const style = {
         position: 'absolute',
-        width: '100px',
+        width: '20%',
         right: '0',
         margin: '6px',
         height: '25px',
