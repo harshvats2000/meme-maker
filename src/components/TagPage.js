@@ -111,7 +111,7 @@ class TagPage extends Component {
                                 <LabelSharpIcon style={labelIconStyle} />
                                 {tagsObject[i].map((tag, i) => (
                                     <React.Fragment key={tag}>
-                                        <Link to={`./${tag}`} className='relatedLinks'>{tag}</Link>
+                                        <Link to={`./${tag}`} className='relatedLinks'>{i === 0 ? null : ', '}{tag}</Link>
                                     </React.Fragment>
                                 ))}
                             </div>
