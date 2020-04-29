@@ -3,7 +3,8 @@ import firebase from 'firebase';
 import { Link } from 'react-router-dom';
 import '../styles/TagPage.css';
 import SnackbarContainer from '../container/Snackbar';
-import Clipboard from 'react-clipboard.js'
+import Clipboard from 'react-clipboard.js';
+import LocalOfferIcon from '@material-ui/icons/LocalOffer'
 
 class TagPage extends Component {
     constructor(props) {
@@ -74,7 +75,7 @@ class TagPage extends Component {
         var tagsObject = shayariObject[tag].relatedTagsObject;
         return (
             <div>
-                <h2>{tag}</h2>
+                <h2 style={{textAlign: 'center'}}>{tag}</h2>
                 <hr/>
                 {
                     shayariObject[tag].titleArray.length ?
@@ -82,21 +83,24 @@ class TagPage extends Component {
                         <React.Fragment key={i}>
                         <div className={`shayariCard div${i}`}>
                             <div className={`shayariCardHeader div${i}`}>
-                                <Clipboard 
+                                <Clipboard className='copyBtn'
                                 data-clipboard-text={contentArray[i]}
                                 onClick={this.handleCopy}>
                                 copy
                                 </Clipboard>
                             </div>
-                            <div className={`div${i}`}>
+                            <div className={`div${i} shayariCardTitle`}>
                                 {title}
                             </div>
                             <div className={`div${i}`} onClick={e => this.handleContentClick(e, contentArray[i])}>
                                 {contentArray[i].length > 100 ? contentArray[i].substring(0,100)+'....' : contentArray[i]}
                             </div>
-                            <div>{tagsObject[i].map((tag, i) => (
+                            <div>
+                                <LocalOfferIcon />
+                                {tagsObject[i].map((tag, i) => (
                                 <React.Fragment key={tag}>
-                                    <Link to={`./${tag}`}>{tag}</Link>
+                                
+                                    <Link to={`./${tag}`} className='relatedLinks'>{tag}</Link>
                                     &ensp;
                                 </React.Fragment>
                             ))}

@@ -7,3 +7,18 @@
     display: flex;
     justify-content: flex-end;
 }
+
+.shayariCardTitle {
+    color: crimson;
+    font-weight: 500;
+}
+
+.copyBtn {
+    border: 1px solid black;
+    background-color: white;
+}
+
+.relatedLinks {
+    text-decoration: none;
+    vertical-align: super;
+}
