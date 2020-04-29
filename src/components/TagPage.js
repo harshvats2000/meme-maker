@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import '../styles/TagPage.css';
 import SnackbarContainer from '../container/Snackbar';
 import Clipboard from 'react-clipboard.js';
-import LocalOfferIcon from '@material-ui/icons/LocalOffer'
+import LabelSharpIcon from '@material-ui/icons/LabelSharp'
 
 class TagPage extends Component {
     constructor(props) {
@@ -18,6 +18,7 @@ class TagPage extends Component {
     fetchContent = () => {
         var titleArray = [];
         var contentArray = [];
+        var poetArray = [];
         var tempRelatedTagsObject = {};
         var relatedTagsArray = [];
         if(!this.state.shayariObject[this.props.tag].titleArray.length){
@@ -27,9 +28,11 @@ class TagPage extends Component {
                 snap.forEach(doc => {
                     var title = doc.data().title;
                     var content = doc.data().content;
+                    var poet = doc.data().poet;
                     relatedTagsArray = doc.data().tags;
                     titleArray.push(title);
                     contentArray.push(content);
+                    poetArray.push(poet);
                     Object.assign(tempRelatedTagsObject, {
                         [i]: relatedTagsArray
                     })
@@ -41,6 +44,7 @@ class TagPage extends Component {
                                 ...prev.shayariObject[this.props.tag],
                                 titleArray: titleArray,
                                 contentArray: contentArray,
+                                poetArray: poetArray,
                                 relatedTagsObject: tempRelatedTagsObject
                             }
                     })
@@ -72,9 +76,13 @@ class TagPage extends Component {
         const { shayariObject } = this.state;
         var titleArray = shayariObject[tag].titleArray;
         var contentArray = shayariObject[tag].contentArray;
+        var poetArray = shayariObject[tag].poetArray;
         var tagsObject = shayariObject[tag].relatedTagsObject;
+        const labelIconStyle = {
+            fontSize: '22px'
+        }
         return (
-            <div>
+            <div id='tagPage'>
                 <h2 style={{textAlign: 'center'}}>{tag}</h2>
                 <hr/>
                 {
@@ -83,8 +91,12 @@ class TagPage extends Component {
                         <React.Fragment key={i}>
                         <div className={`shayariCard div${i}`}>
                             <div className={`shayariCardHeader div${i}`}>
-                                <Clipboard className='copyBtn'
-                                data-clipboard-text={contentArray[i]}
+                                <Clipboard 
+                                className='copyBtn'
+                                data-clipboard-text={
+                                    titleArray[i].charAt(0).toUpperCase() + titleArray[i].slice(1) + '\n' 
+                                    + contentArray[i].charAt(0).toUpperCase() + contentArray[i].slice(1) 
+                                    + '\nbestshayaris.com'}
                                 onClick={this.handleCopy}>
                                 copy
                                 </Clipboard>
@@ -92,18 +104,20 @@ class TagPage extends Component {
                             <div className={`div${i} shayariCardTitle`}>
                                 {title}
                             </div>
-                            <div className={`div${i}`} onClick={e => this.handleContentClick(e, contentArray[i])}>
-                                {contentArray[i].length > 100 ? contentArray[i].substring(0,100)+'....' : contentArray[i]}
+                            <div className={`div${i} shayariCardContent`} onClick={e => this.handleContentClick(e, contentArray[i])}>
+                                {contentArray[i].length > 200 ? contentArray[i].substring(0,200)+'....' : contentArray[i]}
                             </div>
-                            <div>
-                                <LocalOfferIcon />
+                            <div className='shayariCardLinks'>
+                                <LabelSharpIcon style={labelIconStyle} />
                                 {tagsObject[i].map((tag, i) => (
-                                <React.Fragment key={tag}>
-                                
-                                    <Link to={`./${tag}`} className='relatedLinks'>{tag}</Link>
-                                    &ensp;
-                                </React.Fragment>
-                            ))}
+                                    <React.Fragment key={tag}>
+                                        <Link to={`./${tag}`} className='relatedLinks'>{tag}</Link>
+                                        &ensp;
+                                    </React.Fragment>
+                                ))}
+                                <div className='shayariCardPoet'>
+                                    {poetArray[i]}
+                                </div>
                             </div>
                         </div>
                         <hr/>

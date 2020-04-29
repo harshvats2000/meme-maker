@@ -16,6 +16,7 @@ class Upload extends Component {
         this.state = {
             title: '',
             content: '',
+            poet: '',
             tags: [],
             newTagInput: false,
             newTagInputValue: '',
@@ -41,10 +42,17 @@ class Upload extends Component {
         })
     }
 
+    handlePoetChange = (e) => {
+        this.setState({
+            poet: e.target.value
+        })
+    }
+
     upload = () => {
         var tags = this.state.tags;
         var title = this.state.title;
         var content = this.state.content;
+        var poet = this.state.poet;
         if(tags){
             if(title){
                 if(content){
@@ -69,13 +77,15 @@ class Upload extends Component {
                                         title: title,
                                         content: content,
                                         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                                        tags: this.state.tags
+                                        tags: this.state.tags,
+                                        poet: poet
                                     })
                                     .then(() => {
                                         if(i === this.state.tags.length-1){
                                             this.setState({
                                                 title: '',
                                                 content: '',
+                                                poet: '',
                                                 tags: [],
                                                 newTagInput: false,
                                                 newTagInputValue: '',
@@ -99,14 +109,16 @@ class Upload extends Component {
                                 firebase.firestore().collection('tags').doc(tag).collection('shayaris').doc().set({
                                     title: title,
                                     content: content,
+                                    poet: poet,
                                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                                    tags: this.state.tags
+                                    tags: this.state.tags,
                                 })
                                 .then(() => {
                                     if(i === this.state.tags.length-1){
                                         this.setState({
                                             title: '',
                                             content: '',
+                                            poet: '',
                                             tags: [],
                                             newTagInput: false,
                                             newTagInputValue: '',
@@ -176,7 +188,6 @@ class Upload extends Component {
                           null
                     }
                   <TextField
-                      id="standard-textarea"
                       label="Title"
                       placeholder="Choose title wisely"
                       margin="normal"
@@ -184,13 +195,19 @@ class Upload extends Component {
                       onChange={e => this.handleTitleChange(e)}
                     />
                   <TextField
-                      id="standard-textarea"
                       label="Content"
                       placeholder="Write beyond imagination"
                       multiline
                       margin="normal"
                       value={this.state.content}
                       onChange={e => this.handleContentChange(e)}
+                    />
+                  <TextField
+                      label="Poet"
+                      placeholder="Poet"
+                      margin="normal"
+                      value={this.state.poet}
+                      onChange={e => this.handlePoetChange(e)}
                     />
                     <button type='submit' onClick={this.upload} className='uploadBtn' disabled={this.state.uploading}>Upload</button>
                 </FormControl>

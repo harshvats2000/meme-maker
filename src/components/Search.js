@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/Search.css';
 import { Link } from 'react-router-dom';
-import SearchIcon from '@material-ui/icons/Search'
 
 class Search extends Component {
     constructor(props){
@@ -23,22 +22,43 @@ class Search extends Component {
         this.setState({
             searchingWord: e.target.value,
             searchingList: this.props.tags.filter(tag => {
-                return tag.indexOf(e.target.value) !== -1
+                return tag.indexOf(e.target.value.toLowerCase()) !== -1
             })
         })
       }
 
     render() {
+      const focusStyle = {
+        left: '0',
+        width: '100%',
+        margin: '0',
+        position: 'fixed',
+        height: '35px',
+      }
+      const style = {
+        position: 'absolute',
+        width: '100px',
+        right: '0',
+        margin: '6px',
+        height: '25px',
+        fontSize: '16px',
+        border: '1px solid black',
+        paddingLeft: '5px',
+        transition: '.4s',
+        boxShadow: '1px 1px 3px'
+      }
         return (
             <React.Fragment>
-                <div style={{float: 'left'}}>
-                  <input className='headerSearchInput'
+            {
+              this.state.searching ? window.addEventListener('popstate', () => this.setState({searching: false, searchingWord: ''})) : null
+            }
+                  <input
+                  style={this.state.searching ? focusStyle : style}
                   placeholder='search...'
                   maxLength='20'
-                  value={this.state.searchingWord}
-                  onFocus={e => this.handleInputFocus(e)} 
+                  onClick={(e) => this.setState({searching: true, searchingWord: e.target.value})}
+                  value={this.state.searchingWord} 
                   onChange={e => this.handleInputChange(e)}/>
-                </div>
                 {
                     !this.state.searching ? null :
                     <div id='searchingListParent'>

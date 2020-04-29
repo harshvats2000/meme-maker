@@ -22,9 +22,7 @@ class App extends Component {
         tags: [],
         drawer: false,
         loading: true,
-        shayariObject: {},
-        searching: '',
-        searchingList: []
+        shayariObject: {}
     }
   }
 
@@ -41,6 +39,7 @@ class App extends Component {
         tempShayariObject[tag] = {
           titleArray: [],
           contentArray: [],
+          poetArray: []
         }
       })
       tagsArray.forEach(tag => {
@@ -52,8 +51,7 @@ class App extends Component {
       this.setState(prev => ({
         tags: tagsArray,
         loading: false,
-        shayariObject: Object.assign({}, prev.shayariObject, tempShayariObject),
-        searchingList: tagsArray
+        shayariObject: Object.assign({}, prev.shayariObject, tempShayariObject)
       }))
     })
     .catch(error => {
