@@ -71,7 +71,9 @@ class TagPage extends Component {
         })
     }
 
+
     render() {
+
         const { tag } = this.props;
         const { shayariObject } = this.state;
         var titleArray = shayariObject[tag].titleArray;

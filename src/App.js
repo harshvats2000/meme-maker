@@ -3,24 +3,19 @@ import './App.css'
 import { HashRouter, Switch, Route, Link } from 'react-router-dom'
 import Home from './components/Home';
 import Error404 from './components/Error404';
-import Menu from '@material-ui/icons/Menu';
-import Drawer from '@material-ui/core/Drawer';
-import HomeIcon from '@material-ui/icons/Home';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import firebase from 'firebase'
 import TagPage from './components/TagPage';
 import Upload from './components/Upload';
 import Search from './components/Search';
+import MenuContainer from './container/Menu';
+import Routes from './components/Routes';
+import Edit from './components/Edit';
 
 class App extends Component {
   constructor(){
     super()
     this.state = {
         tags: [],
-        drawer: false,
         loading: true,
         shayariObject: {}
     }
@@ -65,27 +60,7 @@ class App extends Component {
     }))
   }
 
-  toggleDrawer = () => {
-    this.setState({
-      drawer: !this.state.drawer
-    })
-  }
-
   render() {
-    const list = () => (
-      <div
-        role="presentation"
-        onClick={() => this.toggleDrawer()}
-        onKeyDown={() => this.toggleDrawer()}
-      >
-        <List>
-            <ListItem button>
-              <ListItemIcon><HomeIcon/></ListItemIcon>
-              <ListItemText><Link to='/' className='drawerTextLink'>Home</Link></ListItemText>
-            </ListItem>
-        </List>
-      </div>
-    );
 
     return (
       this.state.loading ? <h1>loading</h1> :
@@ -93,8 +68,7 @@ class App extends Component {
       <HashRouter>
       <div 
       className='header'>
-        <Menu fontSize='large' onClick={this.toggleDrawer}
-        className='headerMenuIcon' />
+        <MenuContainer />
         <span className='headerName'><Link to='/' className='link'>𝓫𝓮𝓼𝓽𝓼𝓱𝓪𝔂𝓪𝓻𝓲𝓼.𝓬𝓸𝓶</Link></span>
         <Search tags={this.state.tags} />
       </div>
@@ -109,13 +83,11 @@ class App extends Component {
         putIntoShayariObject={this.putIntoShayariObject} />} />
 
         <Route exact path='/upload' render={props => <Upload tags={this.state.tags} />} />
+        <Route exact path='/edit' render={props => <Edit tags={this.state.tags} />} />
 
         <Route path='*' component={Error404} />
       </Switch>
-
-      <Drawer anchor='left' open={this.state.drawer} onClose={this.toggleDrawer}>
-          {list()}
-      </Drawer>
+      {/* <Routes tag={this.state.tags} shayariObject={this.state.shayariObject} putIntoShayariObject={this.putIntoShayariObject} /> */}
       </HashRouter>
     </div>
     )

@@ -14,6 +14,8 @@ class Upload extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            authenticated: false,
+            password: '',
             title: '',
             content: '',
             poet: '',
@@ -22,6 +24,15 @@ class Upload extends Component {
             newTagInputValue: '',
             uploading: false
         }
+    }
+
+    componentDidMount(){
+        firebase.firestore().collection('users').doc('auth').get()
+        .then(doc => {
+            this.setState({
+                password: doc.data().password
+            })
+        })
     }
 
     handleTagChange = (e) => {
@@ -40,7 +51,6 @@ class Upload extends Component {
         this.setState({
             content: e.target.value
         })
-        console.log(this.state.content);
     }
 
     handlePoetChange = (e) => {
@@ -157,8 +167,21 @@ class Upload extends Component {
         })
     }
 
+    authMe = (e) => {
+        if(this.state.password !== ''){
+            if(this.state.password === e.target.value) {
+                this.setState({
+                    authenticated: true
+                })
+            }
+        }
+    }
+
     render() {
         return (
+            !this.state.authenticated 
+            ? <input placeholder='password' onChange={(e) => this.authMe(e)}></input>
+            :
             <div style={{textAlign: 'center'}}>
                 <FormControl>
                     <InputLabel htmlFor="select-multiple-chip">Tag</InputLabel>
