@@ -11,8 +11,15 @@ class TagPage extends Component {
         super(props)
         this.state = {
             shayariObject: Object.assign({}, props.shayariObject),
-            snackbar: false
+            snackbar: false,
+            pageSize: 5
         }
+    }
+
+    componentWillReceiveProps() {
+        this.setState({
+            pageSize: 5
+        })
     }
 
     fetchContent = () => {
@@ -22,7 +29,8 @@ class TagPage extends Component {
         var tempRelatedTagsObject = {};
         var relatedTagsArray = [];
         if(!this.state.shayariObject[this.props.tag].titleArray.length){
-            firebase.firestore().collection('tags').doc(this.props.tag).collection('shayaris').orderBy('timestamp', 'desc').get()
+            var first = firebase.firestore().collection('tags').doc(this.props.tag).collection('shayaris').orderBy('timestamp', 'desc');
+            first.get()
             .then(snap => {
                 var i = 0;
                 snap.forEach(doc => {
@@ -75,7 +83,7 @@ class TagPage extends Component {
     render() {
 
         const { tag } = this.props;
-        const { shayariObject } = this.state;
+        const { shayariObject, pageSize } = this.state;
         var titleArray = shayariObject[tag].titleArray;
         var contentArray = shayariObject[tag].contentArray;
         var poetArray = shayariObject[tag].poetArray;
@@ -89,7 +97,7 @@ class TagPage extends Component {
                 <hr/>
                 {
                     shayariObject[tag].titleArray.length ?
-                    titleArray.map((title, i) => (
+                    titleArray.slice(0,pageSize).map((title, i) => (
                         <React.Fragment key={i}>
                         <div className={`shayariCard div${i}`}>
                             <div className={`shayariCardHeader div${i}`}>
@@ -124,6 +132,15 @@ class TagPage extends Component {
                             &ensp;
                         </div>
                         <hr/>
+                        {
+                            pageSize !== titleArray.length 
+                            ?
+                            i === titleArray.slice(0, pageSize).length-1 
+                            ? <div className='seeMoreDiv' onClick={() => this.setState(prev => ({pageSize: prev.pageSize + 5}))}><span className='seeMoreSpan'>See more</span></div>
+                            : null
+                            : null
+                        }
+                        
                         </React.Fragment>
                     ))
                     :

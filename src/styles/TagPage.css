@@ -47,3 +47,13 @@
     float: right;
     margin-top: -1rem;
 }
+
+.seeMoreDiv {
+    text-align: center;
+}
+
+.seeMoreSpan {
+    border: 1px solid black;
+    font-family: monospace;
+    padding: 5px;
+}
