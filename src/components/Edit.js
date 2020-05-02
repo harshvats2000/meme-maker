@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import firebase from 'firebase'
+import EditFinal from './EditFinal';
+import SnackbarContainer from '../container/Snackbar';
 
 class Edit extends Component {
     constructor(props){
@@ -9,11 +11,13 @@ class Edit extends Component {
             title: [],
             content: [],
             id: [],
-            authenticated: true,
+            authenticated: false,
             password: '',
+            relatedTags: {},
             editing: false,
-            editingTitle: '',
-            editingContent: ''
+            i: -1,
+            open: false,
+            message: ''
         }
     }
 
@@ -33,15 +37,28 @@ class Edit extends Component {
     }
 
     fetchPosts = () => {
+        var titleArray = [];
+        var contentArray = [];
+        var idArray = [];
+        var tempTagsObject = {};
         firebase.firestore().collection('tags').doc(this.state.tag).collection('shayaris').get()
         .then(snap => {
+            var i = 0;
             snap.forEach(doc => {
-                this.setState(prev => ({
-                    title: [...prev.title, doc.data().title],
-                    content: [...prev.content, doc.data().content],
-                    id: [...prev.id, doc.id]
-                }))
+                titleArray.push(doc.data().title)
+                contentArray.push(doc.data().content)
+                idArray.push(doc.id)
+                Object.assign(tempTagsObject, {
+                    [i]: doc.data().tags
+                })
+                i++;
             })
+            this.setState(prev => ({
+                title: titleArray,
+                content: contentArray,
+                id: idArray,
+                relatedTags: tempTagsObject
+            }))
         })
     }
 
@@ -55,76 +72,63 @@ class Edit extends Component {
         }
     }
 
-    handleEdit = (i) => {
+    closeEditing = () => {
         this.setState({
-            editing: true
+            editing: false,
+            open: true,
+            message: 'successfully deleted',
+            title: [],
+            content: [],
+            id: [],
+            relatedTags: {}
         })
-        var title = document.getElementsByClassName(`div${i}`)[0];
-        var content = document.getElementsByClassName(`div${i}`)[1];
-        title.contentEditable = true;
-        content.contentEditable = true;
     }
 
-    handleSave = (i) => {
+    handleSnackbarClose = () => {
         this.setState({
-            editing: false
-        })
-        var title = document.getElementsByClassName(`div${i}`)[0];
-        var content = document.getElementsByClassName(`div${i}`)[1];
-        title.contentEditable = false;
-        content.contentEditable = false;
-        console.log(this.state.id[i]);
-        firebase.firestore().collection('tags').doc(this.state.tag).collection('shayaris').doc(this.state.id[i]).update({
-            title: title.innerHTML,
-            content: content.innerHTML
+            open: false,
+            message: ''
         })
     }
 
     render() {
+        const { i, title, content, relatedTags, id, tag} = this.state;
         return (
             !this.state.authenticated 
             ? <input placeholder='password' onChange={(e) => this.authMe(e)}></input>
             :
-            <div>
-                <select value={this.state.tag} onChange={e => this.handleTagChange(e)}>
-                    {
-                        <option value=''>--select an option--</option>
-                    }
-                    {
-                        this.props.tags.map((tag, i) => (
-                            <option key={i} value={tag}>{tag}</option>
-                        ))
-                    }
-                </select>
-                <button onClick={this.fetchPosts} disabled={!this.state.tag}>Fetch posts</button>
+            this.state.editing
+            ? <EditFinal tag={tag} relatedTags={relatedTags[i]} title={title[i]} content={content[i]} id={id[i]} closeEditing={this.closeEditing} />
+            : <div>
+            <select value={tag} onChange={e => this.handleTagChange(e)}>
                 {
-                    this.state.title.map((title, i) => {
-                        return (
-                            <React.Fragment key={title}>
-                            <div>
-                                {
-                                    this.state.editing
-                                    ? <div>
-                                        <span onClick={e => this.handleSave(i)}>save</span>
-                                        <span>discard</span>
-                                    </div>
-                                    : <React.Fragment>
-                                    <div>
-                                        <span onClick={e => this.handleEdit(i)}>Edit</span>
-                                    </div>
-                                    </React.Fragment> 
-                                }
-                                <div className={`div${i}`}>{title}</div>
-                                <br/>
-                                <div className={`div${i}`}>{this.state.content[i]}</div>
-                            </div>
-                            <hr/>
-                            </React.Fragment>
-                        )
-                    })
+                    <option value=''>--select a tag--</option>
                 }
+                {
+                    this.props.tags.map((tag, i) => (
+                        <option key={i} value={tag}>{tag}</option>
+                    ))
+                }
+            </select>
+            <button onClick={this.fetchPosts} disabled={!tag}>Fetch posts</button>
 
-            </div>
+            {
+                title.map((title, i) => {
+                    return (
+                        <React.Fragment key={title}>
+                        <div className={`div${i}`} onClick={(e) => this.setState({editing: true, i: i})}>
+                            <div className={`div${i}`}>{title}</div>
+                            <br/>
+                            <div className={`div${i}`}>{content[i]}</div>
+                            <div>{relatedTags[i].join(', ')}</div>
+                        </div>
+                        <hr/>
+                        </React.Fragment>
+                    )
+                })
+            }
+            <SnackbarContainer open={this.state.open} message={this.state.message} handleClose={this.handleSnackbarClose} />
+        </div>
         )
     }
 }

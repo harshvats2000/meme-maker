@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/Search.css';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 class Search extends Component {
     constructor(props){
@@ -52,7 +52,15 @@ class Search extends Component {
         return (
             <React.Fragment>
             {
-              this.state.searching ? window.addEventListener('popstate', () => this.setState({searching: false, searchingWord: ''})) : null
+              this.state.searching ? 
+              window.addEventListener('popstate', () => {
+                this.setState({
+                    searching: false, 
+                    searchingWord: ''
+                })
+                this.props.history.push(this.props.location.pathName)
+              }) 
+              : null
             }
                   <input
                   style={this.state.searching ? focusStyle : style}
@@ -80,4 +88,4 @@ class Search extends Component {
     }
 }
 
-export default Search
+export default withRouter(Search)

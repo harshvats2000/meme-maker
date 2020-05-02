@@ -8,7 +8,6 @@ import TagPage from './components/TagPage';
 import Upload from './components/Upload';
 import Search from './components/Search';
 import MenuContainer from './container/Menu';
-import Routes from './components/Routes';
 import Edit from './components/Edit';
 
 class App extends Component {
@@ -87,7 +86,6 @@ class App extends Component {
 
         <Route path='*' component={Error404} />
       </Switch>
-      {/* <Routes tag={this.state.tags} shayariObject={this.state.shayariObject} putIntoShayariObject={this.putIntoShayariObject} /> */}
       </HashRouter>
     </div>
     )
