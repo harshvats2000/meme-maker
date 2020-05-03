@@ -32,8 +32,7 @@ class App extends Component {
         tagsArray.push(tag)
         tempShayariObject[tag] = {
           titleArray: [],
-          contentArray: [],
-          poetArray: []
+          totalShayaris: totalShayaris
         }
       })
       tagsArray.forEach(tag => {
@@ -60,6 +59,7 @@ class App extends Component {
   }
 
   render() {
+    const { tags, shayariObject } = this.state;
 
     return (
       this.state.loading ? <h1>loading</h1> :
@@ -68,21 +68,21 @@ class App extends Component {
       <div 
       className='header'>
         <MenuContainer />
-        <span className='headerName'><Link to='/' className='link'>𝓫𝓮𝓼𝓽𝓼𝓱𝓪𝔂𝓪𝓻𝓲𝓼.𝓬𝓸𝓶</Link></span>
-        <Search tags={this.state.tags} />
+        <span className='headerName'><Link to='/' className='link'>𝓫𝓮𝓼𝓽𝓼𝓱𝓪𝔂𝓪𝓻𝓲𝓼.𝓬𝓸𝓶</Link><span></span></span>
+        <Search tags={tags} />
       </div>
 
       <Switch>
-        <Route exact path='/' render={props => <Home tags={this.state.tags} />} />
+        <Route exact path='/' render={props => <Home tags={tags} shayariObject={shayariObject} />} />
 
         <Route path='/tags/:tag' render={props => 
         <TagPage 
         tag={props.match.params.tag}
-        shayariObject={this.state.shayariObject}
+        shayariObject={shayariObject}
         putIntoShayariObject={this.putIntoShayariObject} />} />
 
-        <Route exact path='/upload' render={props => <Upload tags={this.state.tags} />} />
-        <Route exact path='/edit' render={props => <Edit tags={this.state.tags} />} />
+        <Route exact path='/upload' render={props => <Upload tags={tags} />} />
+        <Route exact path='/edit' render={props => <Edit tags={tags} />} />
 
         <Route path='*' component={Error404} />
       </Switch>

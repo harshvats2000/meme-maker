@@ -12,14 +12,17 @@ class TagPage extends Component {
         this.state = {
             shayariObject: Object.assign({}, props.shayariObject),
             snackbar: false,
-            pageSize: 5
+            pageSize: 5,
+            tagsToShow: 2
         }
     }
 
     componentWillReceiveProps() {
-        this.setState({
-            pageSize: 5
-        })
+        var tagsToShowObject = this.props.shayariObject[this.props.tag].tagsToShowObject;
+        Object.keys(tagsToShowObject).forEach(key => tagsToShowObject[key] = this.state.tagsToShow)
+        this.setState(prev => ({
+            pageSize: 5,
+        }))
     }
 
     fetchContent = () => {
@@ -27,6 +30,7 @@ class TagPage extends Component {
         var contentArray = [];
         var poetArray = [];
         var tempRelatedTagsObject = {};
+        var tempTagsToShowObject = {};
         var relatedTagsArray = [];
         if(!this.state.shayariObject[this.props.tag].titleArray.length){
             var first = firebase.firestore().collection('tags').doc(this.props.tag).collection('shayaris').orderBy('timestamp', 'desc');
@@ -41,6 +45,9 @@ class TagPage extends Component {
                     titleArray.push(title);
                     contentArray.push(content);
                     poetArray.push(poet);
+                    Object.assign(tempTagsToShowObject, {
+                        [i]: this.state.tags
+                    })
                     Object.assign(tempRelatedTagsObject, {
                         [i]: relatedTagsArray
                     })
@@ -53,9 +60,10 @@ class TagPage extends Component {
                                 titleArray: titleArray,
                                 contentArray: contentArray,
                                 poetArray: poetArray,
-                                relatedTagsObject: tempRelatedTagsObject
-                            }
-                    })
+                                relatedTagsObject: tempRelatedTagsObject,
+                                tagsToShowObject: tempTagsToShowObject
+                                }
+                            })
                 }), () => {
                     this.props.putIntoShayariObject(this.state.shayariObject)
                 })
@@ -79,6 +87,33 @@ class TagPage extends Component {
         })
     }
 
+    handleSeeMore = (tag, i, length) => {
+        this.setState(prev => ({
+            shayariObject: Object.assign({}, prev.shayariObject, {
+                [tag]: {
+                    ...prev.shayariObject[tag],
+                    tagsToShowObject: {
+                        ...prev.shayariObject[tag].tagsToShowObject,
+                        [i]: length
+                    }
+                }
+            })
+        }))
+    }
+
+    handleSeeLess = (tag, i) => {
+        this.setState(prev => ({
+            shayariObject: Object.assign({}, prev.shayariObject, {
+                [tag]: {
+                    ...prev.shayariObject[tag],
+                    tagsToShowObject: {
+                        ...prev.shayariObject[tag].tagsToShowObject,
+                        [i]: this.state.tagsToShow
+                    }
+                }
+            })
+        }))
+    }
 
     render() {
 
@@ -88,6 +123,7 @@ class TagPage extends Component {
         var contentArray = shayariObject[tag].contentArray;
         var poetArray = shayariObject[tag].poetArray;
         var tagsObject = shayariObject[tag].relatedTagsObject;
+        var tagsToShowObject = shayariObject[tag].tagsToShowObject;
         const labelIconStyle = {
             fontSize: '22px'
         }
@@ -118,33 +154,42 @@ class TagPage extends Component {
                             <div className={`div${i} shayariCardContent`} onClick={e => this.handleContentClick(e, contentArray[i])}>
                                 {contentArray[i].length > 200 ? contentArray[i].substring(0,200) + '....' : contentArray[i]}
                             </div>
+                            <div className='shayariCardPoet'>
+                                <span>{poetArray[i]}</span>
+                            </div>
                             <div className='shayariCardLinks'>
                                 <LabelSharpIcon style={labelIconStyle} />
-                                {tagsObject[i].map((tag, i) => (
+                                {tagsObject[i].slice(0, tagsToShowObject[i]).map((tag, i) => (
                                     <React.Fragment key={tag}>
                                         <Link to={`./${tag}`} className='relatedLinks'>{i === 0 ? null : ','}{tag}</Link>
                                     </React.Fragment>
                                 ))}
+                                {
+                                    tagsToShowObject[i] < tagsObject[i].length
+                                    ? <span onClick={() => this.handleSeeMore(tag, i, tagsObject[i].length)} className='seeMore'>see more</span>
+                                    : <span onClick={() => this.handleSeeLess(tag, i)} className='seeLess'>see less</span>
+                                }
+                                
                             </div>
-                            <div className='shayariCardPoet'>
-                                {poetArray[i]}
-                            </div>
-                            &ensp;
+                            <br/>
                         </div>
                         <hr/>
-                        {
-                            pageSize !== titleArray.length 
-                            ?
-                            i === titleArray.slice(0, pageSize).length-1 
-                            ? <div className='seeMoreDiv' onClick={() => this.setState(prev => ({pageSize: prev.pageSize + 5}))}><span className='seeMoreSpan'>See more</span></div>
-                            : null
-                            : null
-                        }
-                        
                         </React.Fragment>
                     ))
                     :
                     this.fetchContent()
+                }
+                {
+                    shayariObject[tag].totalShayaris > pageSize
+                    ?
+                    <div 
+                    className='seeMoreDiv' 
+                    onClick={() => this.setState(prev => ({pageSize: prev.pageSize + 5}))}
+                    >
+                    {console.log(pageSize, titleArray.length)}
+                    <span className='seeMoreSpan'>See more</span>
+                    </div>
+                    : null
                 }
                 <SnackbarContainer open={this.state.snackbar} message='copied.' handleClose={this.handleSnackbarClose} />
             </div>

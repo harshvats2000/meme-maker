@@ -25,7 +25,8 @@
 }
 
 .shayariCardLinks {
-    float: left;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .copyBtn {
@@ -36,7 +37,6 @@
 
 .relatedLinks {
     text-decoration: none;
-    vertical-align: super;
     font-family: monospace;
     font-size: 16px;
 }
@@ -44,12 +44,27 @@
 .shayariCardPoet {
     font-family: monospace;
     text-transform: capitalize;
-    float: right;
-    margin-top: -1rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.seeMore {
+    margin-left: 5px;
+    text-decoration: underline;
+    font-size: 16px;
+    font-family: monospace;
+}
+
+.seeLess {
+    margin-left: 5px;
+    text-decoration: underline;
+    font-size: 16px;
+    font-family: monospace;
 }
 
 .seeMoreDiv {
     text-align: center;
+    margin-bottom: 10px;
 }
 
 .seeMoreSpan {

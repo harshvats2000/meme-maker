@@ -51,17 +51,11 @@ class Search extends Component {
       }
         return (
             <React.Fragment>
-            {
-              this.state.searching ? 
-              window.addEventListener('popstate', () => {
-                this.setState({
-                    searching: false, 
-                    searchingWord: ''
-                })
-                this.props.history.push(this.props.location.pathName)
-              }) 
-              : null
-            }
+                  {
+                    this.state.searching
+                    ? window.addEventListener('popstate', () => this.setState({searching: false, searchingWord: ''}))
+                    : null
+                  }
                   <input
                   style={this.state.searching ? focusStyle : style}
                   placeholder='search...'
