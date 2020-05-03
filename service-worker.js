@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.0/workbox-sw.js");
 
 importScripts(
-  "/bestshayari/precache-manifest.20326c90092f662bbf5c9a44773e96e1.js"
+  "/bestshayari/precache-manifest.27d8f99917ccacd0496de31c0b7306b0.js"
 );
 
 self.addEventListener('message', (event) => {
