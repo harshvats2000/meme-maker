@@ -1,8 +1,13 @@
 .tagCards {
-    padding: 30px;
     text-align: center;
     font-family: monospace;
-    font-size: 15px;
-    border: 1px solid black;
-    margin: 15px;
+    width: 100%;
+    background-color: gainsboro;
+    line-height: 35px;
+    border-left: 1px solid white;
+}
+
+.tagCardLinks {
+    text-decoration: none;
+    color: crimson;
 }

@@ -48,7 +48,7 @@ class App extends Component {
       }))
     })
     .catch(error => {
-      alert(error.message)
+      alert('your internet connection is slow.We cannot fetch data.')
     })
   }
 
@@ -73,7 +73,7 @@ class App extends Component {
       </div>
 
       <Switch>
-        <Route exact path='/' render={props => <Home tags={tags} shayariObject={shayariObject} />} />
+        <Route exact path='/' render={props => <Home tags={tags} />} />
 
         <Route path='/tags/:tag' render={props => 
         <TagPage 

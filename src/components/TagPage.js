@@ -72,6 +72,40 @@ class TagPage extends Component {
     }
 
     handleContentClick = (e, content) => {
+        // var t = '';
+        // var sel='';
+        // if (window.getSelection && (sel = window.getSelection()).modify) {
+            // var s = window.getSelection();
+            // if (s.isCollapsed) {
+                // s.modify('move', 'forward', 'character');
+                // s.modify('move', 'backward', 'word');
+                // s.modify('extend', 'forward', 'word');
+                // t = s.toString();
+                // s.modify('move', 'forward', 'character'); //clear selection
+            // }
+            // else {
+                // t = s.toString();
+            // }
+        // } else if ((sel = document.selection) && sel.type !== "Control") {
+            // var textRange = sel.createRange();
+            // if (!textRange.text) {
+                // textRange.expand("word");
+            // }
+            // while (/\s$/.test(textRange.text)) {
+                // textRange.moveEnd("character", -1);
+            // }
+            // t = textRange.text;
+        // }
+        // console.log(t.split(' ')[0])
+
+        // fetch(`https://www.googleapis.com/customsearch/v1?key=AIzaSyBsnFSb7My_vFvacFd0339ox6A5bUPFce4&cx=007954369214827889398:jybfnymzbis&q=${t}`)
+        // .then(res => {
+        //     return res.json()
+        // })
+        // .then(res => {
+        //     console.log(res);
+        //     // console.log(res.items[0].snippet)
+        // })
         e.target.innerHTML = content;
     }
 
@@ -151,7 +185,9 @@ class TagPage extends Component {
                                 {title.charAt(0).toUpperCase() + title.slice(1)}
                             </div>
                             <br/>
-                            <div className={`div${i} shayariCardContent`} onClick={e => this.handleContentClick(e, contentArray[i])}>
+                            <div 
+                            className={`div${i} shayariCardContent`} 
+                            onClick={e => this.handleContentClick(e, contentArray[i])}>
                                 {contentArray[i].length > 200 ? contentArray[i].substring(0,200) + '....' : contentArray[i]}
                             </div>
                             <div className='shayariCardPoet'>
@@ -186,7 +222,6 @@ class TagPage extends Component {
                     className='seeMoreDiv' 
                     onClick={() => this.setState(prev => ({pageSize: prev.pageSize + 5}))}
                     >
-                    {console.log(pageSize, titleArray.length)}
                     <span className='seeMoreSpan'>See more</span>
                     </div>
                     : null
