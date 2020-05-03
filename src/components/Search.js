@@ -39,7 +39,7 @@ class Search extends Component {
       }
       const style = {
         position: 'absolute',
-        width: '20%',
+        width: '25%',
         right: '0',
         margin: '6px',
         height: '25px',
@@ -58,7 +58,7 @@ class Search extends Component {
                   }
                   <input
                   style={this.state.searching ? focusStyle : style}
-                  placeholder='search...'
+                  placeholder='search tag...'
                   maxLength='20'
                   onClick={(e) => this.setState({searching: true, searchingWord: e.target.value})}
                   value={this.state.searchingWord} 

@@ -1,62 +1,21 @@
 import React, { Component } from 'react'
 import '../styles/Home.css';
 import { Link } from 'react-router-dom'
-import firebase from 'firebase'
 import Carousel from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
 
 class Home extends Component {
+
     constructor(){
         super()
         this.state = {
-            title: [],
-            content: [],
-            poet: [],
-            relatedTags: {},
             pageSize: 3
         }
     }
 
-    componentDidMount() {
-        var titleArray = [];
-        var contentArray = [];
-        var poetArray = [];
-        var tempTagsObject = {};
-        var i = 0;
-        firebase.firestore().collection('tags').doc('sher').collection('shayaris').get()
-        .then(snap => {
-            snap.forEach(doc => {
-                titleArray.push(doc.data().title);
-                contentArray.push(doc.data().content);
-                poetArray.push(doc.data().poet);
-                Object.assign(tempTagsObject, {
-                    [i]: doc.data().tags
-                })
-                i++;
-            })
-            // this.setState(prev => ({
-            //     title: titleArray,
-            //     content: contentArray,
-            //     poet: poetArray,
-            //     relatedTags: Object.assign({}, ...prev.relatedTags)
-            // }))
-
-            this.setState({
-                title: titleArray,
-                content: contentArray,
-                poet: poetArray,
-                relatedTags: Object.assign(this.state.relatedTags, tempTagsObject)
-            })
-        })
-    }
-
     render() {
-        const { tags } = this.props;
-        const { title, content, poet, relatedTags, pageSize } = this.state;
-        // var cx = '007954369214827889398:jybfnymzbis'; 
-        // var gcse = document.createElement('script'); gcse.type = 'text/javascript'; gcse.async = true;
-        // gcse.src = (document.location.protocol === 'https' ? 'https:' : 'http:') + '//www.google.com/cse/cse.js?cx=' + cx;
-        // var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gcse, s);
+        const { pageSize } = this.state;
+        const { tags, title, content, poet, relatedTags } = this.props;
         return (
             <React.Fragment>
                 {/* <div className="gcse-search"></div> */}
@@ -80,10 +39,7 @@ class Home extends Component {
                             >
                                 {
                                     relatedTags[i].map(tag => (
-                                    <div className='tagCards'
-                                    key={tag}>
-                                    <Link to={`/tags/${tag}`} className='tagCardLinks'>{tag}</Link>
-                                    </div>
+                                    <Link to={`/tags/${tag}`} className='tagCards' key={tag}>{tag}</Link>
                                 ))
                                 }
                             </Carousel>
@@ -105,26 +61,14 @@ class Home extends Component {
                 <h2>All Tags</h2>
                 <Carousel
                 slidesPerPage={4}
-                slidesPerScroll={4}
                 keepDirectionWhenDragging
                 infinite>
                     {
                         tags.map(tag => (
-                        <div className='tagCards'
-                        key={tag}>
-                        <Link to={`/tags/${tag}`} className='tagCardLinks'>{tag}</Link>
-                        </div>
+                        <Link to={`/tags/${tag}`} className='tagCards' key={tag}>{tag}</Link>
                     ))
                     }
                 </Carousel>
-                {/* {
-                    tags.map(tag => (
-                    <div className='tagCards' 
-                    key={tag}>
-                    <Link to={`/tags/${tag}`}>{tag}</Link><span> {shayariObject[tag].totalShayaris}</span>
-                    </div>
-                    ))
-                } */}
             </React.Fragment>
         )
     }

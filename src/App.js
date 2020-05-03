@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import './App.css'
-import { HashRouter, Switch, Route, Link } from 'react-router-dom'
+import { HashRouter, Switch, Route } from 'react-router-dom'
 import Home from './components/Home';
 import Error404 from './components/Error404';
 import firebase from 'firebase'
 import TagPage from './components/TagPage';
 import Upload from './components/Upload';
-import Search from './components/Search';
-import MenuContainer from './container/Menu';
 import Edit from './components/Edit';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import About from './container/About';
 
 class App extends Component {
   constructor(){
@@ -16,7 +17,11 @@ class App extends Component {
     this.state = {
         tags: [],
         loading: true,
-        shayariObject: {}
+        shayariObject: {},
+        title: [],
+        content: [],
+        poet: [],
+        relatedTags: {},
     }
   }
 
@@ -50,6 +55,30 @@ class App extends Component {
     .catch(error => {
       alert('your internet connection is slow.We cannot fetch data.')
     })
+
+    var titleArray = [];
+        var contentArray = [];
+        var poetArray = [];
+        var tempTagsObject = {};
+        var i = 0;
+        firebase.firestore().collection('tags').doc('sher').collection('shayaris').get()
+        .then(snap => {
+            snap.forEach(doc => {
+                titleArray.push(doc.data().title);
+                contentArray.push(doc.data().content);
+                poetArray.push(doc.data().poet);
+                Object.assign(tempTagsObject, {
+                    [i]: doc.data().tags
+                })
+                i++;
+            })
+            this.setState({
+                title: titleArray,
+                content: contentArray,
+                poet: poetArray,
+                relatedTags: Object.assign(this.state.relatedTags, tempTagsObject)
+            })
+        })
   }
 
   putIntoShayariObject = (shayariObject) => {
@@ -59,33 +88,34 @@ class App extends Component {
   }
 
   render() {
-    const { tags, shayariObject } = this.state;
+    const { tags, shayariObject, title, content, poet, relatedTags } = this.state;
 
     return (
       this.state.loading ? <h1>loading</h1> :
       <div className="App">
       <HashRouter>
-      <div 
-      className='header'>
-        <MenuContainer />
-        <span className='headerName'><Link to='/' className='link'>𝓫𝓮𝓼𝓽𝓼𝓱𝓪𝔂𝓪𝓻𝓲𝓼.𝓬𝓸𝓶</Link><span></span></span>
-        <Search tags={tags} />
-      </div>
 
-      <Switch>
-        <Route exact path='/' render={props => <Home tags={tags} />} />
+          <Header tags={tags} />
 
-        <Route path='/tags/:tag' render={props => 
-        <TagPage 
-        tag={props.match.params.tag}
-        shayariObject={shayariObject}
-        putIntoShayariObject={this.putIntoShayariObject} />} />
+          <Switch>
+            <Route exact path='/' render={props => <Home tags={tags} title={title} content={content} poet={poet} relatedTags={relatedTags} />} />
 
-        <Route exact path='/upload' render={props => <Upload tags={tags} />} />
-        <Route exact path='/edit' render={props => <Edit tags={tags} />} />
+            <Route path='/tags/:tag' render={props => 
+            <TagPage 
+            tag={props.match.params.tag}
+            shayariObject={shayariObject}
+            putIntoShayariObject={this.putIntoShayariObject} />} />
 
-        <Route path='*' component={Error404} />
-      </Switch>
+            <Route exact path='/upload' render={props => <Upload tags={tags} />} />
+            <Route exact path='/edit' render={props => <Edit tags={tags} />} />
+            <Route exact path='/about' render={props => <About />} />
+            
+            <Route path='*' component={Error404} />
+          </Switch>
+
+          <hr/>
+
+          <Footer />
       </HashRouter>
     </div>
     )

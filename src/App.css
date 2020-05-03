@@ -8,22 +8,3 @@
 .drawerTextLink {
     text-decoration: none;
 }
-
-.header {
-    position: sticky;
-    top: 0;
-    background-color: white;
-    z-index: 10;
-}
-
-.headerName {
-    font-size: 28px;
-    vertical-align: top;
-    margin-left: 10px;
-}
-
-.link {
-    text-decoration: none;
-    color: black;
-    color: crimson;
-}
