@@ -10,14 +10,14 @@ class Header extends Component {
             position: 'sticky',
             top: 0,
             backgroundColor: 'white',
-            zIndex: 10
+            zIndex: 10,
         }
         const headerNameStyle = {
             fontSize: '28px',
-            verticalAlign: 'top',
-            marginLeft: '10px'
-        }
-        const searchLink = {
+            position: 'absolute',
+            bottom: '4px',
+            marginLeft: '10px',
+            fontFamily: 'Alconica',
             textDecoration: 'none',
             color: 'crimson'
         }
@@ -27,7 +27,7 @@ class Header extends Component {
             style={headerStyle}
             >
               <MenuContainer />
-              <span style={headerNameStyle}><Link to='/' style={searchLink}>𝓫𝓮𝓼𝓽𝓼𝓱𝓪𝔂𝓪𝓻𝓲𝓼.𝓬𝓸𝓶</Link><span></span></span>
+              <Link to='/' style={headerNameStyle}>bestshayaris.com</Link>
               <Search tags={tags} />
             </div>
         )

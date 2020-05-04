@@ -113,9 +113,8 @@ class App extends Component {
             <Route path='*' component={Error404} />
           </Switch>
 
-          <hr/>
-
           <Footer />
+          
       </HashRouter>
     </div>
     )

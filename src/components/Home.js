@@ -3,6 +3,8 @@ import '../styles/Home.css';
 import { Link } from 'react-router-dom'
 import Carousel from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
+import mainTags from '../constants/Maintags';
+import HomeTagCards from './HomeTagCards';
 
 class Home extends Component {
 
@@ -15,11 +17,10 @@ class Home extends Component {
 
     render() {
         const { pageSize } = this.state;
-        const { tags, title, content, poet, relatedTags } = this.props;
+        const { title, content, poet, relatedTags } = this.props;
         return (
             <React.Fragment>
                 {/* <div className="gcse-search"></div> */}
-                <h2 style={{textAlign: 'center'}}>Shayaris of the day</h2>
                 {
                     title.slice(0, pageSize).map((title, i) => {
                         return (
@@ -58,17 +59,9 @@ class Home extends Component {
                     </div>
                     : null
                 }
-                <h2>All Tags</h2>
-                <Carousel
-                slidesPerPage={4}
-                keepDirectionWhenDragging
-                infinite>
-                    {
-                        tags.map(tag => (
-                        <Link to={`/tags/${tag}`} className='tagCards' key={tag}>{tag}</Link>
-                    ))
-                    }
-                </Carousel>
+
+                <h2 style={{fontFamily: 'Alconica', textAlign: 'center'}}>Top Tags</h2>
+                <HomeTagCards mainTags={mainTags} />
             </React.Fragment>
         )
     }

@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import '../styles/TagPage.css';
 import SnackbarContainer from '../container/Snackbar';
 import Clipboard from 'react-clipboard.js';
-import LabelSharpIcon from '@material-ui/icons/LabelSharp'
 import Carousel from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
 
@@ -94,10 +93,6 @@ class TagPage extends Component {
         var contentArray = shayariObject[tag].contentArray;
         var poetArray = shayariObject[tag].poetArray;
         var tagsObject = shayariObject[tag].relatedTagsObject;
-        var tagsToShowObject = shayariObject[tag].tagsToShowObject;
-        const labelIconStyle = {
-            fontSize: '22px'
-        }
         return (
             <div id='tagPage'>
                 <h2 style={{textAlign: 'center', textTransform: 'capitalize'}}>{tag}</h2>
