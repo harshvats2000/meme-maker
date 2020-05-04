@@ -10,6 +10,8 @@ import Edit from './components/Edit';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import About from './container/About';
+import mainTags from './constants/Maintags';
+import HomeTagCards from './components/HomeTagCards';
 
 class App extends Component {
   constructor(){
@@ -112,6 +114,9 @@ class App extends Component {
             
             <Route path='*' component={Error404} />
           </Switch>
+
+          <h2 style={{fontFamily: 'Alconica', textAlign: 'center'}}>Top Tags</h2>
+          <HomeTagCards mainTags={mainTags} />
 
           <Footer />
           

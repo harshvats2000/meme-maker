@@ -31,8 +31,7 @@ class TagPage extends Component {
         var tempTagsToShowObject = {};
         var relatedTagsArray = [];
         if(!this.state.shayariObject[this.props.tag].titleArray.length){
-            var first = firebase.firestore().collection('tags').doc(this.props.tag).collection('shayaris').orderBy('timestamp', 'desc');
-            first.get()
+            firebase.firestore().collection('tags').doc(this.props.tag).collection('shayaris').orderBy('timestamp', 'desc').get()
             .then(snap => {
                 var i = 0;
                 snap.forEach(doc => {

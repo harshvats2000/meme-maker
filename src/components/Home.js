@@ -3,8 +3,6 @@ import '../styles/Home.css';
 import { Link } from 'react-router-dom'
 import Carousel from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
-import mainTags from '../constants/Maintags';
-import HomeTagCards from './HomeTagCards';
 
 class Home extends Component {
 
@@ -54,14 +52,11 @@ class Home extends Component {
                     ? 
                     <div
                     className='seeMoreDiv'
-                    onClick={e => this.setState(prev => ({pageSize: prev.pageSize + 2}))}>
+                    onClick={e => this.setState(prev => ({pageSize: prev.pageSize + 3}))}>
                         <span className='seeMoreSpan'>see more</span>
                     </div>
                     : null
                 }
-
-                <h2 style={{fontFamily: 'Alconica', textAlign: 'center'}}>Top Tags</h2>
-                <HomeTagCards mainTags={mainTags} />
             </React.Fragment>
         )
     }

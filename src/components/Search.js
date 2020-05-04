@@ -35,14 +35,14 @@ class Search extends Component {
         width: '100%',
         margin: '0',
         height: '35px',
-
       }
       const style = {
         position: 'absolute',
         width: '25%',
         right: '0',
-        margin: '6px',
-        height: '25px',
+        marginTop: '3px',
+        marginRight: '3px',
+        height: '23px',
         fontSize: '16px',
         border: '1px solid black',
         paddingLeft: '5px',

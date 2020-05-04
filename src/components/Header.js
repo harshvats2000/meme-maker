@@ -16,7 +16,6 @@ class Header extends Component {
             fontSize: '28px',
             position: 'absolute',
             bottom: '4px',
-            marginLeft: '10px',
             fontFamily: 'Alconica',
             textDecoration: 'none',
             color: 'crimson'
