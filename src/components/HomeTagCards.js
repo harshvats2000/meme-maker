@@ -47,6 +47,58 @@ class HomeTagCards extends Component {
                 lineHeight: '80px',
                 flex: '0 50%',
                 background: 'linear-gradient(to right, #fe8c00, #f83600)'
+            },
+            3: {
+                textDecoration: 'none',
+                fontSize: '20px',
+                textTransform: 'capitalize',
+                border: '1px solid white',
+                color: 'white',
+                boxSizing: 'border-box',
+                width: '50%',
+                textAlign: 'center',
+                lineHeight: '80px',
+                flex: '0 50%',
+                background: 'linear-gradient(to right, #ff0084, #33001b)'
+            },
+            4: {
+                textDecoration: 'none',
+                fontSize: '20px',
+                textTransform: 'capitalize',
+                border: '1px solid white',
+                color: 'white',
+                boxSizing: 'border-box',
+                width: '50%',
+                textAlign: 'center',
+                lineHeight: '80px',
+                flex: '0 50%',
+                background: 'linear-gradient(to right, #00c6ff, #0072ff)'
+            },
+            5: {
+                textDecoration: 'none',
+                fontSize: '20px',
+                textTransform: 'capitalize',
+                border: '1px solid white',
+                color: 'white',
+                boxSizing: 'border-box',
+                width: '50%',
+                textAlign: 'center',
+                lineHeight: '80px',
+                flex: '0 50%',
+                background: 'linear-gradient(to right, #fbd3e9, #bb377d)'
+            },
+            6: {
+                textDecoration: 'none',
+                fontSize: '20px',
+                textTransform: 'capitalize',
+                border: '1px solid white',
+                color: 'white',
+                boxSizing: 'border-box',
+                width: '50%',
+                textAlign: 'center',
+                lineHeight: '80px',
+                flex: '0 50%',
+                background: 'linear-gradient(to right, #870000, #190a05)'
             }
         }
         return (

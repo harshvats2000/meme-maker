@@ -57,30 +57,30 @@ class App extends Component {
     .catch(error => {
       alert('your internet connection is slow.We cannot fetch data.')
     })
-
+    //fetching shayaris for home page
     var titleArray = [];
-        var contentArray = [];
-        var poetArray = [];
-        var tempTagsObject = {};
-        var i = 0;
-        firebase.firestore().collection('tags').doc('sher').collection('shayaris').get()
-        .then(snap => {
-            snap.forEach(doc => {
-                titleArray.push(doc.data().title);
-                contentArray.push(doc.data().content);
-                poetArray.push(doc.data().poet);
-                Object.assign(tempTagsObject, {
-                    [i]: doc.data().tags
-                })
-                i++;
+    var contentArray = [];
+    var poetArray = [];
+    var tempTagsObject = {};
+    var i = 0;
+    firebase.firestore().collection('tags').doc('sher').collection('shayaris').get()
+    .then(snap => {
+        snap.forEach(doc => {
+            titleArray.push(doc.data().title);
+            contentArray.push(doc.data().content);
+            poetArray.push(doc.data().poet);
+            Object.assign(tempTagsObject, {
+                [i]: doc.data().tags
             })
-            this.setState({
-                title: titleArray,
-                content: contentArray,
-                poet: poetArray,
-                relatedTags: Object.assign(this.state.relatedTags, tempTagsObject)
-            })
+            i++;
         })
+        this.setState({
+            title: titleArray,
+            content: contentArray,
+            poet: poetArray,
+            relatedTags: Object.assign(this.state.relatedTags, tempTagsObject)
+        })
+    })
   }
 
   putIntoShayariObject = (shayariObject) => {
@@ -96,7 +96,7 @@ class App extends Component {
       this.state.loading ? <h1>loading</h1> :
       <div className="App">
       <HashRouter>
-
+          
           <Header tags={tags} />
 
           <Switch>
