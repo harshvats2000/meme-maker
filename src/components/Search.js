@@ -8,7 +8,7 @@ class Search extends Component {
         this.state = {
             searching: false,
             searchingWord: '',
-            searchingList: props.tags
+            searchingList: ''
         }
     }
     
@@ -22,7 +22,7 @@ class Search extends Component {
         this.setState({
             searchingWord: e.target.value,
             searchingList: this.props.tags.filter(tag => {
-                return tag.indexOf(e.target.value.toLowerCase()) !== -1
+                return tag.indexOf(e.target.value.toLowerCase()) === 0
             })
         })
       }
@@ -60,7 +60,7 @@ class Search extends Component {
                   style={this.state.searching ? focusStyle : style}
                   placeholder='search tag...'
                   maxLength='20'
-                  onClick={(e) => this.setState({searching: true, searchingWord: e.target.value})}
+                  onClick={(e) => this.setState({searching: true, searchingWord: e.target.value, searchingList: this.props.tags})}
                   value={this.state.searchingWord} 
                   onChange={e => this.handleInputChange(e)}/>
                 {

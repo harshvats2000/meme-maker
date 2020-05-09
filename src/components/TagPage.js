@@ -24,29 +24,25 @@ class TagPage extends Component {
     }
 
     fetchContent = () => {
-        var titleArray = [];
-        var contentArray = [];
-        var poetArray = [];
+        var tempTitleObject = {};
+        var tempContentObject = {};
+        var tempPoetObject = {};
         var tempRelatedTagsObject = {};
-        var tempTagsToShowObject = {};
-        var relatedTagsArray = [];
-        if(!this.state.shayariObject[this.props.tag].titleArray.length){
             firebase.firestore().collection('tags').doc(this.props.tag).collection('shayaris').orderBy('timestamp', 'desc').get()
             .then(snap => {
                 var i = 0;
                 snap.forEach(doc => {
-                    var title = doc.data().title;
-                    var content = doc.data().content;
-                    var poet = doc.data().poet;
-                    relatedTagsArray = doc.data().tags;
-                    titleArray.push(title);
-                    contentArray.push(content);
-                    poetArray.push(poet);
-                    Object.assign(tempTagsToShowObject, {
-                        [i]: this.state.tags
+                    Object.assign(tempTitleObject, {
+                        [i]: doc.data().title
+                    })
+                    Object.assign(tempContentObject, {
+                        [i]: doc.data().content
+                    })
+                    Object.assign(tempPoetObject, {
+                        [i]: doc.data().poet
                     })
                     Object.assign(tempRelatedTagsObject, {
-                        [i]: relatedTagsArray
+                        [i]: doc.data().tags
                     })
                     i++;
                 })
@@ -54,18 +50,16 @@ class TagPage extends Component {
                     shayariObject: Object.assign({}, prev.shayariObject, {
                             [this.props.tag]: {
                                 ...prev.shayariObject[this.props.tag],
-                                titleArray: titleArray,
-                                contentArray: contentArray,
-                                poetArray: poetArray,
+                                titleObject: tempTitleObject,
+                                contentObject: tempContentObject,
+                                poetObject: tempPoetObject,
                                 relatedTagsObject: tempRelatedTagsObject,
-                                tagsToShowObject: tempTagsToShowObject
                                 }
                             })
                 }), () => {
                     this.props.putIntoShayariObject(this.state.shayariObject)
                 })
             })
-        }
     }
 
     handleContentClick = (e, content) => {
@@ -85,83 +79,91 @@ class TagPage extends Component {
     }
 
     render() {
-
         const { tag } = this.props;
         const { shayariObject, pageSize } = this.state;
-        var titleArray = shayariObject[tag].titleArray;
-        var contentArray = shayariObject[tag].contentArray;
-        var poetArray = shayariObject[tag].poetArray;
-        var tagsObject = shayariObject[tag].relatedTagsObject;
-        return (
-            <div id='tagPage'>
-                <h2 style={{textAlign: 'center', textTransform: 'capitalize'}}>{tag}</h2>
-                <hr/>
-                {
-                    shayariObject[tag].titleArray.length ?
-                    titleArray.slice(0,pageSize).map((title, i) => (
-                        <React.Fragment key={i}>
-                        <div className={`shayariCard div${i}`}>
 
-                            <div className={`shayariCardHeader div${i}`}>
-                                <Clipboard 
-                                className='copyBtn'
-                                data-clipboard-text={
-                                    titleArray[i].charAt(0).toUpperCase() + titleArray[i].slice(1) + '\n' 
-                                    + contentArray[i].charAt(0).toUpperCase() + contentArray[i].slice(1) 
-                                    + '\nbestshayaris.com'}
-                                onClick={this.handleCopy}>
-                                copy
-                                </Clipboard>
+        if(shayariObject[tag]){
+            var titleObject = shayariObject[tag].titleObject;
+            var contentObject = shayariObject[tag].contentObject;
+            var poetObject = shayariObject[tag].poetObject;
+            var tagsObject = shayariObject[tag].relatedTagsObject;
+            return (
+                <div id='tagPage'>
+                    <h2 style={{textAlign: 'center', textTransform: 'capitalize'}}>{tag}</h2>
+                    <hr/>
+                    {
+                        shayariObject[tag].titleObject[0] ?
+                        Object.keys(titleObject).slice(0,pageSize).map((key, i) => (
+                            <React.Fragment key={i}>
+                            <div className={`shayariCard div${i}`}>
+    
+                                <div className={`shayariCardHeader div${i}`}>
+                                    <Clipboard 
+                                    className='copyBtn'
+                                    data-clipboard-text={
+                                        titleObject[i].charAt(0).toUpperCase() + titleObject[i].slice(1) + '\n' 
+                                        + contentObject[i].charAt(0).toUpperCase() + contentObject[i].slice(1) 
+                                        + '\nbestshayaris.com'}
+                                    onClick={this.handleCopy}>
+                                    copy
+                                    </Clipboard>
+                                </div>
+    
+                                <div className={`div${i} shayariCardTitle`}>
+                                    {titleObject[i].charAt(0).toUpperCase() + titleObject[i].slice(1)}
+                                </div>
+    
+                                <br/>
+    
+                                <div 
+                                className={`div${i} shayariCardContent`} 
+                                onClick={e => this.handleContentClick(e, contentObject[i])}>
+                                    {contentObject[i].length > 200 ? contentObject[i].substring(0,200) + '....' : contentObject[i]}
+                                </div>
+    
+                                <div className='shayariCardPoet'>
+                                    <span>{poetObject[i]}</span>
+                                </div>
+    
+                                <Carousel
+                                slidesPerPage={4}
+                                slidesPerScroll={4}
+                                keepDirectionWhenDragging
+                                >
+                                    {
+                                        tagsObject[i].map(tag => (
+                                        <Link to={`/tags/${tag}`} className='tagCards' key={tag}>{tag}</Link>
+                                    ))
+                                    }
+                                </Carousel>
                             </div>
-
-                            <div className={`div${i} shayariCardTitle`}>
-                                {title.charAt(0).toUpperCase() + title.slice(1)}
-                            </div>
-
-                            <br/>
-
-                            <div 
-                            className={`div${i} shayariCardContent`} 
-                            onClick={e => this.handleContentClick(e, contentArray[i])}>
-                                {contentArray[i].length > 200 ? contentArray[i].substring(0,200) + '....' : contentArray[i]}
-                            </div>
-
-                            <div className='shayariCardPoet'>
-                                <span>{poetArray[i]}</span>
-                            </div>
-
-                            <Carousel
-                            slidesPerPage={4}
-                            slidesPerScroll={4}
-                            keepDirectionWhenDragging
-                            >
-                                {
-                                    tagsObject[i].map(tag => (
-                                    <Link to={`/tags/${tag}`} className='tagCards' key={tag}>{tag}</Link>
-                                ))
-                                }
-                            </Carousel>
-                        </div>
-                        <hr/>
+                            <hr/>
+                            </React.Fragment>
+                        ))
+                        :
+                        <React.Fragment>
+                            {this.fetchContent()}
+                            <h3 style={{textAlign: 'center'}}>fetching...</h3>
                         </React.Fragment>
-                    ))
-                    :
-                    this.fetchContent()
-                }
-                {
-                    shayariObject[tag].totalShayaris > pageSize
-                    ?
-                    <div 
-                    className='seeMoreDiv' 
-                    onClick={() => this.setState(prev => ({pageSize: prev.pageSize + 5}))}
-                    >
-                    <span className='seeMoreSpan'>See more</span>
-                    </div>
-                    : null
-                }
-                <SnackbarContainer open={this.state.snackbar} message='copied.' handleClose={this.handleSnackbarClose} />
-            </div>
-        )
+                    }
+                    {
+                        shayariObject[tag].totalShayaris > pageSize
+                        ?
+                        <div 
+                        className='seeMoreDiv' 
+                        onClick={() => this.setState(prev => ({pageSize: prev.pageSize + 5}))}
+                        >
+                        <span className='seeMoreSpan'>See more</span>
+                        </div>
+                        : null
+                    }
+                    <SnackbarContainer open={this.state.snackbar} message='copied.' handleClose={this.handleSnackbarClose} />
+                </div>
+            )
+        } else {
+            this.fetchContent()
+            return <h3 style={{textAlign: 'center'}}>fetching...</h3>
+        }
     }
 }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css'
-import { HashRouter, Switch, Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import Home from './components/Home';
 import Error404 from './components/Error404';
 import firebase from 'firebase'
@@ -28,6 +28,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.setState({loading: false})
     var tagsArray = [];
     var tempShayariObject = {};
     var totalShayaris = 0;
@@ -38,24 +39,32 @@ class App extends Component {
         totalShayaris = doc.data().totalShayaris;
         tagsArray.push(tag)
         tempShayariObject[tag] = {
-          titleArray: [],
           totalShayaris: totalShayaris
         }
       })
+
       tagsArray.forEach(tag => {
         tempShayariObject[tag].relatedTagsObject = {};
+        tempShayariObject[tag].titleObject = {}
+        tempShayariObject[tag].contentObject = {}
+        tempShayariObject[tag].poetObject = {}
         for(let i=0; i<totalShayaris; i++){
+          tempShayariObject[tag].titleObject[i] = '';
+          tempShayariObject[tag].contentObject[i] = '';
+          tempShayariObject[tag].poetObject[i] = '';
           tempShayariObject[tag].relatedTagsObject[i] = [];
         }
       })
+      
       this.setState(prev => ({
         tags: tagsArray,
-        loading: false,
+        // loading: false,
         shayariObject: Object.assign({}, prev.shayariObject, tempShayariObject)
       }))
     })
     .catch(error => {
-      alert('your internet connection is slow.We cannot fetch data.')
+      console.log(error);
+      alert('error in app.js did mount')
     })
     //fetching shayaris for home page
     var titleArray = [];
@@ -95,7 +104,6 @@ class App extends Component {
     return (
       this.state.loading ? <h1>loading</h1> :
       <div className="App">
-      <HashRouter>
           
           <Header tags={tags} />
 
@@ -119,8 +127,6 @@ class App extends Component {
           <HomeTagCards mainTags={mainTags} />
 
           <Footer />
-          
-      </HashRouter>
     </div>
     )
   }
