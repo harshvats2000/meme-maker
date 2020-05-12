@@ -6,6 +6,9 @@ import SnackbarContainer from '../container/Snackbar';
 import Clipboard from 'react-clipboard.js';
 import Carousel from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
+import ClipLoader from "react-spinners/ClipLoader";
+import SkeletonContainer from '../container/Skeleton';
+
 
 class TagPage extends Component {
     constructor(props) {
@@ -140,10 +143,9 @@ class TagPage extends Component {
                             <hr/>
                             </React.Fragment>
                         ))
-                        :
-                        <React.Fragment>
+                        : <React.Fragment>
                             {this.fetchContent()}
-                            <h3 style={{textAlign: 'center'}}>fetching...</h3>
+                            <SkeletonContainer/>
                         </React.Fragment>
                     }
                     {
@@ -162,7 +164,8 @@ class TagPage extends Component {
             )
         } else {
             this.fetchContent()
-            return <h3 style={{textAlign: 'center'}}>fetching...</h3>
+            // return <h3 style={{textAlign: 'center'}}>fetching...</h3>
+            return <SkeletonContainer/>
         }
     }
 }

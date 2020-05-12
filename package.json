@@ -4,13 +4,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@brainhubeu/react-carousel": "^1.13.46",
+    "@material-ui/core": "^4.9.14",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.53",
     "clipboard": "^2.0.6",
     "firebase": "^7.14.2",
     "react": "^16.8.6",
     "react-clipboard.js": "^2.0.16",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.0.0"
+    "react-scripts": "3.0.0",
+    "react-spinners": "^0.8.3"
   },
   "scripts": {
     "start": "react-scripts start",

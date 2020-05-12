@@ -5,7 +5,7 @@ import Search from './Search';
 
 class Header extends Component {
     render() {
-        const { tags } = this.props;
+        const { tags, shayariObject } = this.props;
         const headerStyle = {
             position: 'sticky',
             top: 0,
@@ -27,7 +27,7 @@ class Header extends Component {
             >
               <MenuContainer />
               <Link to='/' style={headerNameStyle}>bestshayaris.com</Link>
-              <Search tags={tags} />
+              <Search tags={tags} shayariObject={shayariObject} />
             </div>
         )
     }

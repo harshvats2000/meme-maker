@@ -28,6 +28,8 @@ class Search extends Component {
       }
 
     render() {
+      const { shayariObject } = this.props;
+
       const focusStyle = {
         position: 'absolute',
         border: 'none',
@@ -48,6 +50,9 @@ class Search extends Component {
         paddingLeft: '5px',
         transition: '.4s',
         boxShadow: '1px 1px 3px'
+      }
+      const totalShayaris = {
+
       }
         return (
             <React.Fragment>
@@ -70,6 +75,7 @@ class Search extends Component {
                         {
                           this.state.searchingList.map((tag, i) => (
                             <Link key={tag} to={`/tags/${tag}`} className='searchingListItemLink'>
+                                {/* <li className='searchingListItem'>{tag}<span style={totalShayaris}>{shayariObject[tag].totalShayaris}</span></li> */}
                                 <li className='searchingListItem'>{tag}</li>
                             </Link>
                           ))

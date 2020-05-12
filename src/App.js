@@ -18,7 +18,6 @@ class App extends Component {
     super()
     this.state = {
         tags: [],
-        loading: true,
         shayariObject: {},
         title: [],
         content: [],
@@ -28,7 +27,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.setState({loading: false})
     var tagsArray = [];
     var tempShayariObject = {};
     var totalShayaris = 0;
@@ -58,7 +56,6 @@ class App extends Component {
       
       this.setState(prev => ({
         tags: tagsArray,
-        // loading: false,
         shayariObject: Object.assign({}, prev.shayariObject, tempShayariObject)
       }))
     })
@@ -102,10 +99,9 @@ class App extends Component {
     const { tags, shayariObject, title, content, poet, relatedTags } = this.state;
 
     return (
-      this.state.loading ? <h1>loading</h1> :
       <div className="App">
           
-          <Header tags={tags} />
+          <Header tags={tags} shayariObject={shayariObject} />
 
           <Switch>
             <Route exact path='/' render={props => <Home tags={tags} title={title} content={content} poet={poet} relatedTags={relatedTags} />} />
