@@ -51,6 +51,8 @@ class Search extends Component {
 
       const focusStyle = {
         position: 'absolute',
+        boxSizing: 'border-box',
+        padding: '5px',
         border: 'none',
         left: '0',
         width: '100%',
@@ -74,7 +76,6 @@ class Search extends Component {
         color: 'red',
         paddingTop: '6px',
         textAlign: 'center',
-        borderTop: '1px solid black'
       }
 
         return (

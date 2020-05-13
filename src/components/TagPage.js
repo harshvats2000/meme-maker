@@ -6,7 +6,6 @@ import SnackbarContainer from '../container/Snackbar';
 import Clipboard from 'react-clipboard.js';
 import Carousel from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
-import ClipLoader from "react-spinners/ClipLoader";
 import SkeletonContainer from '../container/Skeleton';
 
 
@@ -24,6 +23,7 @@ class TagPage extends Component {
         this.setState(prev => ({
             pageSize: 5,
         }))
+        window.scrollTo(0, 0)
     }
 
     fetchContent = () => {
@@ -85,6 +85,12 @@ class TagPage extends Component {
         })
     }
 
+    handleSeeMore = () => {
+        this.setState(prev => ({
+            pageSize: prev.pageSize + 5
+        }))
+    }
+
     render() {
         const { tag } = this.props;
         const { shayariObject, pageSize } = this.state;
@@ -131,19 +137,19 @@ class TagPage extends Component {
                                 <div className='shayariCardPoet'>
                                     <span>{poetObject[i]}</span>
                                 </div>
-    
-                                <Carousel
-                                slidesPerPage={4}
-                                slidesPerScroll={4}
-                                keepDirectionWhenDragging
-                                >
-                                    {
-                                        tagsObject[i].map(tag => (
-                                        <Link to={`/tags/${tag}`} className='tagCards' key={tag}>{tag}</Link>
-                                    ))
-                                    }
-                                </Carousel>
                             </div>
+                            <hr/>
+                            <Carousel
+                            slidesPerPage={4}
+                            slidesPerScroll={4}
+                            keepDirectionWhenDragging
+                            >
+                                {
+                                    tagsObject[i].map(tag => (
+                                    <Link to={`/tags/${tag}`} className='tagCards' key={tag}>{tag}</Link>
+                                ))
+                                }
+                            </Carousel>
                             <hr/>
                             </React.Fragment>
                         ))
@@ -157,7 +163,7 @@ class TagPage extends Component {
                         ?
                         <div 
                         className='seeMoreDiv' 
-                        onClick={() => this.setState(prev => ({pageSize: prev.pageSize + 5}))}
+                        onClick={() => this.handleSeeMore()}
                         >
                         <span className='seeMoreSpan'>See more</span>
                         </div>
