@@ -49,18 +49,22 @@ class TagPage extends Component {
                     })
                     i++;
                 })
-                this.setState(prev => ({
-                    shayariObject: Object.assign({}, prev.shayariObject, {
-                            [this.props.tag]: {
-                                ...prev.shayariObject[this.props.tag],
-                                titleObject: tempTitleObject,
-                                contentObject: tempContentObject,
-                                poetObject: tempPoetObject,
-                                relatedTagsObject: tempRelatedTagsObject,
-                                }
-                            })
-                }), () => {
-                    this.props.putIntoShayariObject(this.state.shayariObject)
+                firebase.firestore().collection('tags').doc(this.props.tag).get()           //get total shayaris too to show see more
+                .then(doc =>  {
+                    this.setState(prev => ({
+                        shayariObject: Object.assign({}, prev.shayariObject, {
+                                [this.props.tag]: {
+                                    ...prev.shayariObject[this.props.tag],
+                                    titleObject: tempTitleObject,
+                                    contentObject: tempContentObject,
+                                    poetObject: tempPoetObject,
+                                    relatedTagsObject: tempRelatedTagsObject,
+                                    totalShayaris: doc.data().totalShayaris
+                                    }
+                                })
+                    }), () => {
+                        this.props.putIntoShayariObject(this.state.shayariObject)
+                    })
                 })
             })
     }
@@ -164,7 +168,6 @@ class TagPage extends Component {
             )
         } else {
             this.fetchContent()
-            // return <h3 style={{textAlign: 'center'}}>fetching...</h3>
             return <SkeletonContainer/>
         }
     }

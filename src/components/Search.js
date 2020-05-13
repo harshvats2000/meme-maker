@@ -8,7 +8,8 @@ class Search extends Component {
         this.state = {
             searching: false,
             searchingWord: '',
-            searchingList: ''
+            searchingList: '',
+            showCross: false
         }
     }
     
@@ -24,6 +25,24 @@ class Search extends Component {
             searchingList: this.props.tags.filter(tag => {
                 return tag.indexOf(e.target.value.toLowerCase()) === 0
             })
+        })
+      }
+
+      handleInputClick = e => {
+        this.setState({
+          searching: true, 
+          searchingWord: e.target.value, 
+          searchingList: this.props.tags,
+          showCross: true
+        })
+      }
+
+      closeSearch = () => {
+        this.setState({
+          searching: false, 
+          searchingWord: '', 
+          searchingList: this.props.tags,
+          showCross: false
         })
       }
 
@@ -51,9 +70,13 @@ class Search extends Component {
         transition: '.4s',
         boxShadow: '1px 1px 3px'
       }
-      const totalShayaris = {
-
+      const closeSearch = {
+        color: 'red',
+        paddingTop: '6px',
+        textAlign: 'center',
+        borderTop: '1px solid black'
       }
+
         return (
             <React.Fragment>
                   {
@@ -65,17 +88,20 @@ class Search extends Component {
                   style={this.state.searching ? focusStyle : style}
                   placeholder='search tag...'
                   maxLength='20'
-                  onClick={(e) => this.setState({searching: true, searchingWord: e.target.value, searchingList: this.props.tags})}
+                  onClick={(e) => this.handleInputClick(e)}
                   value={this.state.searchingWord} 
                   onChange={e => this.handleInputChange(e)}/>
+
+                  <div style={closeSearch} hidden={!this.state.showCross} onClick={() => this.closeSearch()}>close search<hr/></div>
+
                 {
                     !this.state.searching ? null :
                     <div id='searchingListParent'>
-                      <ul className='searchingList' onClick={() => this.setState({searching: false, searchingWord: '', searchingList: this.props.tags})}>
+                      <ul className='searchingList' onClick={() => this.closeSearch()}>
                         {
                           this.state.searchingList.map((tag, i) => (
                             <Link key={tag} to={`/tags/${tag}`} className='searchingListItemLink'>
-                                {/* <li className='searchingListItem'>{tag}<span style={totalShayaris}>{shayariObject[tag].totalShayaris}</span></li> */}
+                                {/* <li className='searchingListItem'>{tag}<span>{shayariObject[tag].totalShayaris}</span></li> */}
                                 <li className='searchingListItem'>{tag}</li>
                             </Link>
                           ))
