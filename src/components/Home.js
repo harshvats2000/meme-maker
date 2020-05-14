@@ -14,6 +14,10 @@ class Home extends Component {
         }
     }
 
+    componentDidMount() {
+        window.scrollTo(0, 0)
+    }
+
     render() {
         const { pageSize } = this.state;
         const { title, content, poet, relatedTags } = this.props;

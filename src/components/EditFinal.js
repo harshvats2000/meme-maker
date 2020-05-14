@@ -4,8 +4,9 @@ import firebase from 'firebase'
 class EditFinal extends Component {
 
     handleDelete = e => {
+        console.log(this.props.relatedTags);
         this.props.relatedTags.forEach((tag, i) => {
-            var ref = firebase.firestore().collection('tags').doc(tag).collection('shayaris').where('content', '==' , this.props.content);
+            var ref = firebase.firestore().collection('tags').doc(tag).collection('shayaris').where('timestamp', '==' , this.props.timestamp);
             ref.get()
             .then(snap => {
                 snap.forEach(doc => {

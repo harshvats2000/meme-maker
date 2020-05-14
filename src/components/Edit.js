@@ -10,6 +10,7 @@ class Edit extends Component {
             tag: '',
             title: [],
             content: [],
+            timestamp: [],
             id: [],
             authenticated: false,
             password: '',
@@ -40,6 +41,7 @@ class Edit extends Component {
         var titleArray = [];
         var contentArray = [];
         var idArray = [];
+        var timestampArray = [];
         var tempTagsObject = {};
         firebase.firestore().collection('tags').doc(this.state.tag).collection('shayaris').get()
         .then(snap => {
@@ -48,6 +50,7 @@ class Edit extends Component {
                 titleArray.push(doc.data().title)
                 contentArray.push(doc.data().content)
                 idArray.push(doc.id)
+                timestampArray.push(doc.data().timestamp)
                 Object.assign(tempTagsObject, {
                     [i]: doc.data().tags
                 })
@@ -56,6 +59,7 @@ class Edit extends Component {
             this.setState(prev => ({
                 title: titleArray,
                 content: contentArray,
+                timestamp: timestampArray,
                 id: idArray,
                 relatedTags: tempTagsObject
             }))
@@ -92,13 +96,13 @@ class Edit extends Component {
     }
 
     render() {
-        const { i, title, content, relatedTags, id, tag} = this.state;
+        const { i, title, content, relatedTags, id, timestamp, tag} = this.state;
         return (
             !this.state.authenticated 
             ? <input placeholder='password' onChange={(e) => this.authMe(e)}></input>
             :
             this.state.editing
-            ? <EditFinal tag={tag} relatedTags={relatedTags[i]} title={title[i]} content={content[i]} id={id[i]} closeEditing={this.closeEditing} />
+            ? <EditFinal tag={tag} relatedTags={relatedTags[i]} title={title[i]} content={content[i]} timestamp={timestamp[i]} id={id[i]} closeEditing={this.closeEditing} />
             : <div>
             <select value={tag} onChange={e => this.handleTagChange(e)}>
                 {
@@ -115,7 +119,7 @@ class Edit extends Component {
             {
                 title.map((title, i) => {
                     return (
-                        <React.Fragment key={title}>
+                        <React.Fragment key={i}>
                         <div className={`div${i}`} onClick={(e) => this.setState({editing: true, i: i})}>
                             <div className={`div${i}`}>{title}</div>
                             <br/>

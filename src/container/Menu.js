@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Menu from '@material-ui/icons/Menu';
 import Drawer from '@material-ui/core/Drawer';
 import HomeIcon from '@material-ui/icons/Home';
+import InfoIcon from '@material-ui/icons/Info';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
@@ -33,6 +34,10 @@ class MenuContainer extends Component {
                   <ListItem button>
                     <ListItemIcon><HomeIcon/></ListItemIcon>
                     <ListItemText><Link to='/' className='drawerTextLink'>Home</Link></ListItemText>
+                  </ListItem>
+                  <ListItem button>
+                    <ListItemIcon><InfoIcon/></ListItemIcon>
+                    <ListItemText><Link to='/about' className='drawerTextLink'>About Us</Link></ListItemText>
                   </ListItem>
               </List>
             </div>
