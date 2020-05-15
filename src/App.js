@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import './App.css'
 import { Switch, Route } from 'react-router-dom'
-import Home from './components/Home';
+import Home from './components/pages/Home';
 import Error404 from './components/Error404';
 import firebase from 'firebase'
-import TagPage from './components/TagPage';
+import TagPage from './components/pages/TagPage';
 import Upload from './components/Upload';
-import Edit from './components/Edit';
+import Edit from './components/pages/Edit';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import About from './container/About';
+import About from './components/pages/About';
 import mainTags from './constants/Maintags';
 import HomeTagCards from './components/HomeTagCards';
+import SuggestionPage from './components/SuggestionPage';
 
 class App extends Component {
   constructor(){
@@ -115,6 +116,7 @@ class App extends Component {
             <Route exact path='/upload' render={props => <Upload tags={tags} />} />
             <Route exact path='/edit' render={props => <Edit tags={tags} />} />
             <Route exact path='/about' render={props => <About />} />
+            <Route exact path='/suggest' render={props => <SuggestionPage /> } />
             
             <Route path='*' component={Error404} />
           </Switch>

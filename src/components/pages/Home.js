@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import '../styles/Home.css';
+import '../../styles/Home.css';
 import { Link } from 'react-router-dom'
 import Carousel from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
-import SkeletonContainer from '../container/Skeleton';
+import SkeletonContainer from '../../container/Skeleton';
 
 class Home extends Component {
 

@@ -3,7 +3,8 @@ import Menu from '@material-ui/icons/Menu';
 import Drawer from '@material-ui/core/Drawer';
 import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
-import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt'
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import RateReviewIcon from '@material-ui/icons/RateReview';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider'
@@ -52,14 +53,22 @@ class MenuContainer extends Component {
                   </ListItem>
                 </Link>
 
+                <Link to='/suggest' style={drawerTextLinkStyle}>
+                  <ListItem button>
+                    <ListItemIcon><RateReviewIcon /></ListItemIcon>
+                    <ListItemText>Suggestions?</ListItemText>
+                  </ListItem>
+                </Link>
+
                 <Divider/>
+
                 <Link to='/tags/sher' style={drawerTextLinkStyle}>
                   <ListItem button>
                     <ListItemText>Sher</ListItemText>
                     <ListItemIcon><ArrowRightAltIcon/></ListItemIcon>
                   </ListItem>
                 </Link>
-                
+
                 <Link to='/tags/ghazal' style={drawerTextLinkStyle}>
                   <ListItem button>
                     <ListItemText>Ghazal</ListItemText>

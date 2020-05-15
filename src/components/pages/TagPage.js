@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import { Link } from 'react-router-dom';
-import '../styles/TagPage.css';
-import SnackbarContainer from '../container/Snackbar';
+import '../../styles/TagPage.css';
+import SnackbarContainer from '../../container/Snackbar';
 import Clipboard from 'react-clipboard.js';
 import Carousel from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
-import SkeletonContainer from '../container/Skeleton';
+import SkeletonContainer from '../../container/Skeleton';
 
 
 class TagPage extends Component {
