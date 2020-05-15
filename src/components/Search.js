@@ -102,8 +102,8 @@ class Search extends Component {
                         {
                           this.state.searchingList.map((tag, i) => (
                             <Link key={tag} to={`/tags/${tag}`} className='searchingListItemLink'>
-                                {/* <li className='searchingListItem'>{tag}<span>{shayariObject[tag].totalShayaris}</span></li> */}
-                                <li className='searchingListItem'>{tag}</li>
+                                <li className='searchingListItem'>{tag}<span> ({shayariObject[tag].totalShayaris})</span></li>
+                                {/* <li className='searchingListItem'>{tag}</li> */}
                             </Link>
                           ))
                         }

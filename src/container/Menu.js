@@ -3,8 +3,10 @@ import Menu from '@material-ui/icons/Menu';
 import Drawer from '@material-ui/core/Drawer';
 import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt'
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { Link } from 'react-router-dom';
@@ -24,35 +26,60 @@ class MenuContainer extends Component {
     }
 
     render() {
-        const list = () => (
-            <div
-              role="presentation"
-              onClick={() => this.toggleDrawer()}
-              onKeyDown={() => this.toggleDrawer()}
-            >
-              <List>
+      const drawerTextLinkStyle = {
+        textDecoration: 'none',
+        color: 'black'
+      }
+      
+      const list = () => (
+          <div
+            role="presentation"
+            onClick={() => this.toggleDrawer()}
+            onKeyDown={() => this.toggleDrawer()}
+          >
+            <List>
+                <Link to='/' style={drawerTextLinkStyle}>
                   <ListItem button>
                     <ListItemIcon><HomeIcon/></ListItemIcon>
-                    <ListItemText><Link to='/' className='drawerTextLink'>Home</Link></ListItemText>
+                    <ListItemText>Home</ListItemText>
                   </ListItem>
+                </Link>
+
+                <Link to='/about' style={drawerTextLinkStyle}>
                   <ListItem button>
                     <ListItemIcon><InfoIcon/></ListItemIcon>
-                    <ListItemText><Link to='/about' className='drawerTextLink'>About Us</Link></ListItemText>
+                    <ListItemText>About Us</ListItemText>
                   </ListItem>
-              </List>
-            </div>
-          );
+                </Link>
+
+                <Divider/>
+                <Link to='/tags/sher' style={drawerTextLinkStyle}>
+                  <ListItem button>
+                    <ListItemText>Sher</ListItemText>
+                    <ListItemIcon><ArrowRightAltIcon/></ListItemIcon>
+                  </ListItem>
+                </Link>
+                
+                <Link to='/tags/ghazal' style={drawerTextLinkStyle}>
+                  <ListItem button>
+                    <ListItemText>Ghazal</ListItemText>
+                    <ListItemIcon><ArrowRightAltIcon/></ListItemIcon>
+                  </ListItem>
+                </Link>
+            </List>
+          </div>
+        );
           
-        return (
-            <React.Fragment>
+      return (
+          <React.Fragment>
 
-                <Menu fontSize='large' onClick={this.toggleDrawer} />
+              <Menu fontSize='large' onClick={this.toggleDrawer} />
 
-                <Drawer anchor='left' open={this.state.open} onClose={this.toggleDrawer}>
-                  {list()}
-                </Drawer>
-            </React.Fragment>
-        )
+              <Drawer anchor='left' open={this.state.open} onClose={this.toggleDrawer}>
+                {list()}
+              </Drawer>
+          </React.Fragment>
+      )
     }
 }
 
