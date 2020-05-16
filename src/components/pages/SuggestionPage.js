@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SnackbarContainer from '../container/Snackbar';
+import SnackbarContainer from '../../container/Snackbar';
 import firebase from 'firebase'
 
 export default class SuggestionPage extends Component {

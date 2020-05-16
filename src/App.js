@@ -12,7 +12,7 @@ import Footer from './components/Footer';
 import About from './components/pages/About';
 import mainTags from './constants/Maintags';
 import HomeTagCards from './components/HomeTagCards';
-import SuggestionPage from './components/SuggestionPage';
+import SuggestionPage from './components/pages/SuggestionPage';
 
 class App extends Component {
   constructor(){
