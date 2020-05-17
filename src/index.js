@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import firebase from 'firebase'
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 
 var firebaseConfig = {
     apiKey: "AIzaSyCEMfOB5_j1hIdpxVXOduBuUMTwj5txVZo",
@@ -20,9 +20,9 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
 ReactDOM.render(
-    <BrowserRouter>
+    <HashRouter>
         <App />
-    </BrowserRouter>, 
+    </HashRouter>, 
     document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
