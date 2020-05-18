@@ -11,6 +11,7 @@ import Divider from '@material-ui/core/Divider'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { Link } from 'react-router-dom';
+import FacebookIcon from '@material-ui/icons/Facebook';
 
 class MenuContainer extends Component {
     constructor(props) {
@@ -75,6 +76,14 @@ class MenuContainer extends Component {
                     <ListItemIcon><ArrowRightAltIcon/></ListItemIcon>
                   </ListItem>
                 </Link>
+
+                <Divider />
+
+                <a href='https://www.facebook.com/hindishayarisbest/?modal=admin_todo_tour' target="_blank" style={drawerTextLinkStyle}>
+                  <ListItem button>
+                    <ListItemIcon><FacebookIcon/></ListItemIcon>
+                  </ListItem>
+                </a>
             </List>
           </div>
         );
