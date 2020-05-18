@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../styles/Search.css';
 import { Link, withRouter } from 'react-router-dom';
+import SearchIcon from '@material-ui/icons/Search';
 
 class Search extends Component {
     constructor(props){
@@ -61,16 +62,10 @@ class Search extends Component {
       }
       const style = {
         position: 'absolute',
-        width: '25%',
-        right: '0',
-        marginTop: '3px',
-        marginRight: '3px',
-        height: '23px',
-        fontSize: '16px',
-        border: '1px solid black',
-        paddingLeft: '5px',
-        transition: '.4s',
-        boxShadow: '1px 1px 3px'
+        right: '12px',
+        top: '3px',
+        width: '40px',
+        textAlign: 'center'
       }
       const closeSearch = {
         color: 'red',
@@ -85,13 +80,16 @@ class Search extends Component {
                     ? window.addEventListener('popstate', () => this.setState({searching: false, searchingWord: ''}))
                     : null
                   }
-                  <input
-                  style={this.state.searching ? focusStyle : style}
-                  placeholder='search tag...'
-                  maxLength='20'
-                  onClick={(e) => this.handleInputClick(e)}
-                  value={this.state.searchingWord} 
-                  onChange={e => this.handleInputChange(e)}/>
+                  
+                  {
+                    !this.state.searching ? <div style={style} onClick={(e) => this.handleInputClick(e)} ><SearchIcon/></div>:
+                      <input
+                      style={focusStyle}
+                      placeholder='search tag...'
+                      maxLength='20'
+                      value={this.state.searchingWord} 
+                      onChange={e => this.handleInputChange(e)}/>
+                  }
 
                   <div style={closeSearch} hidden={!this.state.showCross} onClick={() => this.closeSearch()}>close search<hr/></div>
 
