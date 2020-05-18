@@ -24,7 +24,7 @@ class Search extends Component {
         this.setState({
             searchingWord: e.target.value,
             searchingList: this.props.tags.filter(tag => {
-                return tag.indexOf(e.target.value.toLowerCase()) === 0
+                return tag.toLowerCase().indexOf(e.target.value.toLowerCase()) === 0
             })
         })
       }
@@ -87,7 +87,7 @@ class Search extends Component {
                       style={focusStyle}
                       placeholder='search tag...'
                       maxLength='20'
-                      value={this.state.searchingWord} 
+                      value={this.state.searchingWord || ''} 
                       onChange={e => this.handleInputChange(e)}/>
                   }
 
@@ -101,7 +101,6 @@ class Search extends Component {
                           this.state.searchingList.map((tag, i) => (
                             <Link key={tag} to={`/tags/${tag}`} className='searchingListItemLink'>
                                 <li className='searchingListItem'>{tag}<span> ({shayariObject[tag].totalShayaris})</span></li>
-                                {/* <li className='searchingListItem'>{tag}</li> */}
                             </Link>
                           ))
                         }
