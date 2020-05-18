@@ -63,7 +63,7 @@ class Search extends Component {
       const style = {
         position: 'absolute',
         right: '12px',
-        top: '3px',
+        top: '6px',
         width: '40px',
         textAlign: 'center'
       }
@@ -84,6 +84,7 @@ class Search extends Component {
                   {
                     !this.state.searching ? <div style={style} onClick={(e) => this.handleInputClick(e)} ><SearchIcon/></div>:
                       <input
+                      autoFocus
                       style={focusStyle}
                       placeholder='search tag...'
                       maxLength='20'
@@ -100,7 +101,7 @@ class Search extends Component {
                         {
                           this.state.searchingList.map((tag, i) => (
                             <Link key={tag} to={`/tags/${tag}`} className='searchingListItemLink'>
-                                <li className='searchingListItem'>{tag}<span> ({shayariObject[tag].totalShayaris})</span></li>
+                                <li className='searchingListItem'>{tag.toLowerCase()}<span> ({shayariObject[tag].totalShayaris})</span></li>
                             </Link>
                           ))
                         }

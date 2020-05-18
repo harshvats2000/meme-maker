@@ -45,7 +45,7 @@ class TagPage extends Component {
                         [i]: doc.data().poet
                     })
                     Object.assign(tempRelatedTagsObject, {
-                        [i]: doc.data().tags
+                        [i]: doc.data().tags.map(tag => tag.toLowerCase())
                     })
                     i++;
                 })
