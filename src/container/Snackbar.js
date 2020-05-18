@@ -10,7 +10,7 @@ function SnackbarContainer(props) {
                 open={open}
                 onClose={handleClose}
                 message={message}
-                autoHideDuration={autoHideDuration || 2000}
+                autoHideDuration={autoHideDuration || 5000}
             />
         </div>
     )

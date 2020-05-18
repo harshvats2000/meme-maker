@@ -99,6 +99,10 @@ class TagPage extends Component {
     }
 
     handleExplain = (e, i) => {
+        this.setState({
+            snackbar: true,
+            message: 'fetching...',
+        })
         var content = document.getElementsByClassName(`div${i}`)[3].innerHTML;
         const translate = setCORS("https://cors-anywhere.herokuapp.com/");
         translate(content, { to: "en" })
