@@ -7,6 +7,7 @@ import Clipboard from 'react-clipboard.js';
 import Carousel from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
 import SkeletonContainer from '../../container/Skeleton';
+import { setCORS } from "google-translate-api-browser";
 
 
 class TagPage extends Component {
@@ -16,6 +17,8 @@ class TagPage extends Component {
             shayariObject: Object.assign({}, props.shayariObject),
             snackbar: false,
             pageSize: 5,
+            message: '',
+            autoHideDuration: 2000
         }
     }
 
@@ -70,19 +73,45 @@ class TagPage extends Component {
     }
 
     handleContentClick = (e, content) => {
+        // var s = window.getSelection();
+        // s.modify('extend','backward','word');        
+        // var b = s.toString();
+        
+        // s.modify('extend','forward','word');
+        // var a = s.toString();
+        // s.modify('move','forward','character');
         e.target.innerHTML = content;
     }
 
     handleSnackbarClose = () => {
         this.setState({
-            snackbar: false
+            snackbar: false,
+            message: ''
         })
     }
 
     handleCopy = () => {
         this.setState({
-            snackbar: true
+            snackbar: true,
+            message: 'copied.',
+            autoHideDuration: 2000
         })
+    }
+
+    handleExplain = (e, i) => {
+        var content = document.getElementsByClassName(`div${i}`)[3].innerHTML;
+        const translate = setCORS("http://cors-anywhere.herokuapp.com/");
+        translate(content, { to: "en" })
+        .then(res => {
+            this.setState({
+                message: res.text,
+                snackbar: true,
+                autoHideDuration: 10000
+            })
+        })
+        .catch(err => {
+            console.error(err);
+        });
     }
 
     handleSeeMore = () => {
@@ -93,7 +122,7 @@ class TagPage extends Component {
 
     render() {
         const { tag } = this.props;
-        const { shayariObject, pageSize } = this.state;
+        const { shayariObject, pageSize, message, autoHideDuration } = this.state;
 
         if(shayariObject[tag]){
             var titleObject = shayariObject[tag].titleObject;
@@ -111,6 +140,7 @@ class TagPage extends Component {
                             <div className={`shayariCard div${i}`}>
     
                                 <div className={`shayariCardHeader div${i}`}>
+                                    <button className='explainBtn' onClick={e => this.handleExplain(e, i)}>explain</button>
                                     <Clipboard 
                                     className='copyBtn'
                                     data-clipboard-text={
@@ -169,7 +199,11 @@ class TagPage extends Component {
                         </div>
                         : null
                     }
-                    <SnackbarContainer open={this.state.snackbar} message='copied.' handleClose={this.handleSnackbarClose} />
+                    <SnackbarContainer
+                    autoHideDuration={autoHideDuration} 
+                    open={this.state.snackbar} 
+                    message={message} 
+                    handleClose={this.handleSnackbarClose} />
                 </div>
             )
         } else {

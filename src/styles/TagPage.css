@@ -36,6 +36,13 @@
     font-family: monospace;
 }
 
+.explainBtn {
+    border: 1px solid black;
+    background-color: white;
+    font-family: monospace;
+    margin-right: 3px;
+}
+
 .relatedLinks {
     text-decoration: none;
     font-family: monospace;
