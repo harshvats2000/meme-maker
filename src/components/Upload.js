@@ -206,7 +206,7 @@ class Upload extends Component {
                         <TextField
                             label="New Tag"
                             placeholder="type your tag"
-                            value={this.state.newTagInputValue}
+                            value={this.state.newTagInputValue.toLowerCase()}
                             onChange={this.handleNewTag}
                           /> :
                           null
