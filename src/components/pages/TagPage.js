@@ -105,12 +105,12 @@ class TagPage extends Component {
         })
         var content = document.getElementsByClassName(`div${i}`)[3].innerHTML;
         const translate = setCORS("https://cors-anywhere.herokuapp.com/");
-        translate(content, { to: "en" })
+        translate(content, { to: "te" })
         .then(res => {
             this.setState({
                 message: res.text,
                 snackbar: true,
-                autoHideDuration: 10000
+                autoHideDuration: 15000
             })
         })
         .catch(err => {
