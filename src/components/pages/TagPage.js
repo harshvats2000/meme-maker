@@ -119,12 +119,6 @@ class TagPage extends Component {
         });
     }
 
-    handleSeeMore = () => {
-        this.setState(prev => ({
-            pageSize: prev.pageSize + 5
-        }))
-    }
-
     handleTranslateUrdu = (e, i) => {
         this.setState({
             snackbar: true,

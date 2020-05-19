@@ -74,7 +74,7 @@ class App extends Component {
     var poetArray = [];
     var tempTagsObject = {};
     var i = 0;
-    firebase.firestore().collection('tags').doc('sher').collection('shayaris').orderBy('timestamp').limit(15).get()
+    firebase.firestore().collection('tags').doc('sher').collection('shayaris').orderBy('timestamp', 'desc').limit(15).get()
     .then(snap => {
         snap.forEach(doc => {
             titleArray.push(doc.data().title);
