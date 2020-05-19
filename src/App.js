@@ -24,6 +24,7 @@ class App extends Component {
         content: [],
         poet: [],
         relatedTags: {},
+        totalShayaris: 0
     }
   }
 
@@ -33,9 +34,11 @@ class App extends Component {
     var totalShayaris = 0;
     firebase.firestore().collection('tags').get()
     .then(snap => {
+      var total = 0;
       snap.forEach(doc => {
         var tag =  doc.id;
         totalShayaris = doc.data().totalShayaris;
+        total += totalShayaris;
         tagsArray.push(tag)
         tempShayariObject[tag] = {
           totalShayaris: totalShayaris
@@ -57,6 +60,7 @@ class App extends Component {
       
       this.setState(prev => ({
         tags: tagsArray,
+        totalShayaris: total,
         shayariObject: Object.assign({}, prev.shayariObject, tempShayariObject)
       }))
     })
@@ -70,7 +74,7 @@ class App extends Component {
     var poetArray = [];
     var tempTagsObject = {};
     var i = 0;
-    firebase.firestore().collection('tags').doc('sher').collection('shayaris').orderBy('timestamp').get()
+    firebase.firestore().collection('tags').doc('sher').collection('shayaris').orderBy('timestamp').limit(15).get()
     .then(snap => {
         snap.forEach(doc => {
             titleArray.push(doc.data().title);
@@ -97,7 +101,7 @@ class App extends Component {
   }
 
   render() {
-    const { tags, shayariObject, title, content, poet, relatedTags } = this.state;
+    const { tags, shayariObject, title, content, poet, relatedTags, totalShayaris } = this.state;
 
     return (
       <div className="App">
@@ -105,7 +109,7 @@ class App extends Component {
           <Header tags={tags} shayariObject={shayariObject} />
 
           <Switch>
-            <Route exact path='/' render={props => <Home tags={tags} title={title} content={content} poet={poet} relatedTags={relatedTags} />} />
+            <Route exact path='/' render={props => <Home tags={tags} title={title} content={content} poet={poet} relatedTags={relatedTags} totalShayaris={totalShayaris} />} />
 
             <Route path='/tags/:tag' render={props => 
             <TagPage 

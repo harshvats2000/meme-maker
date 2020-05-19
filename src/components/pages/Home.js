@@ -20,10 +20,11 @@ class Home extends Component {
 
     render() {
         const { pageSize } = this.state;
-        const { title, content, poet, relatedTags } = this.props;
+        const { title, content, poet, relatedTags, totalShayaris } = this.props;
         if(title.length){
             return (
                 <React.Fragment>
+                    <h1 style={{textAlign: 'center', fontFamily: 'Alconica'}}>{Math.floor(totalShayaris/10) * 10}+ Shayaris</h1>
                     {
                         title.slice(0, pageSize).map((title, i) => {
                             return (
