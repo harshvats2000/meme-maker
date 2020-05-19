@@ -8,6 +8,7 @@ import Carousel from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
 import SkeletonContainer from '../../container/Skeleton';
 import { setCORS } from "google-translate-api-browser";
+import FilterNoneIcon from '@material-ui/icons/FilterNone';
 
 
 class TagPage extends Component {
@@ -98,15 +99,41 @@ class TagPage extends Component {
         })
     }
 
-    handleExplain = (e, i) => {
+    handleTranslateEnglish = (e, i) => {
         this.setState({
             snackbar: true,
-            message: 'fetching...',
-            autoHideDuration: 20000
+            message: 'translating...',
+            autoHideDuration: 30000
         })
         var content = document.getElementsByClassName(`div${i}`)[3].innerHTML;
         const translate = setCORS("https://cors-anywhere.herokuapp.com/");
         translate(content, { to: "en" })
+        .then(res => {
+            this.setState({
+                message: res.text,
+                snackbar: true,
+            })
+        })
+        .catch(err => {
+            console.error(err);
+        });
+    }
+
+    handleSeeMore = () => {
+        this.setState(prev => ({
+            pageSize: prev.pageSize + 5
+        }))
+    }
+
+    handleTranslateUrdu = (e, i) => {
+        this.setState({
+            snackbar: true,
+            message: 'translating...',
+            autoHideDuration: 30000
+        })
+        var content = document.getElementsByClassName(`div${i}`)[3].innerHTML;
+        const translate = setCORS("https://cors-anywhere.herokuapp.com/");
+        translate(content, { to: "ur" })
         .then(res => {
             this.setState({
                 message: res.text,
@@ -144,7 +171,8 @@ class TagPage extends Component {
                             <div className={`shayariCard div${i}`}>
     
                                 <div className={`shayariCardHeader div${i}`}>
-                                    <button className='explainBtn' onClick={e => this.handleExplain(e, i)}>explain</button>
+                                    <button className='translateBtn' onClick={e => this.handleTranslateEnglish(e, i)}>English</button>
+                                    <button className='translateBtn' onClick={e => this.handleTranslateUrdu(e, i)}>Urdu</button>
                                     <Clipboard 
                                     className='copyBtn'
                                     data-clipboard-text={
@@ -152,7 +180,7 @@ class TagPage extends Component {
                                         + contentObject[i].charAt(0).toUpperCase() + contentObject[i].slice(1) 
                                         + '\nbestshayaris.com'}
                                     onClick={this.handleCopy}>
-                                    copy
+                                    <FilterNoneIcon />
                                     </Clipboard>
                                 </div>
     
