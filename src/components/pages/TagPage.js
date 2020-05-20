@@ -103,7 +103,7 @@ class TagPage extends Component {
         this.setState({
             snackbar: true,
             message: 'translating...',
-            autoHideDuration: 30000
+            autoHideDuration: 50000
         })
         var content = document.getElementsByClassName(`div${i}`)[3].innerHTML;
         const translate = setCORS("https://cors-anywhere.herokuapp.com/");
