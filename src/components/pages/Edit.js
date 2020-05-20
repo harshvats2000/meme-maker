@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import firebase from 'firebase'
-import EditFinal from './EditFinal';
+import EditFinal from '../EditFinal';
 import SnackbarContainer from '../../container/Snackbar';
 
 class Edit extends Component {

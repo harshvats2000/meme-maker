@@ -33,6 +33,13 @@ class Home extends Component {
         })
     }
 
+    handleSnackbarClose = () => {
+        this.setState({
+            snackbar: false,
+            message: ''
+        })
+    }
+
     handleTranslateEnglish = (e, i) => {
         this.setState({
             snackbar: true,
