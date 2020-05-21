@@ -23,7 +23,8 @@ class Upload extends Component {
             tags: [],
             newTagInput: false,
             newTagInputValue: '',
-            uploading: false
+            uploading: false,
+            titleAvailable: true
         }
     }
 
@@ -44,7 +45,23 @@ class Upload extends Component {
 
     handleTitleChange = (e) => {
         this.setState({
-            title: e.target.value
+            title: e.target.value,
+            titleAvailable: true
+        })
+        this.props.tags.map(tag => {
+            firebase.firestore().collection('tags').doc(tag).collection('shayaris').where('title', '==', e.target.value).get()
+            .then(snap => {
+                snap.forEach(doc => {
+                    if(doc.exists){
+                        this.setState({
+                            titleAvailable: false
+                        })
+                    }
+                })
+            })
+            .catch(err => {
+                alert(err.message)
+            })
         })
     }
 
@@ -66,22 +83,60 @@ class Upload extends Component {
         }
         return 0;
     }
-
-    upload = () => {
+    
+    finalUpload = () => {
         var tags = this.state.tags;
         var title = this.state.title;
         var content = this.state.content;
         var poet = this.state.poet;
+
+        this.state.tags.forEach((tag, i) => {
+            firebase.firestore().collection('tags').doc(tag).update({
+                totalShayaris: firebase.firestore.FieldValue.increment(1)
+            })
+            .then(() => {
+                firebase.firestore().collection('tags').doc(tag).collection('shayaris').doc().set({
+                    title: title,
+                    content: content,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    tags: tags,
+                    poet: poet
+                })
+                .then(() => {
+                    if(i === tags.length-1){
+                        this.setState({
+                            title: '',
+                            content: '',
+                            poet: '',
+                            tags: [],
+                            newTagInput: false,
+                            newTagInputValue: '',
+                            uploading: false
+                        })
+                        alert('uploaded');
+                    }
+                })
+                .catch(err => {
+                    alert(err.message)
+                })
+            })
+            .catch(err => {
+                alert('cannot upload due to some error.')
+            })
+        })
+    }
+
+    upload = () => {
+        var title = this.state.title;
+        var content = this.state.content;
         var newTagInputValue = this.state.newTagInputValue;
-        if(tags){
-            if(title){
+        if(title){
                 if(content){
                     this.setState({
                         uploading: true
                     })
                     if(newTagInputValue !== ''){                 //there is a new tag
                         if(this.searchStringInArray(newTagInputValue, this.props.tags)){         //if tag is already available
-                            console.log(this.searchStringInArray(newTagInputValue, this.props.tags));
                             alert('Your new tag is not new.It is already available.')
                             this.setState({
                                 uploading: false
@@ -94,81 +149,19 @@ class Upload extends Component {
                                 totalShayaris: 0
                             })
                             .then(() => {
-                                //upload
-                                this.state.tags.forEach((tag, i) => {
-                                    firebase.firestore().collection('tags').doc(tag).update({
-                                        totalShayaris: firebase.firestore.FieldValue.increment(1)
-                                    })
-                                    .then(() => {
-                                        firebase.firestore().collection('tags').doc(tag).collection('shayaris').doc().set({
-                                            title: title,
-                                            content: content,
-                                            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                                            tags: this.state.tags,
-                                            poet: poet
-                                        })
-                                        .then(() => {
-                                            if(i === this.state.tags.length-1){
-                                                this.setState({
-                                                    title: '',
-                                                    content: '',
-                                                    poet: '',
-                                                    tags: [],
-                                                    newTagInput: false,
-                                                    newTagInputValue: '',
-                                                    uploading: false
-                                                })
-                                                alert('uploaded');
-                                            }
-                                        })
-                                    })
-                                    .catch(err => {
-                                        alert('cannot upload due to some error.')
-                                    })
-                                })
+                                this.finalUpload()
                             })
                         }
                     } else {                    //there is no new tag
-                        this.state.tags.forEach((tag, i) => {
-                            firebase.firestore().collection('tags').doc(tag).update({
-                                totalShayaris: firebase.firestore.FieldValue.increment(1)
-                            })
-                            .then(() => {
-                                firebase.firestore().collection('tags').doc(tag).collection('shayaris').doc().set({
-                                    title: title,
-                                    content: content,
-                                    poet: poet,
-                                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                                    tags: this.state.tags,
-                                })
-                                .then(() => {
-                                    if(i === this.state.tags.length-1){
-                                        this.setState({
-                                            title: '',
-                                            content: '',
-                                            poet: '',
-                                            tags: [],
-                                            newTagInput: false,
-                                            newTagInputValue: '',
-                                            uploading: false
-                                        })
-                                        alert('uploaded');
-                                    }
-                                })
-                            })
-                            .catch(err => {
-                                alert('cannot upload due to some error.')
-                            })
-                        })   
+                        this.finalUpload()
                     }
-                }else {
-                    alert('error')
+                } else {
+                    alert('content cannot be empty.')
+                    console.log('empty content');
                 }
-            } else {
-                alert('error')
-            }
-        }else {
-            alert('error')
+        } else {
+            alert('title cannot be empty')
+            console.log('empty title');
         }
     }
 
@@ -235,6 +228,9 @@ class Upload extends Component {
                       value={this.state.title}
                       onChange={e => this.handleTitleChange(e)}
                     />
+                    {
+                        this.state.titleAvailable ? null : <div style={{color: 'red'}}>This title is not available.</div>
+                    }
                   <TextField
                       label="Content"
                       placeholder="Write beyond imagination"
