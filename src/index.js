@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/analytics'
+import 'firebase/firestore'
 import { BrowserRouter } from 'react-router-dom'
 
 var firebaseConfig = {

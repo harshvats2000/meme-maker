@@ -7,7 +7,8 @@ import Input from '@material-ui/core/Input';
 import Checkbox from '@material-ui/core/Checkbox';
 import ListItemText from '@material-ui/core/ListItemText';
 import TextField from '@material-ui/core/TextField';
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/firestore'
 import '../styles/Upload.css'
 
 class Upload extends Component {
@@ -27,7 +28,7 @@ class Upload extends Component {
     }
 
     componentDidMount(){
-        firebase.firestore().collection('users').doc('auth').get()
+        firebase.firestore().collection('password').doc('auth').get()
         .then(doc => {
             this.setState({
                 password: doc.data().password
@@ -59,58 +60,74 @@ class Upload extends Component {
         })
     }
 
+    searchStringInArray = (str, strArray) => {
+        for (var j=0; j<strArray.length; j++) {
+            if (strArray[j].match(str)) return j;
+        }
+        return 0;
+    }
+
     upload = () => {
         var tags = this.state.tags;
         var title = this.state.title;
         var content = this.state.content;
         var poet = this.state.poet;
+        var newTagInputValue = this.state.newTagInputValue;
         if(tags){
             if(title){
                 if(content){
                     this.setState({
                         uploading: true
                     })
-                    if(this.state.newTagInputValue !== ''){                 //there is a new tag
-                        this.setState(prev => ({
-                            tags: [...prev.tags, this.state.newTagInputValue]
-                        }))
-                        firebase.firestore().collection('tags').doc(this.state.newTagInputValue).set({
-                            totalShayaris: 0
-                        })
-                        .then(() => {
-                            //upload
-                            this.state.tags.forEach((tag, i) => {
-                                firebase.firestore().collection('tags').doc(tag).update({
-                                    totalShayaris: firebase.firestore.FieldValue.increment(1)
-                                })
-                                .then(() => {
-                                    firebase.firestore().collection('tags').doc(tag).collection('shayaris').doc().set({
-                                        title: title,
-                                        content: content,
-                                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                                        tags: this.state.tags,
-                                        poet: poet
+                    if(newTagInputValue !== ''){                 //there is a new tag
+                        if(this.searchStringInArray(newTagInputValue, this.props.tags)){         //if tag is already available
+                            console.log(this.searchStringInArray(newTagInputValue, this.props.tags));
+                            alert('Your new tag is not new.It is already available.')
+                            this.setState({
+                                uploading: false
+                            })
+                        } else {                                                                            //if tag is actually new
+                            this.setState(prev => ({
+                                tags: [...prev.tags, this.state.newTagInputValue]
+                            }))
+                            firebase.firestore().collection('tags').doc(this.state.newTagInputValue).set({
+                                totalShayaris: 0
+                            })
+                            .then(() => {
+                                //upload
+                                this.state.tags.forEach((tag, i) => {
+                                    firebase.firestore().collection('tags').doc(tag).update({
+                                        totalShayaris: firebase.firestore.FieldValue.increment(1)
                                     })
                                     .then(() => {
-                                        if(i === this.state.tags.length-1){
-                                            this.setState({
-                                                title: '',
-                                                content: '',
-                                                poet: '',
-                                                tags: [],
-                                                newTagInput: false,
-                                                newTagInputValue: '',
-                                                uploading: false
-                                            })
-                                            alert('uploaded');
-                                        }
+                                        firebase.firestore().collection('tags').doc(tag).collection('shayaris').doc().set({
+                                            title: title,
+                                            content: content,
+                                            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                                            tags: this.state.tags,
+                                            poet: poet
+                                        })
+                                        .then(() => {
+                                            if(i === this.state.tags.length-1){
+                                                this.setState({
+                                                    title: '',
+                                                    content: '',
+                                                    poet: '',
+                                                    tags: [],
+                                                    newTagInput: false,
+                                                    newTagInputValue: '',
+                                                    uploading: false
+                                                })
+                                                alert('uploaded');
+                                            }
+                                        })
+                                    })
+                                    .catch(err => {
+                                        alert('cannot upload due to some error.')
                                     })
                                 })
-                                .catch(err => {
-                                    alert('cannot upload due to some error.')
-                                })
                             })
-                        })
+                        }
                     } else {                    //there is no new tag
                         this.state.tags.forEach((tag, i) => {
                             firebase.firestore().collection('tags').doc(tag).update({

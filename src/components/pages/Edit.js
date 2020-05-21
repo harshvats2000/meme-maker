@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/firestore'
 import EditFinal from '../EditFinal';
 import SnackbarContainer from '../../container/Snackbar';
 
@@ -23,7 +24,7 @@ class Edit extends Component {
     }
 
     componentDidMount(){
-        firebase.firestore().collection('users').doc('auth').get()
+        firebase.firestore().collection('password').doc('auth').get()
         .then(doc => {
             this.setState({
                 password: doc.data().password

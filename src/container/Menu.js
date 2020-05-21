@@ -6,15 +6,12 @@ import InfoIcon from '@material-ui/icons/Info';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import RateReviewIcon from '@material-ui/icons/RateReview';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { Link } from 'react-router-dom';
 import FacebookIcon from '@material-ui/icons/Facebook';
-import { AuthenticationConsumer, PhotoURLConsumer, DisplayNameConsumer } from '../components/context';
-import firebase from 'firebase'
 import MuiAlert from '@material-ui/lab/Alert'
 import { Snackbar } from '@material-ui/core';
 
@@ -32,24 +29,6 @@ class MenuContainer extends Component {
     toggleDrawer = () => {
       this.setState({
         open: !this.state.open
-      })
-    }
-
-    logout = () => {
-      firebase.auth().signOut()
-      .then(res => {
-        this.setState({
-          snackbar: true,
-          message: 'successfully logged out!',
-          severity: 'success'
-        })
-      })
-      .catch(err => {
-        this.setState({
-          snackbar: true,
-          message: 'cannot logout due to some error!',
-          severity: 'error'
-        })
       })
     }
 
@@ -72,43 +51,6 @@ class MenuContainer extends Component {
             onKeyDown={() => this.toggleDrawer()}
           >
             <List>
-                <AuthenticationConsumer>
-                {
-                  authenticated => {
-                    return (
-                      !authenticated 
-                      ?
-                      <Link to='/login' style={drawerTextLinkStyle}>
-                        <ListItem button>
-                          <ListItemText>Log In</ListItemText>
-                          <ListItemIcon><ArrowRightAltIcon/></ListItemIcon>
-                        </ListItem>
-                      </Link> 
-                      :
-                      <Link to='/profile' style={drawerTextLinkStyle}>
-                        <ListItem button>
-                          <PhotoURLConsumer>
-                            {
-                              url => {
-                                return <ListItemIcon><img src={url} alt='profile_photo' style={{height: '30px', width: '30px', borderRadius: '50%'}} /></ListItemIcon>
-                              }
-                            }
-                          </PhotoURLConsumer>
-                          <DisplayNameConsumer>
-                            {
-                              name => {
-                                return <ListItemText>{name}</ListItemText>
-                              }
-                            }
-                          </DisplayNameConsumer>
-                        </ListItem>
-                      </Link>
-                    )
-                  }
-                }
-                </AuthenticationConsumer>
-
-                <Divider/>
 
                 <Link to='/' style={drawerTextLinkStyle}>
                   <ListItem button>
@@ -156,28 +98,12 @@ class MenuContainer extends Component {
 
                 <Divider />
 
-                <a href='https://www.facebook.com/hindishayarisbest/?modal=admin_todo_tour' target="_blank" style={drawerTextLinkStyle}>
+                <a href='https://www.facebook.com/hindishayarisbest/?modal=admin_todo_tour' target="_blank" rel="noopener noreferrer" style={drawerTextLinkStyle}>
                   <ListItem button>
                     <ListItemIcon><FacebookIcon/></ListItemIcon>
                   </ListItem>
                 </a>
 
-                <Divider />
-
-                <AuthenticationConsumer>
-                {
-                  authenticated => {
-                    return (
-                      !authenticated ? null
-                      :
-                        <ListItem button onClick={this.logout}>
-                          <ListItemIcon><ExitToAppIcon/></ListItemIcon>
-                          <ListItemText>Logout</ListItemText>
-                        </ListItem>
-                    )
-                  }
-                }
-                </AuthenticationConsumer>
             </List>
           </div>
         );

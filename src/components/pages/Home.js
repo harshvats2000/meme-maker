@@ -92,19 +92,19 @@ class Home extends Component {
                             return (
                                 <React.Fragment key={i}>
                                 <div className={`shayariCard div${i}`}>
-                                <div className={`shayariCardHeader div${i}`}>
-                                    <button className='translateBtn' onClick={e => this.handleTranslateEnglish(e, i)}>English</button>
-                                    <button className='translateBtn' onClick={e => this.handleTranslateUrdu(e, i)}>Urdu</button>
-                                    <Clipboard 
-                                    className='copyBtn'
-                                    data-clipboard-text={
-                                        title.charAt(0).toUpperCase() + title.slice(1) + '\n' 
-                                        + content[i].charAt(0).toUpperCase() + content[i].slice(1) 
-                                        + '\nbestshayaris.com'}
-                                    onClick={this.handleCopy}>
-                                    <FilterNoneIcon />
-                                    </Clipboard>
-                                </div>
+                                    <div className={`shayariCardHeader div${i}`}>
+                                        <button className='translateBtn' onClick={e => this.handleTranslateEnglish(e, i)}>English</button>
+                                        <button className='translateBtn' onClick={e => this.handleTranslateUrdu(e, i)}>Urdu</button>
+                                        <Clipboard 
+                                        className='copyBtn'
+                                        data-clipboard-text={
+                                            title.charAt(0).toUpperCase() + title.slice(1) + '\n' 
+                                            + content[i].charAt(0).toUpperCase() + content[i].slice(1) 
+                                            + '\nbestshayaris.com'}
+                                        onClick={this.handleCopy}>
+                                        <FilterNoneIcon />
+                                        </Clipboard>
+                                    </div>
                                     <div className={`shayariCardTitle div${i}`}>{title}</div><br/>
                                     <div className={`shayariCardContent div${i}`}>{content[i]}</div>
                                     <div className={`div${i}`} style={{textAlign: 'center'}}>
