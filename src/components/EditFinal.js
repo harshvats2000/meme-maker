@@ -17,6 +17,12 @@ class EditFinal extends Component {
                             totalShayaris: firebase.firestore.FieldValue.increment(-1)
                         })
                         .then(() => {
+                            firebase.firestore().collection('tags').doc(tag).get()
+                            .then(doc => {
+                                if(doc.data().totalShayaris === 0){
+                                    firebase.firestore().collection('tags').doc(tag).delete()
+                                }
+                            })
                             if(i === this.props.relatedTags.length-1){
                                 this.props.closeEditing()
                             }

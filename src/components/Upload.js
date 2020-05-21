@@ -216,7 +216,7 @@ class Upload extends Component {
                         <TextField
                             label="New Tag"
                             placeholder="type your tag"
-                            value={this.state.newTagInputValue.toLowerCase()}
+                            value={this.state.newTagInputValue.toLowerCase().trim()}
                             onChange={this.handleNewTag}
                           /> :
                           null
@@ -225,7 +225,7 @@ class Upload extends Component {
                       label="Title"
                       placeholder="Choose title wisely"
                       margin="normal"
-                      value={this.state.title}
+                      value={this.state.title.trim()}
                       onChange={e => this.handleTitleChange(e)}
                     />
                     {
@@ -236,7 +236,7 @@ class Upload extends Component {
                       placeholder="Write beyond imagination"
                       multiline
                       margin="normal"
-                      value={this.state.content}
+                      value={this.state.content.trim()}
                       onChange={e => this.handleContentChange(e)}
                     />
                   <TextField
