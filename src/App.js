@@ -14,11 +14,16 @@ import About from './components/pages/About';
 import mainTags from './constants/Maintags';
 import HomeTagCards from './components/HomeTagCards';
 import SuggestionPage from './components/pages/SuggestionPage';
+import {ThemeProvider} from "styled-components";
+import { GlobalStyles } from "./components/GlobalStyles";
+import { lightTheme, darkTheme } from "./components/Theme"
+import SwitchMode from '@material-ui/core/Switch';
 
 class App extends Component {
   constructor(){
     super()
     this.state = {
+        theme: 'light',
         tags: [],
         shayariObject: {},
         title: [],
@@ -107,39 +112,54 @@ class App extends Component {
     }))
   }
 
+  themeToggler = () => {
+    this.state.theme === 'light' ? this.setState({theme: 'dark'}) : this.setState({theme: 'light'})
+  }
+
   render() {
-    const { tags, shayariObject, title, content, poet, id, relatedTags, totalShayaris } = this.state;
+    const { theme, tags, shayariObject, title, content, poet, id, relatedTags, totalShayaris } = this.state;
 
     return (
+      <ThemeProvider theme={this.state.theme === 'light' ? lightTheme : darkTheme}>
+      <GlobalStyles/>
       <div className="App">
+          <div style={{textAlign: 'center'}}>
+            <SwitchMode
+              checked={theme === 'dark' ? true : false}
+              onChange={this.themeToggler}
+              name="checkedA"
+              color='black'
+            />
+          </div>
 
-              <Header tags={tags} shayariObject={shayariObject} />
+          <Header theme={theme} tags={tags} shayariObject={shayariObject}  />
 
-              <Switch>
-                <Route exact path='/' 
-                render={props => <Home 
-                                  tags={tags} title={title} content={content} poet={poet} id={id} 
-                                  relatedTags={relatedTags} totalShayaris={totalShayaris} />} />
+          <Switch>
+            <Route exact path='/' 
+            render={props => <Home 
+                              tags={tags} title={title} content={content} poet={poet} id={id} 
+                              relatedTags={relatedTags} totalShayaris={totalShayaris} theme={theme} />} />
 
-                <Route path='/tags/:tag' render={props => 
-                <TagPage 
-                tag={props.match.params.tag}
-                shayariObject={shayariObject}
-                putIntoShayariObject={this.putIntoShayariObject} />} />
+            <Route path='/tags/:tag/' render={props => 
+            <TagPage 
+            tag={props.match.params.tag} theme={theme}
+            shayariObject={shayariObject}
+            putIntoShayariObject={this.putIntoShayariObject} />} />
 
-                <Route exact path='/upload' render={props => <Upload tags={tags} />} />
-                <Route exact path='/edit' render={props => <Edit tags={tags} />} />
-                <Route exact path='/about' render={props => <About />} />
-                <Route exact path='/suggest' render={props => <SuggestionPage /> } />
+            <Route exact path='/upload' render={props => <Upload tags={tags} />} />
+            <Route exact path='/edit' render={props => <Edit tags={tags} />} />
+            <Route exact path='/about' render={props => <About />} />
+            <Route exact path='/suggest' render={props => <SuggestionPage /> } />
+            
+            <Route path='*' component={Error404} />
+          </Switch>
                 
-                <Route path='*' component={Error404} />
-              </Switch>
+          <h2 style={{fontFamily: 'Alconica', textAlign: 'center'}}>Top Tags</h2>
+          <HomeTagCards mainTags={mainTags} />
                 
-              <h2 style={{fontFamily: 'Alconica', textAlign: 'center'}}>Top Tags</h2>
-              <HomeTagCards mainTags={mainTags} />
-                
-              <Footer />
+          <Footer />
       </div>
+      </ThemeProvider>
     )
   }
 }

@@ -82,7 +82,17 @@ class Home extends Component {
 
     render() {
         const { pageSize } = this.state;
-        const { title, content, poet, relatedTags, totalShayaris } = this.props;
+        const { title, content, poet, relatedTags, totalShayaris, theme } = this.props;
+        const translateBtnStyle = {
+            backgroundColor: '#363537',
+            color: 'white',
+            transition: '0.5s',
+            border: 'none'
+        }
+        const darkShayariCardStyle = {
+            boxShadow: '0 0 4px 2px gainsboro'
+        }
+
         if(title.length){
             return (
                 <React.Fragment>
@@ -91,11 +101,13 @@ class Home extends Component {
                         title.slice(0, pageSize).map((title, i) => {
                             return (
                                 <React.Fragment key={i}>
-                                <div className={`shayariCard div${i}`}>
+                                <div className={`shayariCard div${i}`}
+                                style={theme === 'dark' ? darkShayariCardStyle : null}>
                                     <div className={`shayariCardHeader div${i}`}>
-                                        <button className='translateBtn' onClick={e => this.handleTranslateEnglish(e, i)}>English</button>
-                                        <button className='translateBtn' onClick={e => this.handleTranslateUrdu(e, i)}>Urdu</button>
+                                        <button style={theme === 'dark' ? translateBtnStyle : null} className='translateBtn' onClick={e => this.handleTranslateEnglish(e, i)}>English</button>
+                                        <button style={theme === 'dark' ? translateBtnStyle : null} className='translateBtn' onClick={e => this.handleTranslateUrdu(e, i)}>Urdu</button>
                                         <Clipboard 
+                                        style={theme === 'dark' ? translateBtnStyle : null}
                                         className='copyBtn'
                                         data-clipboard-text={
                                             title.charAt(0).toUpperCase() + title.slice(1) + '\n' 
@@ -119,7 +131,9 @@ class Home extends Component {
                                 >
                                     {
                                         relatedTags[i].map(tag => (
-                                        <Link to={`/tags/${tag}`} className='tagCards' key={tag}>{tag}</Link>
+                                        <Link to={`/tags/${tag}/`}
+                                        style={theme === 'dark' ? translateBtnStyle : null} 
+                                        className='tagCards' key={tag}>{tag}</Link>
                                     ))
                                     }
                                 </Carousel>

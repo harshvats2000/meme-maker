@@ -147,8 +147,17 @@ class TagPage extends Component {
     }
 
     render() {
-        const { tag } = this.props;
+        const { tag, theme } = this.props;
         const { shayariObject, pageSize, message, autoHideDuration } = this.state;
+        const translateBtnStyle = {
+            backgroundColor: '#363537',
+            color: 'white',
+            transition: '0.5s',
+            border: 'none'
+        }
+        const darkShayariCardStyle = {
+            boxShadow: '0 0 4px 2px gainsboro'
+        }
 
         if(shayariObject[tag]){
             var titleObject = shayariObject[tag].titleObject;
@@ -163,12 +172,13 @@ class TagPage extends Component {
                         shayariObject[tag].titleObject[0] ?
                         Object.keys(titleObject).slice(0,pageSize).map((key, i) => (
                             <React.Fragment key={i}>
-                            <div className={`shayariCard div${i}`}>
+                            <div className={`shayariCard div${i}`} style={theme === 'dark' ? darkShayariCardStyle : null}>
     
                                 <div className={`shayariCardHeader div${i}`}>
-                                    <button className='translateBtn' onClick={e => this.handleTranslateEnglish(e, i)}>English</button>
-                                    <button className='translateBtn' onClick={e => this.handleTranslateUrdu(e, i)}>Urdu</button>
+                                    <button style={theme === 'dark' ? translateBtnStyle : null} className='translateBtn' onClick={e => this.handleTranslateEnglish(e, i)}>English</button>
+                                    <button style={theme === 'dark' ? translateBtnStyle : null} className='translateBtn' onClick={e => this.handleTranslateUrdu(e, i)}>Urdu</button>
                                     <Clipboard 
+                                    style={theme === 'dark' ? translateBtnStyle : null}
                                     className='copyBtn'
                                     data-clipboard-text={
                                         titleObject[i].charAt(0).toUpperCase() + titleObject[i].slice(1) + '\n' 
@@ -203,7 +213,9 @@ class TagPage extends Component {
                             >
                                 {
                                     tagsObject[i].map(tag => (
-                                    <Link to={`/tags/${tag}`} className='tagCards' key={tag}>{tag}</Link>
+                                    <Link 
+                                    style={theme === 'dark' ? translateBtnStyle : null} 
+                                    to={`/tags/${tag}`} className='tagCards' key={tag}>{tag}</Link>
                                 ))
                                 }
                             </Carousel>

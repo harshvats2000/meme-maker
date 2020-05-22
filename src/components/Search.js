@@ -67,10 +67,25 @@ class Search extends Component {
         width: '40px',
         textAlign: 'center'
       }
+      const darkInputStyle = {
+        position: 'absolute',
+        boxSizing: 'border-box',
+        padding: '5px',
+        border: 'none',
+        left: '0',
+        width: '100%',
+        margin: '0',
+        height: '35px',
+        color: 'white',
+        backgroundColor: '#363537'
+      }
       const closeSearch = {
         color: 'red',
         paddingTop: '6px',
         textAlign: 'center',
+      }
+      const darkList = {
+        color: 'white'
       }
 
         return (
@@ -85,7 +100,7 @@ class Search extends Component {
                     !this.state.searching ? <div style={style} onClick={(e) => this.handleInputClick(e)} ><SearchIcon/></div>:
                       <input
                       autoFocus
-                      style={focusStyle}
+                      style={this.props.theme === 'dark' ? darkInputStyle : focusStyle}
                       placeholder='search tag...'
                       maxLength='20'
                       value={this.state.searchingWord || ''} 
@@ -101,7 +116,10 @@ class Search extends Component {
                         {
                           this.state.searchingList.map((tag, i) => (
                             <Link key={tag} to={`/tags/${tag}`} className='searchingListItemLink'>
-                                <li className='searchingListItem'>{tag.toLowerCase()}<span> ({shayariObject[tag].totalShayaris})</span></li>
+                                <li 
+                                className='searchingListItem'
+                                style={this.props.theme === 'dark' ? darkList : null}>
+                                {tag.toLowerCase()}<span> ({shayariObject[tag].totalShayaris})</span></li>
                             </Link>
                           ))
                         }

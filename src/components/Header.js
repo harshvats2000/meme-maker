@@ -5,12 +5,19 @@ import Search from './Search';
 
 class Header extends Component {
     render() {
-        const { tags, shayariObject } = this.props;
+        const { theme, tags, shayariObject } = this.props;
         const headerStyle = {
             position: 'sticky',
             top: 0,
             backgroundColor: 'white',
             zIndex: 10,
+        }
+        const darkHeaderStyle = {
+            position: 'sticky',
+            top: 0,
+            backgroundColor: '#363537',
+            zIndex: 10,
+            transition: '.5s'
         }
         const headerNameStyle = {
             fontSize: '28px',
@@ -23,11 +30,11 @@ class Header extends Component {
 
         return (
             <div 
-            style={headerStyle}
+            style={theme === 'light' ? headerStyle : darkHeaderStyle}
             >
-              <MenuContainer />
+              <MenuContainer theme={theme} />
               <Link to='/' style={headerNameStyle}>bestshayaris.com</Link>
-              <Search tags={tags} shayariObject={shayariObject} />
+              <Search theme={theme} tags={tags} shayariObject={shayariObject} />
             </div>
         )
     }

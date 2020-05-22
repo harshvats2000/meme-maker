@@ -15,7 +15,7 @@ class Upload extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            authenticated: false,
+            authenticated: true,
             password: '',
             title: '',
             content: '',
@@ -86,9 +86,9 @@ class Upload extends Component {
     
     finalUpload = () => {
         var tags = this.state.tags;
-        var title = this.state.title;
-        var content = this.state.content;
-        var poet = this.state.poet;
+        var title = this.state.title.trim();
+        var content = this.state.content.trim();
+        var poet = this.state.poet.trim();
 
         this.state.tags.forEach((tag, i) => {
             firebase.firestore().collection('tags').doc(tag).update({
@@ -127,9 +127,9 @@ class Upload extends Component {
     }
 
     upload = () => {
-        var title = this.state.title;
-        var content = this.state.content;
-        var newTagInputValue = this.state.newTagInputValue;
+        var title = this.state.title.trim();
+        var content = this.state.content.trim();
+        var newTagInputValue = this.state.newTagInputValue.trim();
         if(title){
                 if(content){
                     this.setState({
@@ -143,9 +143,9 @@ class Upload extends Component {
                             })
                         } else {                                                                            //if tag is actually new
                             this.setState(prev => ({
-                                tags: [...prev.tags, this.state.newTagInputValue]
+                                tags: [...prev.tags, newTagInputValue]
                             }))
-                            firebase.firestore().collection('tags').doc(this.state.newTagInputValue).set({
+                            firebase.firestore().collection('tags').doc(newTagInputValue).set({
                                 totalShayaris: 0
                             })
                             .then(() => {
@@ -216,7 +216,7 @@ class Upload extends Component {
                         <TextField
                             label="New Tag"
                             placeholder="type your tag"
-                            value={this.state.newTagInputValue.toLowerCase().trim()}
+                            value={this.state.newTagInputValue.toLowerCase()}
                             onChange={this.handleNewTag}
                           /> :
                           null
@@ -225,7 +225,7 @@ class Upload extends Component {
                       label="Title"
                       placeholder="Choose title wisely"
                       margin="normal"
-                      value={this.state.title.trim()}
+                      value={this.state.title}
                       onChange={e => this.handleTitleChange(e)}
                     />
                     {
@@ -236,7 +236,7 @@ class Upload extends Component {
                       placeholder="Write beyond imagination"
                       multiline
                       margin="normal"
-                      value={this.state.content.trim()}
+                      value={this.state.content}
                       onChange={e => this.handleContentChange(e)}
                     />
                   <TextField

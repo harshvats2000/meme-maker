@@ -12,17 +12,20 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { Link } from 'react-router-dom';
 import FacebookIcon from '@material-ui/icons/Facebook';
-import MuiAlert from '@material-ui/lab/Alert'
-import { Snackbar } from '@material-ui/core';
+import { withStyles } from "@material-ui/core/styles";
+
+const styles = {
+  paper: {
+    // background: "#363537"
+    background: '#A9A9A9'
+  }
+};
 
 class MenuContainer extends Component {
     constructor(props) {
         super(props)
         this.state = {
             open: false,
-            snackbar: false,
-            message: '',
-            severity: ''
         }
     }
 
@@ -32,13 +35,8 @@ class MenuContainer extends Component {
       })
     }
 
-    handleClose = () => {
-      this.setState({
-        snackbar: false
-      })
-    }
-
     render() {
+      const { classes } = this.props;
       const drawerTextLinkStyle = {
         textDecoration: 'none',
         color: 'black'
@@ -113,16 +111,12 @@ class MenuContainer extends Component {
 
               <Menu fontSize='large' onClick={this.toggleDrawer} />
 
-              <Drawer anchor='left' open={this.state.open} onClose={this.toggleDrawer}>
+              <Drawer classes={{ paper: this.props.theme === 'dark' ? classes.paper : null }} anchor='left' open={this.state.open} onClose={this.toggleDrawer}>
                 {list()}
               </Drawer>
-
-              <Snackbar open={this.state.snackbar} autoHideDuration={3000} onClose={this.handleClose}>
-                <MuiAlert elevation={6} variant='filled' severity={this.state.severity}>{this.state.message}</MuiAlert>
-              </Snackbar>
           </React.Fragment>
       )
     }
 }
 
-export default MenuContainer;
+export default withStyles(styles)(MenuContainer);
