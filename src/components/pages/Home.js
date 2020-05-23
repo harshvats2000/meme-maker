@@ -90,7 +90,7 @@ class Home extends Component {
             border: 'none'
         }
         const darkShayariCardStyle = {
-            boxShadow: '0 0 4px 2px gainsboro'
+            boxShadow: '0 0 4px 1px gainsboro'
         }
 
         if(title.length){

@@ -156,7 +156,7 @@ class TagPage extends Component {
             border: 'none'
         }
         const darkShayariCardStyle = {
-            boxShadow: '0 0 4px 2px gainsboro'
+            boxShadow: '0 0 4px 1px gainsboro'
         }
 
         if(shayariObject[tag]){
@@ -166,7 +166,7 @@ class TagPage extends Component {
             var tagsObject = shayariObject[tag].relatedTagsObject;
             return (
                 <div id='tagPage'>
-                    <h2 style={{textAlign: 'center', textTransform: 'capitalize'}}>{tag}</h2>
+                    <h2 style={{textAlign: 'center', textTransform: 'capitalize'}}>{tag}({shayariObject[tag].totalShayaris})</h2>
                     <hr/>
                     {
                         shayariObject[tag].titleObject[0] ?

@@ -128,7 +128,6 @@ class App extends Component {
               checked={theme === 'dark' ? true : false}
               onChange={this.themeToggler}
               name="checkedA"
-              color='black'
             />
           </div>
 
