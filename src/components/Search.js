@@ -102,7 +102,7 @@ class Search extends Component {
                       autoFocus
                       style={this.props.theme === 'dark' ? darkInputStyle : focusStyle}
                       placeholder='search tag...'
-                      maxLength='20'
+                      maxLength='30'
                       value={this.state.searchingWord || ''} 
                       onChange={e => this.handleInputChange(e)}/>
                   }

@@ -23,7 +23,7 @@ class App extends Component {
   constructor(){
     super()
     this.state = {
-        theme: 'light',
+        theme: 'dark',
         tags: [],
         shayariObject: {},
         title: [],
@@ -132,6 +132,7 @@ class App extends Component {
           </div>
 
           <Header theme={theme} tags={tags} shayariObject={shayariObject}  />
+
 
           <Switch>
             <Route exact path='/' 

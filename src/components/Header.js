@@ -25,7 +25,8 @@ class Header extends Component {
             bottom: '4px',
             fontFamily: 'Alconica',
             textDecoration: 'none',
-            color: 'crimson'
+            color: 'crimson',
+            marginLeft: '5px'
         }
 
         return (
