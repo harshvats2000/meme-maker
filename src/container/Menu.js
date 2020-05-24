@@ -13,6 +13,7 @@ import ListItem from '@material-ui/core/ListItem';
 import { Link } from 'react-router-dom';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import { withStyles } from "@material-ui/core/styles";
+import SwitchMode from '@material-ui/core/Switch';
 
 const styles = {
   paper: {
@@ -101,6 +102,18 @@ class MenuContainer extends Component {
                     <ListItemIcon><FacebookIcon/></ListItemIcon>
                   </ListItem>
                 </a>
+
+                <Divider />
+
+                <ListItem>
+                <div style={{textAlign: 'center'}}>
+                  <SwitchMode
+                    checked={this.props.theme === 'dark' ? true : false}
+                    onChange={this.props.themeToggler}
+                    name="checkedA"
+                  />
+                </div>
+                </ListItem>
 
             </List>
           </div>

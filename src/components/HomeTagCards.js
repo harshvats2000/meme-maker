@@ -95,11 +95,13 @@ class HomeTagCards extends Component {
             }
         }
         return (
-            <div style={tagCardContainerStyle}>
+            <div style={tagCardContainerStyle} 
+            data-aos='fade-up'
+            >
                 {
                     mainTags.map((tag, i) => {
                         return (
-                            <Link to={`/tags/${tag}`} key={i} style={tagCardStyle[i]}>
+                            <Link to={`/tags/${tag}/`} key={i} style={tagCardStyle[i]}>
                                 {tag}
                             </Link>
                         )

@@ -4,15 +4,32 @@ import { Link } from 'react-router-dom'
 import Search from './Search';
 
 class Header extends Component {
+    componentDidMount(){
+        var prev = window.pageYOffset
+        var header = document.getElementById('header')
+        window.addEventListener('scroll', () => {
+            var curr = window.pageYOffset
+            if(prev > curr){
+                header.style.top = '0'
+            } 
+            else {
+                header.style.top = '-40px'
+            }
+            prev = curr;
+        })
+    }
+
     render() {
-        const { theme, tags, shayariObject } = this.props;
+        const { theme, themeToggler, tags, shayariObject } = this.props;
         const headerStyle = {
+            transition: 'top .3s',
             position: 'sticky',
             top: 0,
             backgroundColor: 'white',
             zIndex: 10,
         }
         const darkHeaderStyle = {
+            transition: 'top .3s',
             position: 'sticky',
             top: 0,
             backgroundColor: '#363537',
@@ -31,9 +48,10 @@ class Header extends Component {
 
         return (
             <div 
+            id='header'
             style={theme === 'light' ? headerStyle : darkHeaderStyle}
             >
-              <MenuContainer theme={theme} />
+              <MenuContainer theme={theme} themeToggler={themeToggler} />
               <Link to='/' style={headerNameStyle}>bestshayaris.com</Link>
               <Search theme={theme} tags={tags} shayariObject={shayariObject} />
             </div>

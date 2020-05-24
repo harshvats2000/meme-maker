@@ -17,7 +17,8 @@ import SuggestionPage from './components/pages/SuggestionPage';
 import {ThemeProvider} from "styled-components";
 import { GlobalStyles } from "./components/GlobalStyles";
 import { lightTheme, darkTheme } from "./components/Theme"
-import SwitchMode from '@material-ui/core/Switch';
+import 'aos/dist/aos.css';
+import AOS from 'aos'
 // import GetTotalPosts from './functions/GetTotalPosts';
 // import RenameTag from './functions/RenameTag';
 
@@ -38,6 +39,8 @@ class App extends Component {
   }
 
   componentDidMount() {
+    AOS.init()
+    AOS.refresh()
     
     var tagsArray = [];
     var tempShayariObject = {};
@@ -127,15 +130,9 @@ class App extends Component {
       {/* <RenameTag from='angdaai ' to='angdaai'/> */}
       <GlobalStyles/>
       <div className="App">
-          <div style={{textAlign: 'center'}}>
-            <SwitchMode
-              checked={theme === 'dark' ? true : false}
-              onChange={this.themeToggler}
-              name="checkedA"
-            />
-          </div>
 
-          <Header theme={theme} tags={tags} shayariObject={shayariObject}  />
+          <Header theme={theme} themeToggler={this.themeToggler} tags={tags} shayariObject={shayariObject} />
+          <div style={{overflowX: 'hidden'}}>
 
 
           <Switch>
@@ -162,6 +159,7 @@ class App extends Component {
           <HomeTagCards mainTags={mainTags} />
                 
           <Footer />
+          </div>
       </div>
       </ThemeProvider>
     )
