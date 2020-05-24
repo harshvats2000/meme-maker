@@ -18,6 +18,8 @@ import {ThemeProvider} from "styled-components";
 import { GlobalStyles } from "./components/GlobalStyles";
 import { lightTheme, darkTheme } from "./components/Theme"
 import SwitchMode from '@material-ui/core/Switch';
+// import GetTotalPosts from './functions/GetTotalPosts';
+// import RenameTag from './functions/RenameTag';
 
 class App extends Component {
   constructor(){
@@ -121,6 +123,8 @@ class App extends Component {
 
     return (
       <ThemeProvider theme={this.state.theme === 'light' ? lightTheme : darkTheme}>
+      {/* <GetTotalPosts /> */}
+      {/* <RenameTag from='angdaai ' to='angdaai'/> */}
       <GlobalStyles/>
       <div className="App">
           <div style={{textAlign: 'center'}}>

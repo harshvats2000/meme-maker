@@ -24,7 +24,7 @@ class TagPage extends Component {
         }
     }
 
-    componentWillReceiveProps() {
+    UNSAFE_componentWillReceiveProps() {
         this.setState(prev => ({
             pageSize: 5,
         }))

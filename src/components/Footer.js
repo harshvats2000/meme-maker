@@ -7,7 +7,7 @@ class Footer extends Component {
         return (
             <div className='footer'>
                 <Link to='/about' className='footerAbout'>About Us</Link>
-                <div className='footerContact'>Contact Us:<span style={{letterSpacing: '1px'}}>&ensp;bestshayari4u@gmail.com</span></div>
+                <div className='footerContact'>Contact Us:<span style={{letterSpacing: '1px'}}>&ensp;<a href='mailto:bestshayari4u@gmail.com'>bestshayari4u@gmail.com</a></span></div>
             </div>
         )
     }

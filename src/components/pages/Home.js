@@ -80,6 +80,14 @@ class Home extends Component {
         });
     }
 
+    // makeSpansFromString = string => {
+    //     string = string.split(" ");
+    //     return string.map((word, i) => {
+    //         console.log(word);
+    //         return <span key={i} onClick={() => alert(1)}>{word} </span>
+    //     })
+    // }
+
     render() {
         const { pageSize } = this.state;
         const { title, content, poet, relatedTags, totalShayaris, theme } = this.props;
@@ -118,6 +126,7 @@ class Home extends Component {
                                         </Clipboard>
                                     </div>
                                     <div className={`shayariCardTitle div${i}`}>{title}</div><br/>
+                                    {/* <div className={`shayariCardContent div${i}`}>{this.makeSpansFromString(content[i])}</div> */}
                                     <div className={`shayariCardContent div${i}`}>{content[i]}</div>
                                     <div className={`div${i}`} style={{textAlign: 'center'}}>
                                         <span>{poet[i]}</span>
