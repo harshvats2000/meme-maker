@@ -25,7 +25,7 @@ class App extends Component {
   constructor(){
     super()
     this.state = {
-        theme: 'dark',
+        theme: 'light',
         tags: [],
         shayariObject: {},
         title: [],
