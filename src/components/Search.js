@@ -107,11 +107,13 @@ class Search extends Component {
                       onChange={e => this.handleInputChange(e)}/>
                   }
 
-                  <div style={closeSearch} hidden={!this.state.showCross} onClick={() => this.closeSearch()}>close search<hr/></div>
+                  <div style={closeSearch} 
+                  hidden={!this.state.showCross} 
+                  onClick={() => this.closeSearch()}>close search<hr/></div>
 
                 {
                     !this.state.searching ? null :
-                    <div id='searchingListParent'>
+                    <div id='searchingListParent' data-aos='fade-up'>
                       <ul className='searchingList' onClick={() => this.closeSearch()}>
                         {
                           this.state.searchingList.map((tag, i) => (

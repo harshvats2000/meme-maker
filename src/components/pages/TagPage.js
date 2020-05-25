@@ -36,7 +36,7 @@ class TagPage extends Component {
         var tempContentObject = {};
         var tempPoetObject = {};
         var tempRelatedTagsObject = {};
-            firebase.firestore().collection('tags').doc(this.props.tag).collection('shayaris').limit(10).orderBy('timestamp', 'desc').get()
+            firebase.firestore().collection('tags').doc(this.props.tag).collection('shayaris').orderBy('timestamp', 'desc').get()
             .then(snap => {
                 var i = 0;
                 snap.forEach(doc => {
@@ -173,7 +173,7 @@ class TagPage extends Component {
                         Object.keys(titleObject).slice(0,pageSize).map((key, i) => (
                             <React.Fragment key={i}>
                             <div className={`shayariCard div${i}`}
-                            data-aos={i%2 === 0 ? 'fade-left' : 'fade-right'}
+                            data-aos='fade-up'
                             style={theme === 'dark' ? darkShayariCardStyle : null}>
     
                                 <div className={`shayariCardHeader div${i}`}>

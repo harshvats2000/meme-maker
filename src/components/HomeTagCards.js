@@ -96,7 +96,6 @@ class HomeTagCards extends Component {
         }
         return (
             <div style={tagCardContainerStyle} 
-            data-aos='fade-up'
             >
                 {
                     mainTags.map((tag, i) => {

@@ -132,8 +132,6 @@ class App extends Component {
       <div className="App">
 
           <Header theme={theme} themeToggler={this.themeToggler} tags={tags} shayariObject={shayariObject} />
-          <div style={{overflowX: 'hidden'}}>
-
 
           <Switch>
             <Route exact path='/' 
@@ -155,11 +153,11 @@ class App extends Component {
             <Route path='*' component={Error404} />
           </Switch>
                 
-          <h2 style={{fontFamily: 'Alconica', textAlign: 'center'}}>Top Tags</h2>
-          <HomeTagCards mainTags={mainTags} />
-                
+          <div data-aos='fade-up'>      
+            <h2 style={{fontFamily: 'Alconica', textAlign: 'center'}}>Top Tags</h2>
+            <HomeTagCards mainTags={mainTags} />
+          </div> 
           <Footer />
-          </div>
       </div>
       </ThemeProvider>
     )

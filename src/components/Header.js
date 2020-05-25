@@ -34,7 +34,6 @@ class Header extends Component {
             top: 0,
             backgroundColor: '#363537',
             zIndex: 10,
-            transition: '.5s'
         }
         const headerNameStyle = {
             fontSize: '28px',

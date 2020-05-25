@@ -110,7 +110,7 @@ class Home extends Component {
                             return (
                                 <React.Fragment key={i}>
                                 <div className={`shayariCard div${i}`}
-                                data-aos={i%2 === 0 ? 'fade-left' : 'fade-right'}
+                                data-aos='fade-up'
                                 style={theme === 'dark' ? darkShayariCardStyle : null}>
                                     <div className={`shayariCardHeader div${i}`}>
                                         <button style={theme === 'dark' ? translateBtnStyle : null} className='translateBtn' onClick={e => this.handleTranslateEnglish(e, i)}>English</button>
