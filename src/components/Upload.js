@@ -190,7 +190,8 @@ class Upload extends Component {
     render() {
         return (
             !this.state.authenticated 
-            ? <input placeholder='password' onChange={(e) => this.authMe(e)}></input>
+            // ? <input placeholder='password' onChange={(e) => this.authMe(e)}></input>
+            ? <h3>Under maintainance for some time</h3>
             :
             <div style={{textAlign: 'center'}}>
                 <FormControl>

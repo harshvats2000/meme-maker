@@ -100,7 +100,8 @@ class Edit extends Component {
         const { i, title, content, relatedTags, id, timestamp, tag} = this.state;
         return (
             !this.state.authenticated 
-            ? <input placeholder='password' onChange={(e) => this.authMe(e)}></input>
+            // ? <input placeholder='password' onChange={(e) => this.authMe(e)}></input>
+            ? <h3>Under maintainance for some time</h3>
             :
             this.state.editing
             ? <EditFinal tag={tag} relatedTags={relatedTags[i]} title={title[i]} content={content[i]} timestamp={timestamp[i]} id={id[i]} closeEditing={this.closeEditing} />
