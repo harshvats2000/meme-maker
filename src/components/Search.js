@@ -30,6 +30,9 @@ class Search extends Component {
       }
 
       handleInputClick = e => {
+        setTimeout(() => {
+          document.getElementById('header').style.top = 0;
+        }, 1)
         this.setState({
           searching: true, 
           searchingWord: e.target.value, 
@@ -52,6 +55,7 @@ class Search extends Component {
 
       const focusStyle = {
         position: 'absolute',
+        top: 0,
         boxSizing: 'border-box',
         padding: '5px',
         border: 'none',
@@ -69,6 +73,7 @@ class Search extends Component {
       }
       const darkInputStyle = {
         position: 'absolute',
+        top: 0,
         boxSizing: 'border-box',
         padding: '5px',
         border: 'none',
@@ -113,7 +118,7 @@ class Search extends Component {
 
                 {
                     !this.state.searching ? null :
-                    <div id='searchingListParent' data-aos='fade-up'>
+                    <div id='searchingListParent'>
                       <ul className='searchingList' onClick={() => this.closeSearch()}>
                         {
                           this.state.searchingList.map((tag, i) => (

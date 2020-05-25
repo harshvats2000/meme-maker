@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import Search from './Search';
 
 class Header extends Component {
+
     componentDidMount(){
         var prev = window.pageYOffset
         var header = document.getElementById('header')
