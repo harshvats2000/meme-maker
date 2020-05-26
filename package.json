@@ -10,6 +10,7 @@
     "@material-ui/lab": "^4.0.0-alpha.53",
     "aos": "^2.3.4",
     "clipboard": "^2.0.6",
+    "express": "^4.17.1",
     "firebase": "^7.14.2",
     "google-translate-api-browser": "^1.1.71",
     "react": "^16.8.6",
@@ -18,7 +19,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.0.0",
     "react-spinners": "^0.8.3",
-    "styled-components": "^5.1.0"
+    "styled-components": "^5.1.0",
+    "universal-style-loader": "^0.16.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -26,7 +28,10 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "dev:build-server": "NODE_ENV=development webpack --config webpack.server.js --mode=development -w",
+    "dev:start": "nodemon ./server-build/index.js",
+    "dev": "npm-run-all --parallel build dev:*"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -44,6 +49,21 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^2.2.0"
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react-app": "^9.1.2",
+    "css-loader": "^3.5.3",
+    "gh-pages": "^2.2.0",
+    "isomorphic-style-loader": "^5.1.0",
+    "nodemon": "^2.0.4",
+    "npm-run-all": "^4.1.5",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.11",
+    "webpack-node-externals": "^1.7.2"
   }
 }

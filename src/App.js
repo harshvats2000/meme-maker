@@ -19,6 +19,8 @@ import { GlobalStyles } from "./components/GlobalStyles";
 import { lightTheme, darkTheme } from "./components/Theme"
 import 'aos/dist/aos.css';
 import AOS from 'aos'
+import PoetPage from './components/pages/PoetPage';
+import PoetSherPage from './components/pages/PoetSherPage';
 // import GetTotalPosts from './functions/GetTotalPosts';
 // import RenameTag from './functions/RenameTag';
 
@@ -40,8 +42,8 @@ class App extends Component {
 
   componentDidMount() {
     AOS.init()
-    AOS.refresh()
     
+    //initializing everything for tagPage
     var tagsArray = [];
     var tempShayariObject = {};
     var totalShayaris = 0;
@@ -145,6 +147,11 @@ class App extends Component {
             shayariObject={shayariObject}
             putIntoShayariObject={this.putIntoShayariObject} />} />
 
+            <Route path='/poet/:poet/sher' render={props => <PoetSherPage />} />
+            <Route path='/poet/:poet/ghazal' render={props => <PoetSherPage />} />
+            <Route path='/poet/:poet/poems' render={props => <PoetSherPage />} />
+
+            <Route path='/poet/' render={props => <PoetPage/>} />
             <Route exact path='/upload' render={props => <Upload tags={tags} />} />
             <Route exact path='/edit' render={props => <Edit tags={tags} />} />
             <Route exact path='/about' render={props => <About />} />

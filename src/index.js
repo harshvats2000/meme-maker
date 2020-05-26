@@ -21,7 +21,7 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
-ReactDOM.render(
+ReactDOM.hydrate(
     <BrowserRouter>
         <App />
     </BrowserRouter>, 

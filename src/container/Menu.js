@@ -95,6 +95,13 @@ class MenuContainer extends Component {
                   </ListItem>
                 </Link>
 
+                {/* <Link to='/poet/' style={drawerTextLinkStyle}>
+                  <ListItem button>
+                    <ListItemText>Poets</ListItemText>
+                    <ListItemIcon><ArrowRightAltIcon/></ListItemIcon>
+                  </ListItem>
+                </Link> */}
+
                 <Divider />
 
                 <a href='https://www.facebook.com/hindishayarisbest/?modal=admin_todo_tour' target="_blank" rel="noopener noreferrer" style={drawerTextLinkStyle}>
