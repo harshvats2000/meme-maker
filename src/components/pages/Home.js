@@ -104,7 +104,7 @@ class Home extends Component {
         if(title.length){
             return (
                 <React.Fragment>
-                    <h1 style={{textAlign: 'center', fontFamily: 'Alconica'}}>{Math.floor(totalShayaris/10) * 10}+ Shayaris</h1>
+                    <h1 style={{textAlign: 'center', fontFamily: 'Alconica'}}>{Math.floor(totalShayaris/10) * 10}+ Writings</h1>
                     {
                         title.slice(0, pageSize).map((title, i) => {
                             return (

@@ -6,7 +6,6 @@ import * as serviceWorker from './serviceWorker';
 import firebase from 'firebase/app'
 import 'firebase/analytics'
 import 'firebase/firestore'
-import { BrowserRouter } from 'react-router-dom'
 
 var firebaseConfig = {
     apiKey: "AIzaSyCEMfOB5_j1hIdpxVXOduBuUMTwj5txVZo",
@@ -21,11 +20,10 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
-ReactDOM.hydrate(
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>, 
-    document.getElementById('root'));
+ReactDOM.render(
+        <App />, 
+    document.getElementById('root')
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

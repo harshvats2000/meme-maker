@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, BrowserRouter } from 'react-router-dom'
 import Home from './components/pages/Home';
 import Error404 from './components/Error404';
 import firebase from 'firebase/app'
@@ -11,7 +11,6 @@ import Edit from './components/pages/Edit';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import About from './components/pages/About';
-import mainTags from './constants/Maintags';
 import HomeTagCards from './components/HomeTagCards';
 import SuggestionPage from './components/pages/SuggestionPage';
 import {ThemeProvider} from "styled-components";
@@ -20,7 +19,8 @@ import { lightTheme, darkTheme } from "./components/Theme"
 import 'aos/dist/aos.css';
 import AOS from 'aos'
 import PoetPage from './components/pages/PoetPage';
-import PoetSherPage from './components/pages/PoetSherPage';
+import SearchPoet from './components/pages/SearchPoet';
+import HomePoetCards from './components/HomePoetCards';
 // import GetTotalPosts from './functions/GetTotalPosts';
 // import RenameTag from './functions/RenameTag';
 
@@ -28,7 +28,7 @@ class App extends Component {
   constructor(){
     super()
     this.state = {
-        theme: 'light',
+        theme: 'dark',
         tags: [],
         shayariObject: {},
         title: [],
@@ -41,7 +41,35 @@ class App extends Component {
   }
 
   componentDidMount() {
-    AOS.init()
+    // var from = 'अहमद फ़राज़'
+    // var to = 'ahmad faraaz'
+    // var ref = firebase.firestore()
+    // ref.collection('tags').get()
+    // .then(snap => {
+    //   snap.forEach(doc => {
+    //     var ref2 = ref.collection('tags').doc(doc.id).collection('shayaris')
+    //     ref2.where('poet', '==', from).get()
+    //     .then(snap => {
+    //       snap.forEach(doc => {
+    //         ref2.doc(doc.id).update({
+    //           english_name: to
+    //         })
+    //       })
+    //     })
+    //   })
+    // })
+    // .then(() => {
+    //   ref.collection('poets').doc(from).update({
+    //     english_name: to
+    //   })
+    //   .then(() => {
+    //     console.log('done')
+    //   })
+    // })
+
+    AOS.init({
+      once: 'true'
+    })
     
     //initializing everything for tagPage
     var tagsArray = [];
@@ -91,7 +119,7 @@ class App extends Component {
     var idArray = [];
     var tempTagsObject = {};
     var i = 0;
-    firebase.firestore().collection('tags').doc('sher').collection('shayaris').orderBy('timestamp', 'desc').limit(9).get()
+    firebase.firestore().collection('tags').doc('sher').collection('shayaris').orderBy('timestamp', 'desc').limit(12).get()
     .then(snap => {
       snap.forEach(doc => {
             idArray.push(doc.id);
@@ -127,6 +155,7 @@ class App extends Component {
     const { theme, tags, shayariObject, title, content, poet, id, relatedTags, totalShayaris } = this.state;
 
     return (
+      <BrowserRouter>
       <ThemeProvider theme={this.state.theme === 'light' ? lightTheme : darkTheme}>
       {/* <GetTotalPosts /> */}
       {/* <RenameTag from='angdaai ' to='angdaai'/> */}
@@ -147,11 +176,8 @@ class App extends Component {
             shayariObject={shayariObject}
             putIntoShayariObject={this.putIntoShayariObject} />} />
 
-            <Route path='/poet/:poet/sher' render={props => <PoetSherPage />} />
-            <Route path='/poet/:poet/ghazal' render={props => <PoetSherPage />} />
-            <Route path='/poet/:poet/poems' render={props => <PoetSherPage />} />
-
-            <Route path='/poet/' render={props => <PoetPage/>} />
+            <Route exact path='/poet/' render={props => <SearchPoet theme={theme} />} />
+            <Route path='/poet/:poet/' render={props => <PoetPage theme={theme}/>} />
             <Route exact path='/upload' render={props => <Upload tags={tags} />} />
             <Route exact path='/edit' render={props => <Edit tags={tags} />} />
             <Route exact path='/about' render={props => <About />} />
@@ -160,13 +186,18 @@ class App extends Component {
             <Route path='*' component={Error404} />
           </Switch>
                 
-          <div data-aos='fade-up'>      
+          <div>      
+            <h2 style={{fontFamily: 'Alconica', textAlign: 'center'}}>Top Poets</h2>
+            <HomePoetCards/>
+          </div> 
+          <div>      
             <h2 style={{fontFamily: 'Alconica', textAlign: 'center'}}>Top Tags</h2>
-            <HomeTagCards mainTags={mainTags} />
+            <HomeTagCards/>
           </div> 
           <Footer />
       </div>
       </ThemeProvider>
+      </BrowserRouter>
     )
   }
 }

@@ -9,10 +9,7 @@ class Footer extends Component {
                 <Link to='/about' className='footerAbout'>About Us</Link>
                 <div 
                 className='footerContact'>
-                Contact Us:
-                <span style={{letterSpacing: '1px'}}>&ensp;
-                <a href='mailto:bestshayari4u@gmail.com' style={{textDecoration: 'none', fontSize: '20px'}}>
-                bestshayari4u@gmail.com</a></span>
+                    <a href='mailto:bestshayari4u@gmail.com' style={{textDecoration: 'none', color: 'white'}}>Contact Us</a>
                 </div>
             </div>
         )

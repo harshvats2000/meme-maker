@@ -15,7 +15,7 @@ class Upload extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            authenticated: true,
+            authenticated: false,
             password: '',
             title: '',
             content: '',

@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@brainhubeu/react-carousel": "^1.13.46",
+    "@brainhubeu/react-carousel": "^1.15.4",
     "@material-ui/core": "^4.9.14",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.53",
@@ -13,12 +13,15 @@
     "express": "^4.17.1",
     "firebase": "^7.14.2",
     "google-translate-api-browser": "^1.1.71",
+    "isomorphic-fetch": "^2.2.1",
+    "node-fetch": "^2.6.0",
     "react": "^16.8.6",
     "react-clipboard.js": "^2.0.16",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.0.0",
     "react-spinners": "^0.8.3",
+    "react-swipeable-views": "^0.13.9",
     "styled-components": "^5.1.0",
     "universal-style-loader": "^0.16.3"
   },
@@ -28,10 +31,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "dev:build-server": "NODE_ENV=development webpack --config webpack.server.js --mode=development -w",
-    "dev:start": "nodemon ./server-build/index.js",
-    "dev": "npm-run-all --parallel build dev:*"
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"

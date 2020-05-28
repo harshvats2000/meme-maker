@@ -36,7 +36,7 @@ class TagPage extends Component {
         var tempContentObject = {};
         var tempPoetObject = {};
         var tempRelatedTagsObject = {};
-            firebase.firestore().collection('tags').doc(this.props.tag).collection('shayaris').limit(10).orderBy('timestamp', 'desc').get()
+            firebase.firestore().collection('tags').doc(this.props.tag).collection('shayaris').limit(50).orderBy('timestamp', 'desc').get()
             .then(snap => {
                 var i = 0;
                 snap.forEach(doc => {

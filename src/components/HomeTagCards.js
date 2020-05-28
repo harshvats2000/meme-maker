@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
-
+import mainTags from '../constants/Maintags'
 class HomeTagCards extends Component {
     render() {
-        const { mainTags } = this.props;
         const tagCardContainerStyle = {
             display: 'flex',
             flexWrap: 'wrap'

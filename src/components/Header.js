@@ -23,14 +23,14 @@ class Header extends Component {
     render() {
         const { theme, themeToggler, tags, shayariObject } = this.props;
         const headerStyle = {
-            transition: 'top .3s',
+            transition: 'all .5s linear',
             position: 'sticky',
             top: 0,
             backgroundColor: 'white',
             zIndex: 10,
         }
         const darkHeaderStyle = {
-            transition: 'top .3s',
+            transition: 'all .5s linear',
             position: 'sticky',
             top: 0,
             backgroundColor: '#363537',

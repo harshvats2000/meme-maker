@@ -95,12 +95,12 @@ class MenuContainer extends Component {
                   </ListItem>
                 </Link>
 
-                {/* <Link to='/poet/' style={drawerTextLinkStyle}>
+                <Link to='/poet/' style={drawerTextLinkStyle}>
                   <ListItem button>
                     <ListItemText>Poets</ListItemText>
                     <ListItemIcon><ArrowRightAltIcon/></ListItemIcon>
                   </ListItem>
-                </Link> */}
+                </Link>
 
                 <Divider />
 
