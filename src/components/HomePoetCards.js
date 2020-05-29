@@ -20,8 +20,8 @@ class HomePoetCards extends Component {
             textAlign: 'center'
         }
         const imgStyle = {
-            width: '150px',
-            height: '150px',
+            width: '100px',
+            height: '100px',
             borderRadius: '50%'
         }
         const poetNameStyle = {

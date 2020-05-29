@@ -43,7 +43,8 @@ class ShayariCard extends Component {
                     data-clipboard-text={
                         title.charAt(0).toUpperCase() + title.slice(1) + '\n' 
                         + content.charAt(0).toUpperCase() + content.slice(1) 
-                        + '\nbestshayaris.com'}
+                        + `\n—${poet}`
+                        + '\n\nbestshayaris.com'}
                     onClick={handleCopy}>
                     <FilterNoneIcon />
                     </Clipboard>

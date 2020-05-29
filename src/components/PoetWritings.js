@@ -147,7 +147,7 @@ class PoetWritings extends Component {
                     }
                     {
                         Object.keys(sherObject).map((key, i) => {
-                            return <ShayariCard key={i} 
+                            return <ShayariCard key={i} i={i}
                             title={sherObject[key].title} 
                             content={sherObject[key].content} 
                             poet={sherObject[key].poet} 
@@ -165,7 +165,7 @@ class PoetWritings extends Component {
                     }
                     {
                         Object.keys(ghazalObject).map((key, i) => {
-                            return <ShayariCard key={i} 
+                            return <ShayariCard key={i} i={i}
                             title={ghazalObject[key].title} 
                             content={ghazalObject[key].content} 
                             poet={ghazalObject[key].poet} 
@@ -182,7 +182,7 @@ class PoetWritings extends Component {
                     }
                     {
                         Object.keys(poemsObject).map((key, i) => {
-                            return <ShayariCard key={i} 
+                            return <ShayariCard key={i} i={i}
                             title={poemsObject[key].title} 
                             content={poemsObject[key].content} 
                             poet={poemsObject[key].poet} 

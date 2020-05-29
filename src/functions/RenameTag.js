@@ -52,7 +52,31 @@ export default function RenameTag(props) {
         })
       })
       .then(() => {
-          console.log('done');
+          var ref = firebase.firestore().collection('poets')
+          ref.get()
+          .then(snap => {
+            snap.forEach(doc => {
+              if(doc.data().sher > 0) {
+                var ref1 = ref.doc(doc.id).collection('sher')
+                ref1.get()
+                .then(snap => {
+                  snap.forEach(doc => {
+                    var tagsArray = doc.data().tags
+                    var index = tagsArray.indexOf(props.from)
+                    if(index > -1) {
+                      tagsArray[index] = props.to;
+                      ref1.doc(doc.id).update({
+                        tags: tagsArray
+                      })
+                    }
+                  })
+                })
+              }
+            })
+          })
+      })
+      .then(() => {
+        console.log('done');
       })
     return 1
 }

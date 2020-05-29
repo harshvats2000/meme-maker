@@ -90,6 +90,7 @@ class Home extends Component {
                             return (
                                 <ShayariCard
                                 key={i}
+                                i={i}
                                 title={title}
                                 content={content[i]}
                                 poet={poet[i]}

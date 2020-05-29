@@ -154,6 +154,7 @@ class TagPage extends Component {
                         shayariObject[tag].titleObject[0] ?
                         Object.keys(titleObject).slice(0,pageSize).map((key, i) => (
                             <ShayariCard
+                            i={i}
                             key={i}
                             title={titleObject[i]}
                             content={contentObject[i]}
