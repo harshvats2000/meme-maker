@@ -16,6 +16,7 @@ export default function RenameTag(props) {
               title: doc.data().title,
               content: doc.data().content,
               poet: doc.data().poet,
+              english_name: doc.data().english_name,
               tags: doc.data().tags,
               timestamp: doc.data().timestamp
             })

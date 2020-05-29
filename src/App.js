@@ -197,10 +197,10 @@ class App extends Component {
             <h2 style={{fontFamily: 'Alconica', textAlign: 'center'}}>Top Poets</h2>
             <HomePoetCards/>
           </div> 
-          <div>      
+          {/* <div>      
             <h2 style={{fontFamily: 'Alconica', textAlign: 'center'}}>Top Tags</h2>
             <HomeTagCards/>
-          </div> 
+          </div>  */}
           <Footer />
       </div>
       </ThemeProvider>

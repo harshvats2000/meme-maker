@@ -75,6 +75,7 @@ class ShayariCard extends Component {
                 ))
                 }
             </Carousel>
+            <hr/>
             </React.Fragment>
         )
     }

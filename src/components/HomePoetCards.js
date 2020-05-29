@@ -1,107 +1,47 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import mainPoets from '../constants/MainPoets'
+import mirza_ghalib from '../images/mirza_ghalib.jpeg'
+import kumar_vishwas from '../images/kumar_vishwas.jpeg'
+import jaun_elia from '../images/jaun_elia.jpeg'
+import mmeer_taqi_meer from '../images/meer_taqi_meer.jpeg'
+import faiz_ahmed_faiz from '../images/faiz_ahmed_faiz.jpeg'
+import munawwar_rana from '../images/munawwar_rana.jpeg'
 
 class HomePoetCards extends Component {
     render() {
+        const poetsArray = [mirza_ghalib, faiz_ahmed_faiz, kumar_vishwas, munawwar_rana, mmeer_taqi_meer, jaun_elia]
+        const mainPoets = ['mirza ghalib', 'faiz ahmed faiz', 'kumar vishwas', 'munawwar rana', 'mmeer taqi meer', 'jaun elia']
         const tagCardContainerStyle = {
             display: 'flex',
-            flexWrap: 'wrap'
+            overflow: 'scroll'
         }
-        const tagCardStyle = {
-            0: {
-                textDecoration: 'none',
-                fontSize: '20px',
-                textTransform: 'capitalize',
-                border: '1px solid white',
-                color: 'white',
-                boxSizing: 'border-box',
-                textAlign: 'center',
-                lineHeight: '80px',
-                flex: '0 50%',
-                background: 'linear-gradient(to right, #c94b4b, #4b134f)'
-            },
-            1: {
-                textDecoration: 'none',
-                fontSize: '20px',
-                textTransform: 'capitalize',
-                border: '1px solid white',
-                color: 'white',
-                boxSizing: 'border-box',
-                textAlign: 'center',
-                lineHeight: '80px',
-                flex: '0 50%',
-                background: 'linear-gradient(to right, #000000, #0f9b0f)'
-            },
-            2: {
-                textDecoration: 'none',
-                fontSize: '20px',
-                textTransform: 'capitalize',
-                border: '1px solid white',
-                color: 'white',
-                boxSizing: 'border-box',
-                textAlign: 'center',
-                lineHeight: '80px',
-                flex: '0 50%',
-                background: 'linear-gradient(to right, #1e130c, #9a8478)'
-            },
-            3: {
-                textDecoration: 'none',
-                fontSize: '20px',
-                textTransform: 'capitalize',
-                border: '1px solid white',
-                color: 'white',
-                boxSizing: 'border-box',
-                textAlign: 'center',
-                lineHeight: '80px',
-                flex: '0 50%',
-                background: 'linear-gradient(to right, #fdfc47, #24fe41)'
-            },
-            4: {
-                textDecoration: 'none',
-                fontSize: '20px',
-                textTransform: 'capitalize',
-                border: '1px solid white',
-                color: 'white',
-                boxSizing: 'border-box',
-                textAlign: 'center',
-                lineHeight: '80px',
-                flex: '0 50%',
-                background: 'linear-gradient(to right, #00c6ff, #0072ff)'
-            },
-            5: {
-                textDecoration: 'none',
-                fontSize: '20px',
-                textTransform: 'capitalize',
-                border: '1px solid white',
-                color: 'white',
-                boxSizing: 'border-box',
-                textAlign: 'center',
-                lineHeight: '80px',
-                flex: '0 50%',
-                background: 'linear-gradient(to right, #fbd3e9, #bb377d)'
-            },
-            6: {
-                textDecoration: 'none',
-                fontSize: '20px',
-                textTransform: 'capitalize',
-                border: '1px solid white',
-                color: 'white',
-                boxSizing: 'border-box',
-                textAlign: 'center',
-                lineHeight: '80px',
-                flex: '0 50%',
-                background: 'linear-gradient(to right, #f857a6, #ff5858)'
-            }
+        const poetBoxStyle = {
+            margin: '10px',
+            textAlign: 'center'
+        }
+        const imgStyle = {
+            width: '150px',
+            height: '150px',
+            borderRadius: '50%'
+        }
+        const poetNameStyle = {
+            fontSize: '18px',
+            textDecoration: 'none',
+            color: 'crimson'
         }
         return (
             <div style={tagCardContainerStyle}>
                 {
-                    mainPoets.map((tag, i) => {
+                    mainPoets.map((poet, i) => {
                         return (
-                            <Link to={`/poet/${tag}/`} key={i} style={tagCardStyle[i]}>
-                                {tag}
-                            </Link>
+                            <div style={poetBoxStyle} key={i}>
+                                <img src={poetsArray[i]} style={imgStyle} alt='poet_img' />
+                                <div>
+                                    <Link to={`/poet/${poet}/`} style={poetNameStyle}>
+                                        {poet}
+                                    </Link>         
+                                </div>
+                            </div>
                         )
                     })
                 }

@@ -114,11 +114,10 @@ class MenuContainer extends Component {
 
                 <Divider />
 
-                <ListItem>
+                <ListItem onClick={themeToggler}>
                 <ListItemText style={theme === 'dark' ? darkStyle : null}>{theme === 'light' ? 'Light Mode' : 'Dark Mode'}</ListItemText>
                   <SwitchMode
                     checked={theme === 'dark' ? true : false}
-                    onChange={themeToggler}
                     name="checkedA"
                   />
                 </ListItem>
