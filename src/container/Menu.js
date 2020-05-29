@@ -17,8 +17,7 @@ import SwitchMode from '@material-ui/core/Switch';
 
 const styles = {
   paper: {
-    // background: "#363537"
-    background: '#A9A9A9'
+    background: "#363537"
   }
 };
 
@@ -37,7 +36,10 @@ class MenuContainer extends Component {
     }
 
     render() {
-      const { classes } = this.props;
+      const { classes, theme, themeToggler } = this.props;
+      const darkStyle = {
+        color: 'white'
+      }
       const drawerTextLinkStyle = {
         textDecoration: 'none',
         color: 'black'
@@ -53,22 +55,22 @@ class MenuContainer extends Component {
 
                 <Link to='/' style={drawerTextLinkStyle}>
                   <ListItem button>
-                    <ListItemIcon><HomeIcon/></ListItemIcon>
-                    <ListItemText>Home</ListItemText>
+                    <ListItemIcon style={theme === 'dark' ? darkStyle : null}><HomeIcon/></ListItemIcon>
+                    <ListItemText style={theme === 'dark' ? darkStyle : null}>Home</ListItemText>
                   </ListItem>
                 </Link>
 
                 <Link to='/about' style={drawerTextLinkStyle}>
                   <ListItem button>
-                    <ListItemIcon><InfoIcon/></ListItemIcon>
-                    <ListItemText>About Us</ListItemText>
+                    <ListItemIcon style={theme === 'dark' ? darkStyle : null}><InfoIcon/></ListItemIcon>
+                    <ListItemText style={theme === 'dark' ? darkStyle : null}>About Us</ListItemText>
                   </ListItem>
                 </Link>
 
                 <Link to='/suggest' style={drawerTextLinkStyle}>
                   <ListItem button>
-                    <ListItemIcon><RateReviewIcon /></ListItemIcon>
-                    <ListItemText>Suggestions?</ListItemText>
+                    <ListItemIcon style={theme === 'dark' ? darkStyle : null}><RateReviewIcon /></ListItemIcon>
+                    <ListItemText style={theme === 'dark' ? darkStyle : null}>Suggestions?</ListItemText>
                   </ListItem>
                 </Link>
 
@@ -76,29 +78,29 @@ class MenuContainer extends Component {
 
                 <Link to='/tags/sher' style={drawerTextLinkStyle}>
                   <ListItem button>
-                    <ListItemText>Sher</ListItemText>
-                    <ListItemIcon><ArrowRightAltIcon/></ListItemIcon>
+                    <ListItemText style={theme === 'dark' ? darkStyle : null}>Sher</ListItemText>
+                    <ListItemIcon style={theme === 'dark' ? darkStyle : null}><ArrowRightAltIcon/></ListItemIcon>
                   </ListItem>
                 </Link>
 
                 <Link to='/tags/ghazal' style={drawerTextLinkStyle}>
                   <ListItem button>
-                    <ListItemText>Ghazal</ListItemText>
-                    <ListItemIcon><ArrowRightAltIcon/></ListItemIcon>
+                    <ListItemText style={theme === 'dark' ? darkStyle : null}>Ghazal</ListItemText>
+                    <ListItemIcon style={theme === 'dark' ? darkStyle : null}><ArrowRightAltIcon/></ListItemIcon>
                   </ListItem>
                 </Link>
 
                 <Link to='/tags/poems' style={drawerTextLinkStyle}>
                   <ListItem button>
-                    <ListItemText>Poems</ListItemText>
-                    <ListItemIcon><ArrowRightAltIcon/></ListItemIcon>
+                    <ListItemText style={theme === 'dark' ? darkStyle : null}>Poems</ListItemText>
+                    <ListItemIcon style={theme === 'dark' ? darkStyle : null}><ArrowRightAltIcon/></ListItemIcon>
                   </ListItem>
                 </Link>
 
                 <Link to='/poet/' style={drawerTextLinkStyle}>
                   <ListItem button>
-                    <ListItemText>Poets</ListItemText>
-                    <ListItemIcon><ArrowRightAltIcon/></ListItemIcon>
+                    <ListItemText style={theme === 'dark' ? darkStyle : null}>Writers</ListItemText>
+                    <ListItemIcon style={theme === 'dark' ? darkStyle : null}><ArrowRightAltIcon/></ListItemIcon>
                   </ListItem>
                 </Link>
 
@@ -106,20 +108,19 @@ class MenuContainer extends Component {
 
                 <a href='https://www.facebook.com/hindishayarisbest/?modal=admin_todo_tour' target="_blank" rel="noopener noreferrer" style={drawerTextLinkStyle}>
                   <ListItem button>
-                    <ListItemIcon><FacebookIcon/></ListItemIcon>
+                    <ListItemIcon style={theme === 'dark' ? darkStyle : null}><FacebookIcon/></ListItemIcon>
                   </ListItem>
                 </a>
 
                 <Divider />
 
                 <ListItem>
-                <div style={{textAlign: 'center'}}>
+                <ListItemText style={theme === 'dark' ? darkStyle : null}>{theme === 'light' ? 'Light Mode' : 'Dark Mode'}</ListItemText>
                   <SwitchMode
-                    checked={this.props.theme === 'dark' ? true : false}
-                    onChange={this.props.themeToggler}
+                    checked={theme === 'dark' ? true : false}
+                    onChange={themeToggler}
                     name="checkedA"
                   />
-                </div>
                 </ListItem>
 
             </List>

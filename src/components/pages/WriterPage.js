@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import PoetWritings from '../PoetWritings'
@@ -132,7 +132,16 @@ class PoetPage extends Component {
                     <div className='poet-container'>
                         {
                             !poet ? null :
-                            <PoetWritings fetching={fetching} sher={sher} ghazal={ghazal} poems={poems} sherObject={sherObject} ghazalObject={ghazalObject} poemsObject={poemsObject} theme={theme} />
+                            <PoetWritings 
+                            poetEnlgish={poet}
+                            fetching={fetching} 
+                            sher={sher} 
+                            ghazal={ghazal} 
+                            poems={poems} 
+                            sherObject={sherObject} 
+                            ghazalObject={ghazalObject} 
+                            poemsObject={poemsObject} 
+                            theme={theme} />
                         }
                     </div>
                 }

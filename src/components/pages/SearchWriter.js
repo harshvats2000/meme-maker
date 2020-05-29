@@ -56,18 +56,31 @@ class SearchPoet extends Component {
         const poetListStyle = {
             padding: '10px'
         }
+        const lightInputStyle = {
+            padding: '10px',
+            fontSize: '18px',
+            border: 'none'
+        }
+        const darkInputStyle = {
+            padding: '10px',
+            fontSize: '18px',
+            backgroundColor: '#363537',
+            caretColor: 'crimson',
+            border: 'none',
+            color: 'white'
+        }
         return (
             <div>
                 {
                     fetching ? null :
                     <h2 style={{textAlign: 'center', marginBottom: 0}}>
-                        {Math.floor(poetArray.length/10)*10}+ Poets
+                        {Math.floor(poetArray.length/10)*10}+ Writers
                     </h2>
                 }
                 <div style={poetInputStyle}>
-                    <input placeholder='search poet...'
+                    <input placeholder='search writer...'
                     autoFocus
-                    style={{padding: '10px'}}
+                    style={theme === 'light' ? lightInputStyle : darkInputStyle}
                     value={poet}
                     onChange={this.handlePoetChange}></input>
                 </div>

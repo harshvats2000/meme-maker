@@ -63,6 +63,8 @@ class Search extends Component {
         width: '100%',
         margin: '0',
         height: '35px',
+        fontSize: '16px',
+        caretColor: 'crimson'
       }
       const style = {
         position: 'absolute',
@@ -82,7 +84,9 @@ class Search extends Component {
         margin: '0',
         height: '35px',
         color: 'white',
-        backgroundColor: '#363537'
+        backgroundColor: '#363537',
+        fontSize: '16px',
+        caretColor: 'crimson'
       }
       const closeSearch = {
         color: 'red',

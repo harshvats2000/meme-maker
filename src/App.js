@@ -18,8 +18,8 @@ import { GlobalStyles } from "./components/GlobalStyles";
 import { lightTheme, darkTheme } from "./components/Theme"
 import 'aos/dist/aos.css';
 import AOS from 'aos'
-import PoetPage from './components/pages/PoetPage';
-import SearchPoet from './components/pages/SearchPoet';
+import PoetPage from './components/pages/WriterPage';
+import SearchPoet from './components/pages/SearchWriter';
 import HomePoetCards from './components/HomePoetCards';
 // import GetTotalPosts from './functions/GetTotalPosts';
 // import RenameTag from './functions/RenameTag';
@@ -34,6 +34,7 @@ class App extends Component {
         title: [],
         content: [],
         poet: [],
+        poetEnglish: [],
         id: [],
         relatedTags: {},
         totalShayaris: 0,
@@ -116,6 +117,7 @@ class App extends Component {
     var titleArray = [];
     var contentArray = [];
     var poetArray = [];
+    var poetEnglishArr = []
     var idArray = [];
     var tempTagsObject = {};
     var i = 0;
@@ -126,6 +128,7 @@ class App extends Component {
             titleArray.push(doc.data().title);
             contentArray.push(doc.data().content);
             poetArray.push(doc.data().poet);
+            poetEnglishArr.push(doc.data().english_name)
             Object.assign(tempTagsObject, {
               [i]: doc.data().tags
             })
@@ -135,6 +138,7 @@ class App extends Component {
             title: titleArray,
             content: contentArray,
             poet: poetArray,
+            poetEnglish: poetEnglishArr,
             id: idArray,
             relatedTags: Object.assign(this.state.relatedTags, tempTagsObject)
           })
@@ -152,7 +156,7 @@ class App extends Component {
   }
 
   render() {
-    const { theme, tags, shayariObject, title, content, poet, id, relatedTags, totalShayaris } = this.state;
+    const { theme, tags, shayariObject, title, content, poet, poetEnglish, id, relatedTags, totalShayaris } = this.state;
 
     return (
       <BrowserRouter>
@@ -165,16 +169,18 @@ class App extends Component {
           <Header theme={theme} themeToggler={this.themeToggler} tags={tags} shayariObject={shayariObject} />
 
           <Switch>
-            <Route exact path='/' 
-            render={props => <Home 
-                              tags={tags} title={title} content={content} poet={poet} id={id} 
-                              relatedTags={relatedTags} totalShayaris={totalShayaris} theme={theme} />} />
+            <Route exact path='/' render={props => 
+            <Home 
+            tags={tags} title={title} content={content} poet={poet} poetEnglish={poetEnglish} id={id} 
+            relatedTags={relatedTags} totalShayaris={totalShayaris} theme={theme} />} 
+            />
 
             <Route path='/tags/:tag/' render={props => 
             <TagPage 
             tag={props.match.params.tag} theme={theme}
             shayariObject={shayariObject}
-            putIntoShayariObject={this.putIntoShayariObject} />} />
+            putIntoShayariObject={this.putIntoShayariObject} />} 
+            />
 
             <Route exact path='/poet/' render={props => <SearchPoet theme={theme} />} />
             <Route path='/poet/:poet/' render={props => <PoetPage theme={theme}/>} />
@@ -186,6 +192,7 @@ class App extends Component {
             <Route path='*' component={Error404} />
           </Switch>
                 
+          <hr/>
           <div>      
             <h2 style={{fontFamily: 'Alconica', textAlign: 'center'}}>Top Poets</h2>
             <HomePoetCards/>

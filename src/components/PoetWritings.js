@@ -4,8 +4,9 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import SwipeableViews from 'react-swipeable-views';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 import ShayariCard from '../container/ShayariCard'
+import SnackbarContainer from '../container/Snackbar';
+import { setCORS } from "google-translate-api-browser";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -19,9 +20,7 @@ function TabPanel(props) {
         {...other}
       >
         {value === index && (
-          <Box p={3}>
             <Typography component={'div'}>{children}</Typography>
-          </Box>
         )}
       </div>
     );
@@ -34,7 +33,65 @@ class PoetWritings extends Component {
         super()
         this.state = {
             value: 0,
+            snackbar: false,
+            message: '',
+            autoHideDuration: 2000
         }
+    }
+
+    handleCopy = () => {
+      this.setState({
+        snackbar: true,
+        message: 'copied.',
+        autoHideDuration: 2000
+      })
+    }
+
+    handleTranslateEnglish = (e, i) => {
+      this.setState({
+          snackbar: true,
+          message: 'translating...',
+          autoHideDuration: 30000
+      })
+      var content = document.getElementsByClassName(`div${i}`)[3].innerHTML;
+      const translate = setCORS("https://cors-anywhere.herokuapp.com/");
+      translate(content, { to: "en" })
+      .then(res => {
+          this.setState({
+              message: res.text,
+              snackbar: true,
+          })
+      })
+      .catch(err => {
+          console.error(err);
+      });
+    }
+
+    handleTranslateUrdu = (e, i) => {
+      this.setState({
+          snackbar: true,
+          message: 'translating...',
+          autoHideDuration: 50000
+      })
+      var content = document.getElementsByClassName(`div${i}`)[3].innerHTML;
+      const translate = setCORS("https://cors-anywhere.herokuapp.com/");
+      translate(content, { to: "ur" })
+      .then(res => {
+          this.setState({
+              message: res.text,
+              snackbar: true,
+          })
+      })
+      .catch(err => {
+          console.error(err);
+      });
+    }
+
+    handeSnackbarClose = () => {
+      this.setState({
+        snackbar: false,
+        message: '',
+      })
     }
 
     handleChange = (event, newValue) => {
@@ -46,7 +103,7 @@ class PoetWritings extends Component {
     };
 
     render() {
-        const { fetching, sher, ghazal, poems, sherObject, ghazalObject, poemsObject, theme } = this.props;
+        const { fetching, poetEnglish, sher, ghazal, poems, sherObject, ghazalObject, poemsObject, theme } = this.props;
         const { value } = this.state;
         const lightBarStyle = {
             position: 'sticky',
@@ -56,7 +113,7 @@ class PoetWritings extends Component {
           const darkBarStyle = {
             position: 'sticky',
             top: 0,
-            background: '#121212',
+            background: '#363537',
             transition: 'all .5s linear'
         }
         const darkTabStyle = {
@@ -91,8 +148,14 @@ class PoetWritings extends Component {
                     {
                         Object.keys(sherObject).map((key, i) => {
                             return <ShayariCard key={i} 
-                            title={sherObject[key].title} content={sherObject[key].content} 
-                            poet={sherObject[key].poet} relatedTags={sherObject[key].tags} i={i} theme={theme} />
+                            title={sherObject[key].title} 
+                            content={sherObject[key].content} 
+                            poet={sherObject[key].poet} 
+                            relatedTags={sherObject[key].tags} i={i} 
+                            theme={theme} 
+                            handleCopy={this.handleCopy}
+                            handleTranslateEnglish={this.handleTranslateEnglish}
+                            handleTranslateUrdu={this.handleTranslateUrdu} />
                         })
                     }
                   </TabPanel>
@@ -103,8 +166,13 @@ class PoetWritings extends Component {
                     {
                         Object.keys(ghazalObject).map((key, i) => {
                             return <ShayariCard key={i} 
-                            title={ghazalObject[key].title} content={ghazalObject[key].content} 
-                            poet={ghazalObject[key].poet} relatedTags={ghazalObject[key].tags} theme={theme} />
+                            title={ghazalObject[key].title} 
+                            content={ghazalObject[key].content} 
+                            poet={ghazalObject[key].poet} 
+                            relatedTags={ghazalObject[key].tags} 
+                            theme={theme}
+                            handleTranslateEnglish={this.handleTranslateEnglish}
+                            handleTranslateUrdu={this.handleTranslateUrdu} />
                         })
                     }
                   </TabPanel>
@@ -115,12 +183,26 @@ class PoetWritings extends Component {
                     {
                         Object.keys(poemsObject).map((key, i) => {
                             return <ShayariCard key={i} 
-                            title={poemsObject[key].title} content={poemsObject[key].content} 
-                            poet={poemsObject[key].poet} relatedTags={poemsObject[key].tags} theme={theme} />
+                            title={poemsObject[key].title} 
+                            content={poemsObject[key].content} 
+                            poet={poemsObject[key].poet} 
+                            relatedTags={poemsObject[key].tags} 
+                            theme={theme} 
+                            handleCopy={this.handleCopy}
+                            handleTranslateEnglish={this.handleTranslateEnglish}
+                            handleTranslateUrdu={this.handleTranslateUrdu}
+                            poetEnglish={poetEnglish} />
                         })
                     }
                   </TabPanel>
                 </SwipeableViews>
+                
+                <SnackbarContainer
+                message={this.state.message}
+                autoHideDuration={this.state.autoHideDuration}
+                open={this.state.snackbar}
+                handleClose={this.handeSnackbarClose}
+                />
             </div>
         )
     }

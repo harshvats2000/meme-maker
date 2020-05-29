@@ -1,13 +1,9 @@
 import React, { Component } from 'react'
 import '../../styles/Home.css';
-import { Link } from 'react-router-dom'
-import Carousel from '@brainhubeu/react-carousel';
-import '@brainhubeu/react-carousel/lib/style.css';
 import SkeletonContainer from '../../container/Skeleton';
-import Clipboard from 'react-clipboard.js';
-import FilterNoneIcon from '@material-ui/icons/FilterNone';
 import { setCORS } from "google-translate-api-browser";
 import SnackbarContainer from '../../container/Snackbar';
+import ShayariCard from '../../container/ShayariCard';
 
 class Home extends Component {
 
@@ -80,75 +76,30 @@ class Home extends Component {
         });
     }
 
-    // makeSpansFromString = string => {
-    //     string = string.split(" ");
-    //     return string.map((word, i) => {
-    //         console.log(word);
-    //         return <span key={i} onClick={() => alert(1)}>{word} </span>
-    //     })
-    // }
-
     render() {
         const { pageSize } = this.state;
-        const { title, content, poet, relatedTags, totalShayaris, theme } = this.props;
-        const translateBtnStyle = {
-            backgroundColor: '#363537',
-            color: 'white',
-            transition: '0.5s',
-            border: 'none'
-        }
-        const darkShayariCardStyle = {
-            boxShadow: '0 0 4px 1px gainsboro'
-        }
+        const { title, content, poet, poetEnglish, relatedTags, totalShayaris, theme } = this.props;
 
         if(title.length){
             return (
                 <React.Fragment>
                     <h1 style={{textAlign: 'center', fontFamily: 'Alconica'}}>{Math.floor(totalShayaris/10) * 10}+ Writings</h1>
+                    <hr/>
                     {
                         title.slice(0, pageSize).map((title, i) => {
                             return (
-                                <React.Fragment key={i}>
-                                <div className={`shayariCard div${i}`}
-                                data-aos='fade-up'
-                                style={theme === 'dark' ? darkShayariCardStyle : null}>
-                                    <div className={`shayariCardHeader div${i}`}>
-                                        <button style={theme === 'dark' ? translateBtnStyle : null} className='translateBtn' onClick={e => this.handleTranslateEnglish(e, i)}>English</button>
-                                        <button style={theme === 'dark' ? translateBtnStyle : null} className='translateBtn' onClick={e => this.handleTranslateUrdu(e, i)}>Urdu</button>
-                                        <Clipboard 
-                                        style={theme === 'dark' ? translateBtnStyle : null}
-                                        className='copyBtn'
-                                        data-clipboard-text={
-                                            title.charAt(0).toUpperCase() + title.slice(1) + '\n' 
-                                            + content[i].charAt(0).toUpperCase() + content[i].slice(1) 
-                                            + '\nbestshayaris.com'}
-                                        onClick={this.handleCopy}>
-                                        <FilterNoneIcon />
-                                        </Clipboard>
-                                    </div>
-                                    <div className={`shayariCardTitle div${i}`}>{title}</div><br/>
-                                    {/* <div className={`shayariCardContent div${i}`}>{this.makeSpansFromString(content[i])}</div> */}
-                                    <div className={`shayariCardContent div${i}`}>{content[i]}</div>
-                                    <div className={`div${i}`} style={{textAlign: 'center'}}>
-                                        <span>{poet[i]}</span>
-                                    </div>
-                                </div>
-                                <hr/>
-                                <Carousel
-                                slidesPerPage={4}
-                                slidesPerScroll={4}
-                                keepDirectionWhenDragging
-                                >
-                                    {
-                                        relatedTags[i].map(tag => (
-                                        <Link to={`/tags/${tag}/`}
-                                        style={theme === 'dark' ? translateBtnStyle : null} 
-                                        className='tagCards' key={tag}>{tag}</Link>
-                                    ))
-                                    }
-                                </Carousel>
-                                <hr/>
-                                </React.Fragment>
+                                <ShayariCard
+                                key={i}
+                                title={title}
+                                content={content[i]}
+                                poet={poet[i]}
+                                poetEnglish={poetEnglish[i]}
+                                relatedTags={relatedTags[i]}
+                                theme={theme}
+                                handleCopy={this.handleCopy}
+                                handleTranslateEnglish={this.handleTranslateEnglish}
+                                handleTranslateUrdu={this.handleTranslateUrdu}
+                                />
                             )
                         })
                     }
@@ -162,6 +113,7 @@ class Home extends Component {
                         </div>
                         : null
                     }
+
                     <SnackbarContainer
                     autoHideDuration={this.state.autoHideDuration} 
                     open={this.state.snackbar} 

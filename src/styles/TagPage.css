@@ -1,63 +1,7 @@
-.shayariCard {
-    margin: 12px;
-    padding: 9px;
-    box-shadow: 0px 0px 6px 6px gainsboro;
-}
-
-.shayariCardHeader {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 5px;
-}
-
-.shayariCardTitle {
-    color: crimson;
-    font-family: monospace;
-    font-size: xx-large;
-    text-align: center;
-}
-
-.shayariCardContent {
-    font-family: monospace;
-    font-size: x-large;
-    margin-bottom: 1rem;
-    white-space: pre-wrap;
-    text-align: center;
-}
-
-.shayariCardLinks {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.copyBtn {
-    background-color: white;
-    font-family: monospace;
-}
-
-.translateBtn {
-    padding: 3px;
-    background-color: white;
-    font-family: monospace;
-    margin-right: 3px;
-}
-
-.relatedLinks {
-    text-decoration: none;
-    font-family: monospace;
-    font-size: 16px;
-}
-
-.shayariCardPoet {
-    font-family: monospace;
-    text-transform: capitalize;
-    display: flex;
-    justify-content: flex-end;
-}
-
 .seeMoreDiv {
     text-align: center;
     margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .seeMoreSpan {

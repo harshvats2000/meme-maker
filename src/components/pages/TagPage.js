@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/firestore'
-import { Link } from 'react-router-dom';
 import '../../styles/TagPage.css';
 import SnackbarContainer from '../../container/Snackbar';
-import Clipboard from 'react-clipboard.js';
-import Carousel from '@brainhubeu/react-carousel';
-import '@brainhubeu/react-carousel/lib/style.css';
 import SkeletonContainer from '../../container/Skeleton';
 import { setCORS } from "google-translate-api-browser";
-import FilterNoneIcon from '@material-ui/icons/FilterNone';
+import ShayariCard from '../../container/ShayariCard';
 
 
 class TagPage extends Component {
@@ -35,6 +31,7 @@ class TagPage extends Component {
         var tempTitleObject = {};
         var tempContentObject = {};
         var tempPoetObject = {};
+        var tempPoetEnglishObject = {};
         var tempRelatedTagsObject = {};
             firebase.firestore().collection('tags').doc(this.props.tag).collection('shayaris').limit(50).orderBy('timestamp', 'desc').get()
             .then(snap => {
@@ -48,6 +45,9 @@ class TagPage extends Component {
                     })
                     Object.assign(tempPoetObject, {
                         [i]: doc.data().poet
+                    })
+                    Object.assign(tempPoetEnglishObject, {
+                        [i]: doc.data().english_name
                     })
                     Object.assign(tempRelatedTagsObject, {
                         [i]: doc.data().tags.map(tag => tag.toLowerCase())
@@ -63,6 +63,7 @@ class TagPage extends Component {
                                     titleObject: tempTitleObject,
                                     contentObject: tempContentObject,
                                     poetObject: tempPoetObject,
+                                    poetEnglishObject: tempPoetEnglishObject,
                                     relatedTagsObject: tempRelatedTagsObject,
                                     totalShayaris: doc.data().totalShayaris
                                     }
@@ -72,17 +73,6 @@ class TagPage extends Component {
                     })
                 })
             })
-    }
-
-    handleContentClick = (e, content) => {
-        // var s = window.getSelection();
-        // s.modify('extend','backward','word');        
-        // var b = s.toString();
-        
-        // s.modify('extend','forward','word');
-        // var a = s.toString();
-        // s.modify('move','forward','character');
-        e.target.innerHTML = content;
     }
 
     handleSnackbarClose = () => {
@@ -149,20 +139,12 @@ class TagPage extends Component {
     render() {
         const { tag, theme } = this.props;
         const { shayariObject, pageSize, message, autoHideDuration } = this.state;
-        const translateBtnStyle = {
-            backgroundColor: '#363537',
-            color: 'white',
-            transition: '0.5s',
-            border: 'none'
-        }
-        const darkShayariCardStyle = {
-            boxShadow: '0 0 4px 1px gainsboro'
-        }
 
         if(shayariObject[tag]){
             var titleObject = shayariObject[tag].titleObject;
             var contentObject = shayariObject[tag].contentObject;
             var poetObject = shayariObject[tag].poetObject;
+            var poetEnglishObject = shayariObject[tag].poetEnglishObject;
             var tagsObject = shayariObject[tag].relatedTagsObject;
             return (
                 <div id='tagPage'>
@@ -171,58 +153,18 @@ class TagPage extends Component {
                     {
                         shayariObject[tag].titleObject[0] ?
                         Object.keys(titleObject).slice(0,pageSize).map((key, i) => (
-                            <React.Fragment key={i}>
-                            <div className={`shayariCard div${i}`}
-                            data-aos='fade-up'
-                            style={theme === 'dark' ? darkShayariCardStyle : null}>
-    
-                                <div className={`shayariCardHeader div${i}`}>
-                                    <button style={theme === 'dark' ? translateBtnStyle : null} className='translateBtn' onClick={e => this.handleTranslateEnglish(e, i)}>English</button>
-                                    <button style={theme === 'dark' ? translateBtnStyle : null} className='translateBtn' onClick={e => this.handleTranslateUrdu(e, i)}>Urdu</button>
-                                    <Clipboard 
-                                    style={theme === 'dark' ? translateBtnStyle : null}
-                                    className='copyBtn'
-                                    data-clipboard-text={
-                                        titleObject[i].charAt(0).toUpperCase() + titleObject[i].slice(1) + '\n' 
-                                        + contentObject[i].charAt(0).toUpperCase() + contentObject[i].slice(1) 
-                                        + '\nbestshayaris.com'}
-                                    onClick={this.handleCopy}>
-                                    <FilterNoneIcon />
-                                    </Clipboard>
-                                </div>
-    
-                                <div className={`div${i} shayariCardTitle`}>
-                                    {titleObject[i].charAt(0).toUpperCase() + titleObject[i].slice(1)}
-                                </div>
-    
-                                <br/>
-    
-                                <div 
-                                className={`div${i} shayariCardContent`} 
-                                onClick={e => this.handleContentClick(e, contentObject[i])}>
-                                    {contentObject[i].length > 200 ? contentObject[i].substring(0,200) + '....' : contentObject[i]}
-                                </div>
-    
-                                <div className='shayariCardPoet'>
-                                    <span>{poetObject[i]}</span>
-                                </div>
-                            </div>
-                            <hr/>
-                            <Carousel
-                            slidesPerPage={4}
-                            slidesPerScroll={4}
-                            keepDirectionWhenDragging
-                            >
-                                {
-                                    tagsObject[i].map(tag => (
-                                    <Link 
-                                    style={theme === 'dark' ? translateBtnStyle : null} 
-                                    to={`/tags/${tag}`} className='tagCards' key={tag}>{tag}</Link>
-                                ))
-                                }
-                            </Carousel>
-                            <hr/>
-                            </React.Fragment>
+                            <ShayariCard
+                            key={i}
+                            title={titleObject[i]}
+                            content={contentObject[i]}
+                            poet={poetObject[i]}
+                            poetEnglish={poetEnglishObject[i]}
+                            relatedTags={tagsObject[i]}
+                            theme={theme}
+                            handleTranslateEnglish={this.handleTranslateEnglish}
+                            handleTranslateUrdu={this.handleTranslateUrdu}
+                            handleCopy={this.handleCopy}
+                            />
                         ))
                         : <React.Fragment>
                             {this.fetchContent()}
