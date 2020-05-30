@@ -17,7 +17,7 @@ class SearchPoet extends Component {
     componentDidMount() {
         var poetArray = []
         var ref = firebase.firestore().collection('poets')
-        ref.get()
+        ref.orderBy('english_name').get()
         .then(snap => {
             snap.forEach(doc => {
                 poetArray.push(doc.data().english_name)
