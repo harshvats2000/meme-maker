@@ -103,7 +103,7 @@ class PoetWritings extends Component {
     };
 
     render() {
-        const { fetching, poetEnglish, sher, ghazal, poems, sherObject, ghazalObject, poemsObject, theme } = this.props;
+        const { fetching, poetHindi, poetEnglish, sher, ghazal, poems, sherObject, ghazalObject, poemsObject, theme } = this.props;
         const { value } = this.state;
         const lightBarStyle = {
             position: 'sticky',
@@ -143,15 +143,16 @@ class PoetWritings extends Component {
                 >
                   <TabPanel value={value} index={0} >
                     {
-                      fetching ? null : (sher === 0 ? <h4>0 Sher</h4> : null)
+                      fetching ? <h3>Fetching...</h3> : (sher === 0 ? <h4>0 Sher</h4> : null)
                     }
                     {
                         Object.keys(sherObject).map((key, i) => {
                             return <ShayariCard key={i} i={i}
                             title={sherObject[key].title} 
                             content={sherObject[key].content} 
-                            poet={sherObject[key].poet} 
-                            relatedTags={sherObject[key].tags} i={i} 
+                            poetHindi={poetHindi}
+                            poetEnglish={poetEnglish}
+                            relatedTags={sherObject[key].tags}
                             theme={theme} 
                             handleCopy={this.handleCopy}
                             handleTranslateEnglish={this.handleTranslateEnglish}
@@ -161,7 +162,7 @@ class PoetWritings extends Component {
                   </TabPanel>
                   <TabPanel value={value} index={1} >
                     {
-                      fetching ? null : (ghazal === 0 ? <h4>0 Ghazal</h4> : null)
+                      fetching ? <h3>Fetching...</h3> : (ghazal === 0 ? <h4>0 Ghazal</h4> : null)
                     }
                     {
                         Object.keys(ghazalObject).map((key, i) => {
@@ -178,7 +179,7 @@ class PoetWritings extends Component {
                   </TabPanel>
                   <TabPanel value={value} index={2} >
                     {
-                      fetching ? null : (poems === 0 ? <h4>0 Poems</h4> : null)
+                      fetching ? <h3>Fetching...</h3> : (poems === 0 ? <h4>0 Poems</h4> : null)
                     }
                     {
                         Object.keys(poemsObject).map((key, i) => {

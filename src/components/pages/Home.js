@@ -93,7 +93,7 @@ class Home extends Component {
                                 i={i}
                                 title={title}
                                 content={content[i]}
-                                poet={poet[i]}
+                                poetHindi={poet[i]}
                                 poetEnglish={poetEnglish[i]}
                                 relatedTags={relatedTags[i]}
                                 theme={theme}

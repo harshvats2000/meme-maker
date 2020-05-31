@@ -11,7 +11,7 @@ import Edit from './components/pages/Edit';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import About from './components/pages/About';
-import HomeTagCards from './components/HomeTagCards';
+// import HomeTagCards from './components/HomeTagCards';
 import SuggestionPage from './components/pages/SuggestionPage';
 import {ThemeProvider} from "styled-components";
 import { GlobalStyles } from "./components/GlobalStyles";

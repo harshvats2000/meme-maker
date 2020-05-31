@@ -13,16 +13,12 @@ class ShayariCard extends Component {
     }
     
     render() {
-        const { title, content, poet, poetEnglish, relatedTags, theme, i, handleCopy, handleTranslateEnglish, handleTranslateUrdu } = this.props;
-        // console.log(poet);
+        const { title, content, poetHindi, poetEnglish, relatedTags, theme, i, handleCopy, handleTranslateEnglish, handleTranslateUrdu } = this.props;
         const translateBtnStyle = {
             backgroundColor: '#363537',
             color: 'white',
             transition: '0.5s',
             border: 'none'
-        }
-        const darkShayariCardStyle = {
-            // boxShadow: '0 0 4px 1px gainsboro'
         }
         const poetLinkStyle = {
             textDecoration: 'none',
@@ -31,8 +27,7 @@ class ShayariCard extends Component {
 
         return (
             <React.Fragment>
-            <div className={`shayariCard div${i}`}
-            style={theme === 'dark' ? darkShayariCardStyle : null}>
+            <div className={`shayariCard div${i}`}>
 
                 <div className={`shayariCardHeader div${i}`}>
                     <button style={theme === 'dark' ? translateBtnStyle : null} className='translateBtn' onClick={e => handleTranslateEnglish(e, i)}>English</button>
@@ -43,7 +38,7 @@ class ShayariCard extends Component {
                     data-clipboard-text={
                         title.charAt(0).toUpperCase() + title.slice(1) + '\n' 
                         + content.charAt(0).toUpperCase() + content.slice(1) 
-                        + `\n—${poet}`
+                        + `\n—${poetHindi}`
                         + '\n\nbestshayaris.com'}
                     onClick={handleCopy}>
                     <FilterNoneIcon />
@@ -59,7 +54,7 @@ class ShayariCard extends Component {
 
                 <div className={`div${i}`} style={{textAlign: 'center'}}>
                     <span>
-                        <Link style={poetLinkStyle} to={`/poet/${poetEnglish}/`} >{poet}</Link>
+                        <Link style={poetLinkStyle} to={`/poet/${poetEnglish}/`} >{poetHindi}</Link>
                     </span>
                 </div>
             </div>

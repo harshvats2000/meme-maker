@@ -5,7 +5,6 @@ import 'firebase/firestore'
 class EditFinal extends Component {
 
     handleDelete = e => {
-        console.log(this.props.relatedTags);
         this.props.relatedTags.forEach((tag, i) => {
             var ref = firebase.firestore().collection('tags').doc(tag).collection('shayaris').where('title', '==' , this.props.title);
             ref.get()
@@ -23,9 +22,65 @@ class EditFinal extends Component {
                                     firebase.firestore().collection('tags').doc(tag).delete()
                                 }
                             })
-                            if(i === this.props.relatedTags.length-1){
-                                this.props.closeEditing()
-                            }
+                            .then(() => {
+                                var ref = firebase.firestore().collection('poets').doc(this.props.poet)
+                                ref.get()
+                                .then(doc => {
+                                    if(i === this.props.relatedTags.length-1){
+                                        //if sher > 0
+                                        if(doc.data().sher > 0) {
+                                            ref.collection('sher').where('title', '==', this.props.title).get()
+                                            .then(snap => {
+                                                snap.forEach(doc => {
+                                                    ref.collection('sher').doc(doc.id).delete()
+                                                })
+                                            })
+                                            .then(() => {
+                                                ref.update({
+                                                    sher: firebase.firestore.FieldValue.increment(-1)
+                                                })
+                                                .then(() => {
+                                                    this.props.closeEditing()
+                                                })
+                                            })
+                                        }
+                                        //if ghazal > 0
+                                        if(doc.data().ghazal > 0) {
+                                            ref.collection('ghazal').where('title', '==', this.props.title).get()
+                                            .then(snap => {
+                                                snap.forEach(doc => {
+                                                    ref.collection('ghazal').doc(doc.id).delete()
+                                                })
+                                            })
+                                            .then(() => {
+                                                ref.update({
+                                                    ghazal: firebase.firestore.FieldValue.increment(-1)
+                                                })
+                                                .then(() => {
+                                                    this.props.closeEditing()
+                                                })
+                                            })
+                                        }
+                                        //if poems > 0
+                                        if(doc.data().poems > 0) {
+                                            ref.collection('poems').where('title', '==', this.props.title).get()
+                                            .then(snap => {
+                                                snap.forEach(doc => {
+                                                    ref.collection('poems').doc(doc.id).delete()
+                                                })
+                                            })
+                                            .then(() => {
+                                                ref.update({
+                                                    poems: firebase.firestore.FieldValue.increment(-1)
+                                                })
+                                                .then(() => {
+                                                    this.props.closeEditing()
+                                                })
+                                            })
+                                        }
+                                    }
+                                })
+                            })
                         })
                     })
                     .catch(err => {

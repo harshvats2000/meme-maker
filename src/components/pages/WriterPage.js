@@ -3,12 +3,14 @@ import { withRouter } from 'react-router-dom'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import PoetWritings from '../PoetWritings'
+import no_profile_pic from '../../images/no_profile_pic.jpeg'
 
 class PoetPage extends Component {
     constructor(props) {
         super(props)
         this.state = {
             poet: props.match.params.poet,
+            pic_url: '',
             fetching: true,
             poet_hindi: '',
             sher: 0,
@@ -43,7 +45,8 @@ class PoetPage extends Component {
 
                     this.setState({ 
                         poet: doc.data().english_name,
-                        poet_hindi: doc.id 
+                        poet_hindi: doc.id,
+                        pic_url: doc.data().pic_url
                     })
                 })
             })
@@ -121,10 +124,21 @@ class PoetPage extends Component {
             padding: '15px',
             textAlign: 'center',
         }
+        const profile_pic_style = {
+            height: '120px',
+            width: '120px',
+            borderRadius: '50%',
+            marginTop: '15px'
+        }
         return (
             <div>
-                <div style={poetNameStyle}>
-                    {poet_hindi}
+                <div>
+                    <div style={{textAlign: 'center'}}>
+                        <img src={this.state.pic_url ? this.state.pic_url : no_profile_pic} alt='writer_profile_pic' style={profile_pic_style} />
+                    </div>
+                    <div style={poetNameStyle}>
+                        {poet_hindi}
+                    </div>
                 </div>
                 {
                     !this.state.poet ? 
@@ -133,8 +147,9 @@ class PoetPage extends Component {
                         {
                             !poet ? null :
                             <PoetWritings 
-                            poetEnlgish={poet}
                             fetching={fetching} 
+                            poetEnglish={poet}
+                            poetHindi={poet_hindi}
                             sher={sher} 
                             ghazal={ghazal} 
                             poems={poems} 

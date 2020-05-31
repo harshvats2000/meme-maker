@@ -11,9 +11,10 @@ class Edit extends Component {
             tag: '',
             title: [],
             content: [],
+            poets: [],
             timestamp: [],
             id: [],
-            authenticated: false,
+            authenticated: true,
             password: '',
             relatedTags: {},
             editing: false,
@@ -41,6 +42,7 @@ class Edit extends Component {
     fetchPosts = () => {
         var titleArray = [];
         var contentArray = [];
+        var poetsArray = [];
         var idArray = [];
         var timestampArray = [];
         var tempTagsObject = {};
@@ -50,6 +52,7 @@ class Edit extends Component {
             snap.forEach(doc => {
                 titleArray.push(doc.data().title)
                 contentArray.push(doc.data().content)
+                poetsArray.push(doc.data().poet)
                 idArray.push(doc.id)
                 timestampArray.push(doc.data().timestamp)
                 Object.assign(tempTagsObject, {
@@ -60,6 +63,7 @@ class Edit extends Component {
             this.setState(prev => ({
                 title: titleArray,
                 content: contentArray,
+                poets: poetsArray,
                 timestamp: timestampArray,
                 id: idArray,
                 relatedTags: tempTagsObject
@@ -84,6 +88,7 @@ class Edit extends Component {
             message: 'successfully deleted',
             title: [],
             content: [],
+            poet: [],
             id: [],
             relatedTags: {}
         })
@@ -97,14 +102,14 @@ class Edit extends Component {
     }
 
     render() {
-        const { i, title, content, relatedTags, id, timestamp, tag} = this.state;
+        const { i, title, content, poets, relatedTags, id, timestamp, tag} = this.state;
         return (
             !this.state.authenticated 
-            // ? <input placeholder='password' onChange={(e) => this.authMe(e)}></input>
-            ? <h3>Under maintainance for some time</h3>
+            ? <input placeholder='password' onChange={(e) => this.authMe(e)}></input>
+            // ? <h3>Under maintainance for some time</h3>
             :
             this.state.editing
-            ? <EditFinal tag={tag} relatedTags={relatedTags[i]} title={title[i]} content={content[i]} timestamp={timestamp[i]} id={id[i]} closeEditing={this.closeEditing} />
+            ? <EditFinal tag={tag} relatedTags={relatedTags[i]} title={title[i]} content={content[i]} poet={poets[i]} timestamp={timestamp[i]} id={id[i]} closeEditing={this.closeEditing} />
             : <div>
             <select value={tag} onChange={e => this.handleTagChange(e)}>
                 {

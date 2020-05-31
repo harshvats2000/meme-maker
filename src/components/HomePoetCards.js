@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom'
 import mirza_ghalib from '../images/mirza_ghalib.jpeg'
 import kumar_vishwas from '../images/kumar_vishwas.jpeg'
 import jaun_elia from '../images/jaun_elia.jpeg'
-import mmeer_taqi_meer from '../images/meer_taqi_meer.jpeg'
+import meer_taqi_meer from '../images/meer_taqi_meer.jpeg'
 import faiz_ahmed_faiz from '../images/faiz_ahmed_faiz.jpeg'
 import munawwar_rana from '../images/munawwar_rana.jpeg'
 
 class HomePoetCards extends Component {
     render() {
-        const poetsArray = [mirza_ghalib, faiz_ahmed_faiz, kumar_vishwas, munawwar_rana, mmeer_taqi_meer, jaun_elia]
-        const mainPoets = ['mirza ghalib', 'faiz ahmed faiz', 'kumar vishwas', 'munawwar rana', 'mmeer taqi meer', 'jaun elia']
+        const poetsArray = [mirza_ghalib, faiz_ahmed_faiz, kumar_vishwas, munawwar_rana, meer_taqi_meer, jaun_elia]
+        const mainPoets = ['mirza ghalib', 'faiz ahmed faiz', 'kumar vishwas', 'munawwar rana', 'meer taqi meer', 'jaun elia']
         const tagCardContainerStyle = {
             display: 'flex',
             overflow: 'scroll'

@@ -12,6 +12,7 @@
 
 .shayariCardTitle {
     color: crimson;
+    margin-top: 10px;
     font-family: monospace;
     font-size: xx-large;
     text-align: center;
@@ -19,7 +20,7 @@
 
 .shayariCardContent {
     font-family: monospace;
-    font-size: x-large;
+    font-size: 18px;
     margin-bottom: 1rem;
     white-space: pre-wrap;
     text-align: center;

@@ -158,7 +158,7 @@ class TagPage extends Component {
                             key={i}
                             title={titleObject[i]}
                             content={contentObject[i]}
-                            poet={poetObject[i]}
+                            poetHindi={poetObject[i]}
                             poetEnglish={poetEnglishObject[i]}
                             relatedTags={tagsObject[i]}
                             theme={theme}
