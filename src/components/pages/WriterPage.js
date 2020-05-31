@@ -22,6 +22,10 @@ class PoetPage extends Component {
         }
     }
 
+    handleShare = () => {
+        console.log(navigator);
+    }
+
     fetchWritings = () => {
         var poems = 0;
         var sher = 0;
@@ -106,6 +110,14 @@ class PoetPage extends Component {
             this.setState({
                 poet: this.props.match.params.poet
             }, () => {
+                this.setState({
+                    sher: 0,
+                ghazal: 0,
+                poems: 0,
+                sherObject: [],
+                poemsObject: [],
+                ghazalObject: []
+                })
                 this.fetchWritings();
             })
         }
@@ -128,13 +140,19 @@ class PoetPage extends Component {
             height: '120px',
             width: '120px',
             borderRadius: '50%',
-            marginTop: '15px'
+            marginTop: '15px',
+            verticalAlign: 'middle'
+        }
+        const share_btn_style = {
+            position: 'relative',
+            left: '30px'
         }
         return (
             <div>
                 <div>
                     <div style={{textAlign: 'center'}}>
                         <img src={this.state.pic_url ? this.state.pic_url : no_profile_pic} alt='writer_profile_pic' style={profile_pic_style} />
+                        <button style={share_btn_style} onClick={this.handleShare}>share</button>
                     </div>
                     <div style={poetNameStyle}>
                         {poet_hindi}
