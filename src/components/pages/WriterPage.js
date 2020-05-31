@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import PoetWritings from '../PoetWritings'
+import ShareIcon from '@material-ui/icons/Share';
 import no_profile_pic from '../../images/no_profile_pic.jpeg'
 
 class PoetPage extends Component {
@@ -23,7 +24,13 @@ class PoetPage extends Component {
     }
 
     handleShare = () => {
-        console.log(navigator);
+        if(navigator.share) {
+            navigator.share({
+                url: window.location.href
+            })
+        } else {
+            console.log('no')
+        }
     }
 
     fetchWritings = () => {
@@ -152,7 +159,7 @@ class PoetPage extends Component {
                 <div>
                     <div style={{textAlign: 'center'}}>
                         <img src={this.state.pic_url ? this.state.pic_url : no_profile_pic} alt='writer_profile_pic' style={profile_pic_style} />
-                        <button style={share_btn_style} onClick={this.handleShare}>share</button>
+                        <ShareIcon style={share_btn_style} onClick={this.handleShare} />
                     </div>
                     <div style={poetNameStyle}>
                         {poet_hindi}
