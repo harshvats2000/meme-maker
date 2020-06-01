@@ -42,31 +42,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // var from = 'अहमद फ़राज़'
-    // var to = 'ahmad faraaz'
-    // var ref = firebase.firestore()
-    // ref.collection('tags').get()
-    // .then(snap => {
-    //   snap.forEach(doc => {
-    //     var ref2 = ref.collection('tags').doc(doc.id).collection('shayaris')
-    //     ref2.where('poet', '==', from).get()
-    //     .then(snap => {
-    //       snap.forEach(doc => {
-    //         ref2.doc(doc.id).update({
-    //           english_name: to
-    //         })
-    //       })
-    //     })
-    //   })
-    // })
-    // .then(() => {
-    //   ref.collection('poets').doc(from).update({
-    //     english_name: to
-    //   })
-    //   .then(() => {
-    //     console.log('done')
-    //   })
-    // })
 
     AOS.init({
       once: 'true'

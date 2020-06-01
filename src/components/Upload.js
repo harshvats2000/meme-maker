@@ -69,7 +69,7 @@ class Upload extends Component {
             titleAvailable: true
         })
         this.props.tags.map(tag => {
-            firebase.firestore().collection('tags').doc(tag).collection('shayaris').where('title', '==', e.target.value).get()
+            return firebase.firestore().collection('tags').doc(tag).collection('shayaris').where('title', '==', e.target.value).get()
             .then(snap => {
                 snap.forEach(doc => {
                     this.setState({
@@ -296,8 +296,7 @@ class Upload extends Component {
 
     render() {
         const ruleListStyle = {
-            padding: '6px',
-            fontFamily: 'alconica',
+            padding: '3px',
             fontSize: '18px'
         }
         return (
@@ -312,7 +311,7 @@ class Upload extends Component {
                     <li style={ruleListStyle}>Title and content cannot be empty.</li>
                     <li style={ruleListStyle}>Atleast one tag should be assigned to the post, either by selecting from the already uploaded tags or by uploading a new tag.</li>
                     <li style={ruleListStyle}>Only one new tag can be added.</li>
-                    <li style={ruleListStyle}>A post must not contain any pair of these three tags 'sher', 'ghazal', 'poems'.</li>
+                    <li style={ruleListStyle}>A post must not contain any pair of these three tags <i>sher</i>, <i>ghazal</i>, <i>poems</i>.</li>
                     <li style={ruleListStyle}>Either both hindi and english names of the writer should be uploaded or both should remain empty.</li>
                     <li style={ruleListStyle}>Writings with empty writer name field are uploaded as anonymous.</li>
                 </ol>
@@ -335,7 +334,7 @@ class Upload extends Component {
                         ))}
                     </Select>
 
-                    <button className='newTagBtn' onClick={this.showNewTagInput}>New Tag</button>
+                    <button className='newTagBtn' style={{marginTop: '15px'}} onClick={this.showNewTagInput}>New Tag</button>
                     {
                         this.state.newTagInput ?
                         <TextField
@@ -370,7 +369,7 @@ class Upload extends Component {
                       onChange={e => this.handleContentChange(e)}
                     />
 
-                    <select onChange={e => this.handlePoetChange(e)}>
+                    <select onChange={e => this.handlePoetChange(e)} style={{marginBottom: '15px', marginTop: '15px'}}>
                         <option value=''>--select Writer--</option>
                         {
                             this.state.poets_english_arr.slice().sort().map((poet, i) => (

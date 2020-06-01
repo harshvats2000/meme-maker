@@ -4,6 +4,7 @@ import firebase from 'firebase/app'
 import 'firebase/firestore'
 import PoetWritings from '../PoetWritings'
 import ShareIcon from '@material-ui/icons/Share';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import no_profile_pic from '../../images/no_profile_pic.jpeg'
 
 class PoetPage extends Component {
@@ -22,10 +23,50 @@ class PoetPage extends Component {
             ghazalObject: []
         }
     }
+    
+    componentDidMount() {
+        window.scrollTo(0, 0)
+        this.fetchWritings()
+        window.addEventListener('scroll', this.scrollToTop)
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.scrollToTop)
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        window.scrollTo(0, 0)
+        if(prevProps.match.params.poet !== this.props.match.params.poet) {
+            this.setState({
+                poet: this.props.match.params.poet
+            }, () => {
+                this.setState({
+                    sher: 0,
+                    ghazal: 0,
+                    poems: 0,
+                    sherObject: [],
+                    poemsObject: [],
+                    ghazalObject: []
+                })
+                this.fetchWritings();
+            })
+        }
+    }
+
+    scrollToTop = () => {
+        var element = document.getElementById('scroll-btn')
+        if(window.pageYOffset > 232) {
+            element.style.display = 'block'
+        } else {
+            element.style.display = 'none'
+        }
+    }
+    
 
     handleShare = () => {
         if(navigator.share) {
             navigator.share({
+                title: `Take a look at all of the writings of ${this.props.match.params.poet}.`,
                 url: window.location.href
             })
         } else {
@@ -111,29 +152,6 @@ class PoetPage extends Component {
         })
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        window.scrollTo(0, 0)
-        if(prevProps.match.params.poet !== this.props.match.params.poet) {
-            this.setState({
-                poet: this.props.match.params.poet
-            }, () => {
-                this.setState({
-                    sher: 0,
-                ghazal: 0,
-                poems: 0,
-                sherObject: [],
-                poemsObject: [],
-                ghazalObject: []
-                })
-                this.fetchWritings();
-            })
-        }
-    }
-
-    componentDidMount() {
-        window.scrollTo(0, 0)
-        this.fetchWritings()
-    }
 
     render() {
         const { poet, poet_hindi, fetching, sher, ghazal, poems, sherObject, ghazalObject, poemsObject } = this.state;
@@ -148,11 +166,20 @@ class PoetPage extends Component {
             width: '120px',
             borderRadius: '50%',
             marginTop: '15px',
-            verticalAlign: 'middle'
+            verticalAlign: 'middle',
+            position: 'relative',
+            left: '12px'
         }
         const share_btn_style = {
             position: 'relative',
             left: '30px'
+        }
+        const scroll_btn_style = {
+            position: 'fixed',
+            bottom: '10px',
+            right: '10px',
+            display: 'none',
+            fontSize: '30px'
         }
         return (
             <div>
@@ -186,6 +213,11 @@ class PoetPage extends Component {
                     </div>
                 }
                 <hr/>
+                
+                <ArrowUpwardIcon 
+                id='scroll-btn'
+                style={scroll_btn_style} 
+                onClick={() => window.scroll({ top: 0, left: 0, behavior: 'smooth'})} />
             </div>
         )
     }
