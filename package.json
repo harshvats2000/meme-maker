@@ -18,10 +18,13 @@
     "react": "^16.8.6",
     "react-clipboard.js": "^2.0.16",
     "react-dom": "^16.8.6",
+    "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.0.0",
     "react-spinners": "^0.8.3",
     "react-swipeable-views": "^0.13.9",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
     "styled-components": "^5.1.0",
     "universal-style-loader": "^0.16.3"
   },

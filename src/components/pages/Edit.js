@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import EditFinal from '../EditFinal';
@@ -144,4 +146,8 @@ class Edit extends Component {
     }
 }
 
-export default Edit
+const mapStateToProps = state => ({
+    tags: state.tags.tags
+})
+
+export default connect(mapStateToProps)(Edit)

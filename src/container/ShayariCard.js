@@ -1,4 +1,9 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { showSnackbar, clearSnackbar } from '../actions/snackbar'
+import { translateToEnglish, translateToUrdu } from '../functions/Translate'
+
 import Clipboard from 'react-clipboard.js';
 import FilterNoneIcon from '@material-ui/icons/FilterNone';
 import { Link } from 'react-router-dom'
@@ -11,9 +16,32 @@ class ShayariCard extends Component {
     handleContentClick = (e, content) => {
         e.target.innerHTML = content;
     }
+
+    handleCopy = () => {
+        this.props.open ? this.props.clearSnackbar() : this.props.showSnackbar('copied.', 2000)
+    }
+
+     translate =  e => {
+        var { showSnackbar } = this.props
+        showSnackbar('Fetching...', 30000)              //show fetching message instantly
+        var content = this.props.shayari.content;
+        if(e.target.name === 'english') {
+            translateToEnglish(content)
+            .then(res => showSnackbar(res.text))
+            
+        } else {
+            translateToUrdu(content)
+            .then(res => showSnackbar(res.text))
+        }
+    }
     
     render() {
-        const { title, content, poetHindi, poetEnglish, relatedTags, theme, i, handleCopy, handleTranslateEnglish, handleTranslateUrdu } = this.props;
+        const { shayari, theme, i } = this.props;
+        const title = shayari.title;
+        const content = shayari.content;
+        const poet_english = shayari.english_name || this.props.match.params.poet;
+        const poet_hindi = shayari.poet;
+        const related_tags = shayari.tags;
         const translateBtnStyle = {
             backgroundColor: '#363537',
             color: 'white',
@@ -28,21 +56,22 @@ class ShayariCard extends Component {
         return (
             <React.Fragment>
             <div className={`shayariCard div${i}`}>
-
                 <div className={`shayariCardHeader div${i}`}>
-                    <button style={theme === 'dark' ? translateBtnStyle : null} className='translateBtn' onClick={e => handleTranslateEnglish(e, i)}>English</button>
-                    <button style={theme === 'dark' ? translateBtnStyle : null} className='translateBtn' onClick={e => handleTranslateUrdu(e, i)}>Urdu</button>
+                    <button name='english' style={theme === 'dark' ? translateBtnStyle : null} className='translateBtn' onClick={e => this.translate(e)}>English</button>
+                    <button name='urdu' style={theme === 'dark' ? translateBtnStyle : null} className='translateBtn' onClick={e => this.translate(e)}>Urdu</button>
+
                     <Clipboard 
                     style={theme === 'dark' ? translateBtnStyle : null}
                     className='copyBtn'
                     data-clipboard-text={
                         title.charAt(0).toUpperCase() + title.slice(1) + '\n' 
                         + content.charAt(0).toUpperCase() + content.slice(1) 
-                        + `\n—${poetHindi}`
+                        + `\n—${poet_hindi}`
                         + '\n\nbestshayaris.com'}
-                    onClick={handleCopy}>
+                    onClick={this.handleCopy}>
                     <FilterNoneIcon />
                     </Clipboard>
+
                 </div>
 
                 <div className={`shayariCardTitle div${i}`}>{title}</div><br/>
@@ -54,17 +83,18 @@ class ShayariCard extends Component {
 
                 <div className={`div${i}`} style={{textAlign: 'center'}}>
                     <span>
-                        <Link style={poetLinkStyle} to={`/poet/${poetEnglish}/`} >{poetHindi}</Link>
+                        <Link style={poetLinkStyle} to={`/poet/${poet_english}/`}>{poet_hindi}</Link>
                     </span>
                 </div>
             </div>
+
             <Carousel
             slidesPerPage={4}
             slidesPerScroll={4}
             keepDirectionWhenDragging
             >
                 {
-                    relatedTags.map(tag => (
+                    related_tags.map(tag => (
                     <Link to={`/tags/${tag}/`}
                     style={theme === 'dark' ? translateBtnStyle : null} 
                     className='tagCards' key={tag}>{tag}</Link>
@@ -77,4 +107,9 @@ class ShayariCard extends Component {
     }
 }
 
-export default ShayariCard
+const mapStateToProps = state => ({
+    open: state.snackbar.open,
+    theme: state.theme.theme
+})
+
+export default connect(mapStateToProps, { showSnackbar, clearSnackbar })(withRouter(ShayariCard))

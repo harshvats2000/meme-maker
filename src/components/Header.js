@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import MenuContainer from '../container/Menu';
 import { Link } from 'react-router-dom'
 import Search from './Search';
+import { connect } from 'react-redux';
 
 class Header extends Component {
 
@@ -21,7 +22,7 @@ class Header extends Component {
     }
 
     render() {
-        const { theme, themeToggler, tags, shayariObject } = this.props;
+        const { theme, themeToggler } = this.props;
         const headerStyle = {
             transition: 'all .5s linear',
             position: 'sticky',
@@ -53,10 +54,14 @@ class Header extends Component {
             >
               <MenuContainer theme={theme} themeToggler={themeToggler} />
               <Link to='/' style={headerNameStyle}>bestshayaris.com</Link>
-              <Search theme={theme} tags={tags} shayariObject={shayariObject} />
+              <Search theme={theme} />
             </div>
         )
     }
 }
 
-export default Header
+const mapStateToProps = state => ({
+    theme: state.theme.theme
+})
+
+export default connect(mapStateToProps)(Header)

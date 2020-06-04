@@ -6,6 +6,8 @@ import * as serviceWorker from './serviceWorker';
 import firebase from 'firebase/app'
 import 'firebase/analytics'
 import 'firebase/firestore'
+import { Provider } from 'react-redux'
+import store from './store'
 
 var firebaseConfig = {
     apiKey: "AIzaSyCEMfOB5_j1hIdpxVXOduBuUMTwj5txVZo",
@@ -21,7 +23,9 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
 ReactDOM.render(
-        <App />, 
+    <Provider store={store}>
+        <App />
+    </Provider>, 
     document.getElementById('root')
 );
 

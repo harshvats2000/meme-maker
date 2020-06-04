@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
@@ -387,4 +389,8 @@ class Upload extends Component {
     }
 }
 
-export default Upload
+const mapStateToProps = state => ({
+    tags: state.tags.tags
+})
+
+export default connect(mapStateToProps)(Upload)

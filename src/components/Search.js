@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
+
 import '../styles/Search.css';
 import { Link, withRouter } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
@@ -31,7 +33,7 @@ class Search extends Component {
 
       handleInputClick = e => {
         setTimeout(() => {
-          document.getElementById('header').style.top = 0;
+          // document.getElementById('header').style.top = 0;
         }, 1)
         this.setState({
           searching: true, 
@@ -51,7 +53,7 @@ class Search extends Component {
       }
 
     render() {
-      const { shayariObject } = this.props;
+      const { tags, totalShayaris } = this.props;
 
       const focusStyle = {
         position: 'absolute',
@@ -130,7 +132,9 @@ class Search extends Component {
                                 <li 
                                 className='searchingListItem'
                                 style={this.props.theme === 'dark' ? darkList : null}>
-                                {tag.toLowerCase()}<span> ({shayariObject[tag].totalShayaris})</span></li>
+                                {tag.toLowerCase()}
+                                <span> ({totalShayaris[tags.indexOf(tag)]})</span>
+                                </li>
                             </Link>
                           ))
                         }
@@ -142,4 +146,9 @@ class Search extends Component {
     }
 }
 
-export default withRouter(Search)
+const mapStateToProps = state => ({
+  tags: state.tags.tags,
+  totalShayaris: state.tags.totalShayaris
+})
+
+export default connect(mapStateToProps)(withRouter(Search))

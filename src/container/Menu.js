@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { themeToggler } from '../actions/themToggler'
+
 import Menu from '@material-ui/icons/Menu';
 import Drawer from '@material-ui/core/Drawer';
 import HomeIcon from '@material-ui/icons/Home';
@@ -114,7 +117,7 @@ class MenuContainer extends Component {
 
                 <Divider />
 
-                <ListItem onClick={themeToggler}>
+                <ListItem onClick={() => themeToggler(theme)}>
                 <ListItemText style={theme === 'dark' ? darkStyle : null}>{theme === 'light' ? 'Light Mode' : 'Dark Mode'}</ListItemText>
                   <SwitchMode
                     checked={theme === 'dark' ? true : false}
@@ -139,4 +142,8 @@ class MenuContainer extends Component {
     }
 }
 
-export default withStyles(styles)(MenuContainer);
+const mapStateToProps = state => ({
+  theme: state.theme.theme
+})
+
+export default connect(mapStateToProps, { themeToggler })(withStyles(styles)(MenuContainer));

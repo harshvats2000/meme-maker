@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import './App.css'
+import { connect } from 'react-redux'
+import { fetchTags } from './actions/fetchTags'
+
 import { Switch, Route, BrowserRouter } from 'react-router-dom'
 import Home from './components/pages/Home';
 import Error404 from './components/Error404';
-import firebase from 'firebase/app'
-import 'firebase/firestore'
 import TagPage from './components/pages/TagPage';
 import Upload from './components/Upload';
 import Edit from './components/pages/Edit';
@@ -17,150 +18,40 @@ import {ThemeProvider} from "styled-components";
 import { GlobalStyles } from "./components/GlobalStyles";
 import { lightTheme, darkTheme } from "./components/Theme"
 import 'aos/dist/aos.css';
-import AOS from 'aos'
+// import AOS from 'aos'
 import PoetPage from './components/pages/WriterPage';
 import SearchPoet from './components/pages/SearchWriter';
 import HomePoetCards from './components/HomePoetCards';
+import SnackbarContainer from './container/Snackbar';
 // import GetTotalPosts from './functions/GetTotalPosts';
 // import RenameTag from './functions/RenameTag';
 
 class App extends Component {
-  constructor(){
-    super()
-    this.state = {
-        theme: 'dark',
-        tags: [],
-        shayariObject: {},
-        title: [],
-        content: [],
-        poet: [],
-        poetEnglish: [],
-        id: [],
-        relatedTags: {},
-        totalShayaris: 0,
-    }
-  }
 
   componentDidMount() {
-
-    AOS.init({
-      once: 'true'
-    })
-    
-    //initializing everything for tagPage
-    var tagsArray = [];
-    var tempShayariObject = {};
-    var totalShayaris = 0;
-    firebase.firestore().collection('tags').get()
-    .then(snap => {
-      var total = 0;
-      snap.forEach(doc => {
-        var tag =  doc.id;
-        totalShayaris = doc.data().totalShayaris;
-        total += totalShayaris;
-        tagsArray.push(tag)
-        tempShayariObject[tag] = {
-          totalShayaris: totalShayaris
-        }
-      })
-      
-      tagsArray.forEach(tag => {
-        tempShayariObject[tag].relatedTagsObject = {};
-        tempShayariObject[tag].titleObject = {}
-        tempShayariObject[tag].contentObject = {}
-        tempShayariObject[tag].poetObject = {}
-        for(let i=0; i<totalShayaris; i++){
-          tempShayariObject[tag].titleObject[i] = '';
-          tempShayariObject[tag].contentObject[i] = '';
-          tempShayariObject[tag].poetObject[i] = '';
-          tempShayariObject[tag].relatedTagsObject[i] = [];
-        }
-      })
-      
-      this.setState(prev => ({
-        tags: tagsArray,
-        totalShayaris: total,
-        shayariObject: Object.assign({}, prev.shayariObject, tempShayariObject)
-      }))
-    })
-    .catch(error => {
-      console.log(error);
-      alert('error in app.js did mount')
-    })
-
-    //fetching shayaris for home page
-    var titleArray = [];
-    var contentArray = [];
-    var poetArray = [];
-    var poetEnglishArr = []
-    var idArray = [];
-    var tempTagsObject = {};
-    var i = 0;
-    firebase.firestore().collection('tags').doc('sher').collection('shayaris').orderBy('timestamp', 'desc').limit(12).get()
-    .then(snap => {
-      snap.forEach(doc => {
-            idArray.push(doc.id);
-            titleArray.push(doc.data().title);
-            contentArray.push(doc.data().content);
-            poetArray.push(doc.data().poet);
-            poetEnglishArr.push(doc.data().english_name)
-            Object.assign(tempTagsObject, {
-              [i]: doc.data().tags
-            })
-            i++;
-          })
-          this.setState({
-            title: titleArray,
-            content: contentArray,
-            poet: poetArray,
-            poetEnglish: poetEnglishArr,
-            id: idArray,
-            relatedTags: Object.assign(this.state.relatedTags, tempTagsObject)
-          })
-        })
-  }
-
-  putIntoShayariObject = (shayariObject) => {
-    this.setState(prev => ({
-      shayariObject: Object.assign(prev.shayariObject, shayariObject)
-    }))
-  }
-
-  themeToggler = () => {
-    this.state.theme === 'light' ? this.setState({theme: 'dark'}) : this.setState({theme: 'light'})
+    this.props.fetchTags()
   }
 
   render() {
-    const { theme, tags, shayariObject, title, content, poet, poetEnglish, id, relatedTags, totalShayaris } = this.state;
+    const { open, message, autoHideDuration, theme } = this.props;
 
     return (
       <BrowserRouter>
-      <ThemeProvider theme={this.state.theme === 'light' ? lightTheme : darkTheme}>
+      <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       {/* <GetTotalPosts /> */}
       {/* <RenameTag from='angdaai ' to='angdaai'/> */}
       <GlobalStyles/>
       <div className="App">
 
-          <Header theme={theme} themeToggler={this.themeToggler} tags={tags} shayariObject={shayariObject} />
+          <Header />
 
           <Switch>
-            <Route exact path='/' render={props => 
-            <Home 
-            tags={tags} title={title} content={content} poet={poet} poetEnglish={poetEnglish} id={id} 
-            relatedTags={relatedTags} totalShayaris={totalShayaris} theme={theme} />} 
-            />
-
-            <Route path='/tags/:tag/' render={props => 
-            <TagPage 
-            tag={props.match.params.tag} theme={theme}
-            shayariObject={shayariObject}
-            putIntoShayariObject={this.putIntoShayariObject} />} 
-            />
-
-            <Route exact path='/poet/' render={props => <SearchPoet theme={theme} />} />
-            <Route path='/poet/:poet/' render={props => <PoetPage theme={theme}/>} />
-            <Route exact path='/upload' render={props => <Upload tags={tags} />} />
-            <Route exact path='/edit' render={props => <Edit tags={tags} />} />
+            <Route exact path='/' render={props => <Home />} />
+            <Route path='/tags/:tag' render={props => <TagPage tag={props.match.params.tag} />} />
+            <Route exact path='/poet/' render={props => <SearchPoet />} />
+            <Route path='/poet/:poet/' render={props => <PoetPage />} />
+            <Route exact path='/upload' render={props => <Upload />} />
+            <Route exact path='/edit' render={props => <Edit />} />
             <Route exact path='/about' render={props => <About />} />
             <Route exact path='/suggest' render={props => <SuggestionPage /> } />
             
@@ -178,10 +69,25 @@ class App extends Component {
           </div>  */}
           <Footer />
       </div>
+      
+      <SnackbarContainer 
+      open={open} 
+      message={message}
+      handleClose={this.handleClose}
+      autoHideDuration={autoHideDuration}
+      />
       </ThemeProvider>
       </BrowserRouter>
     )
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  open: state.snackbar.open,
+  message: state.snackbar.message,
+  handleClose: state.snackbar.handleClose,
+  autoHideDuration: state.snackbar.autoHideDuration,
+  theme: state.theme.theme
+})
+
+export default connect(mapStateToProps, { fetchTags })(App)

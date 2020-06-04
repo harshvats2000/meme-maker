@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
+
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import SwipeableViews from 'react-swipeable-views';
 import Typography from '@material-ui/core/Typography';
 import ShayariCard from '../container/ShayariCard'
-import SnackbarContainer from '../container/Snackbar';
-import { setCORS } from "google-translate-api-browser";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -33,65 +33,7 @@ class PoetWritings extends Component {
         super()
         this.state = {
             value: 0,
-            snackbar: false,
-            message: '',
-            autoHideDuration: 2000
         }
-    }
-
-    handleCopy = () => {
-      this.setState({
-        snackbar: true,
-        message: 'copied.',
-        autoHideDuration: 2000
-      })
-    }
-
-    handleTranslateEnglish = (e, i) => {
-      this.setState({
-          snackbar: true,
-          message: 'translating...',
-          autoHideDuration: 30000
-      })
-      var content = document.getElementsByClassName(`div${i}`)[3].innerHTML;
-      const translate = setCORS("https://cors-anywhere.herokuapp.com/");
-      translate(content, { to: "en" })
-      .then(res => {
-          this.setState({
-              message: res.text,
-              snackbar: true,
-          })
-      })
-      .catch(err => {
-          console.error(err);
-      });
-    }
-
-    handleTranslateUrdu = (e, i) => {
-      this.setState({
-          snackbar: true,
-          message: 'translating...',
-          autoHideDuration: 50000
-      })
-      var content = document.getElementsByClassName(`div${i}`)[3].innerHTML;
-      const translate = setCORS("https://cors-anywhere.herokuapp.com/");
-      translate(content, { to: "ur" })
-      .then(res => {
-          this.setState({
-              message: res.text,
-              snackbar: true,
-          })
-      })
-      .catch(err => {
-          console.error(err);
-      });
-    }
-
-    handeSnackbarClose = () => {
-      this.setState({
-        snackbar: false,
-        message: '',
-      })
     }
 
     handleChange = (event, newValue) => {
@@ -103,8 +45,8 @@ class PoetWritings extends Component {
     };
 
     render() {
-        const { fetching, poetHindi, poetEnglish, sher, ghazal, poems, sherObject, ghazalObject, poemsObject, theme } = this.props;
-        const { value } = this.state;
+        const { fetching, sher, ghazal, poems, theme } = this.props;
+        const { value } = this.state; 
         const lightBarStyle = {
             position: 'sticky',
             top: 0,
@@ -131,9 +73,9 @@ class PoetWritings extends Component {
                       variant="fullWidth"
                       aria-label="full width tabs example"
                     >
-                      <Tab label={`Sher ${sher}`} style={theme === 'light' ? null : darkTabStyle} />
-                      <Tab label={`Ghazal ${ghazal}`} style={theme === 'light' ? null : darkTabStyle} />
-                      <Tab label={`Poems ${poems}`} style={theme === 'light' ? null : darkTabStyle} />
+                      <Tab label={`Sher ${sher.length}`} style={theme === 'light' ? null : darkTabStyle} />
+                      <Tab label={`Ghazal ${ghazal.length}`} style={theme === 'light' ? null : darkTabStyle} />
+                      <Tab label={`Poems ${poems.length}`} style={theme === 'light' ? null : darkTabStyle} />
                     </Tabs>
                 </AppBar>
 
@@ -143,70 +85,57 @@ class PoetWritings extends Component {
                 >
                   <TabPanel value={value} index={0} >
                     {
-                      fetching ? <h3>Fetching...</h3> : (sher === 0 ? <h4>0 Sher</h4> : null)
+                      fetching ? <h3>Fetching...</h3> : (sher.length === 0 ? <h4>0 Sher</h4> : null)
                     }
                     {
-                        Object.keys(sherObject).map((key, i) => {
-                            return <ShayariCard key={i} i={i}
-                            title={sherObject[key].title} 
-                            content={sherObject[key].content} 
-                            poetHindi={poetHindi}
-                            poetEnglish={poetEnglish}
-                            relatedTags={sherObject[key].tags}
-                            theme={theme} 
-                            handleCopy={this.handleCopy}
-                            handleTranslateEnglish={this.handleTranslateEnglish}
-                            handleTranslateUrdu={this.handleTranslateUrdu} />
+                        sher.map((shayari, i) => {
+                            return <ShayariCard 
+                            key={i} 
+                            i={i}
+                            theme={theme}
+                            shayari={shayari} />
                         })
                     }
                   </TabPanel>
                   <TabPanel value={value} index={1} >
                     {
-                      fetching ? <h3>Fetching...</h3> : (ghazal === 0 ? <h4>0 Ghazal</h4> : null)
+                      fetching ? <h3>Fetching...</h3> : (ghazal.length === 0 ? <h4>0 Ghazal</h4> : null)
                     }
                     {
-                        Object.keys(ghazalObject).map((key, i) => {
-                            return <ShayariCard key={i} i={i}
-                            title={ghazalObject[key].title} 
-                            content={ghazalObject[key].content} 
-                            poet={ghazalObject[key].poet} 
-                            relatedTags={ghazalObject[key].tags} 
+                        ghazal.map((shayari, i) => {
+                            return <ShayariCard 
+                            key={i} 
+                            i={i}
                             theme={theme}
-                            handleTranslateEnglish={this.handleTranslateEnglish}
-                            handleTranslateUrdu={this.handleTranslateUrdu} />
+                            shayari={shayari} />
                         })
                     }
                   </TabPanel>
                   <TabPanel value={value} index={2} >
                     {
-                      fetching ? <h3>Fetching...</h3> : (poems === 0 ? <h4>0 Poems</h4> : null)
+                      fetching ? <h3>Fetching...</h3> : (poems.length === 0 ? <h4>0 Poems</h4> : null)
                     }
                     {
-                        Object.keys(poemsObject).map((key, i) => {
-                            return <ShayariCard key={i} i={i}
-                            title={poemsObject[key].title} 
-                            content={poemsObject[key].content} 
-                            poet={poemsObject[key].poet} 
-                            relatedTags={poemsObject[key].tags} 
-                            theme={theme} 
-                            handleCopy={this.handleCopy}
-                            handleTranslateEnglish={this.handleTranslateEnglish}
-                            handleTranslateUrdu={this.handleTranslateUrdu}
-                            poetEnglish={poetEnglish} />
+                        poems.map((shayari, i) => {
+                            return <ShayariCard 
+                            key={i} 
+                            i={i}
+                            theme={theme}
+                            shayari={shayari} />
                         })
                     }
                   </TabPanel>
                 </SwipeableViews>
-                
-                <SnackbarContainer
-                message={this.state.message}
-                autoHideDuration={this.state.autoHideDuration}
-                open={this.state.snackbar}
-                handleClose={this.handeSnackbarClose}
-                />
             </div>
         )
     }
 }
 
-export default PoetWritings;
+const mapStateToProps = state => ({
+  sher: state.poetPageShayaris.sher,
+  ghazal: state.poetPageShayaris.ghazal,
+  poems: state.poetPageShayaris.poems,
+  fetching: state.poetPageShayaris.fetching
+})
+
+export default connect(mapStateToProps)(PoetWritings);

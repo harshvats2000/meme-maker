@@ -1,46 +1,48 @@
 import React, { Component } from 'react'
-import { Link, withRouter } from 'react-router-dom'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
+import { Link, withRouter } from 'react-router-dom'
 
 class SearchPoet extends Component {
     constructor() {
         super()
         this.state = {
             poet: '',
-            poetArray: [],
-            filteredList: [],
-            fetching: true
+            poets: [],
+            filteredList: []
         }
     }
 
     componentDidMount() {
-        var poetArray = []
-        var ref = firebase.firestore().collection('poets')
-        ref.orderBy('english_name').get()
+        this.fetchPoets()
+    }
+
+    fetchPoets = () => {
+        var poets = [];
+        firebase.firestore().collection('poets').get()
         .then(snap => {
             snap.forEach(doc => {
-                poetArray.push(doc.data().english_name)
+                poets.push(doc.data().english_name)
             })
-            this.setState({ 
-                poetArray: poetArray,
-                filteredList: poetArray,
-                fetching: false
+            this.setState({
+                poets: poets,
+                filteredList: poets
             })
         })
     }
 
     handlePoetChange = (e) => {
+        var poets = this.state.poets;
         this.setState({
             poet: e.target.value,
-            filteredList: this.state.poetArray.filter(poet => {
+            filteredList: poets.filter(poet => {
                 return poet.toLowerCase().indexOf(e.target.value.toLowerCase()) === 0
             })
         })
     }
 
     render() {
-        const { poet, poetArray, filteredList, fetching } = this.state;
+        const { poet, poets, filteredList } = this.state;
         const { theme } = this.props;
         const poetInputStyle = {
             textAlign: 'center',
@@ -72,9 +74,8 @@ class SearchPoet extends Component {
         return (
             <div>
                 {
-                    fetching ? null :
                     <h2 style={{textAlign: 'center', marginBottom: 0}}>
-                        {Math.floor(poetArray.length/10)*10}+ Writers
+                        {Math.floor(poets.length/10)*10}+ Writers
                     </h2>
                 }
                 <div style={poetInputStyle}>
