@@ -34,14 +34,14 @@ class HomePoetCards extends Component {
                 {
                     mainPoets.map((poet, i) => {
                         return (
+                            <Link to={`/poet/${poet}`} style={poetNameStyle} key={i}>
                             <div style={poetBoxStyle} key={i}>
                                 <img src={poetsArray[i]} style={imgStyle} alt='poet_img' />
                                 <div>
-                                    <Link to={`/poet/${poet}/`} style={poetNameStyle}>
-                                        {poet}
-                                    </Link>         
+                                    {poet}   
                                 </div>
                             </div>
+                            </Link>
                         )
                     })
                 }
