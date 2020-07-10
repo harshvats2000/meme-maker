@@ -9,7 +9,7 @@ export default class Edit extends Component {
     }
     
     componentDidMount() {
-      document.body.contentEditable = true
+      document.getElementById('meme').contentEditable = true
       fetch('https://api.imgflip.com/get_memes')
       .then(res => res.json())
       .then(data => {
@@ -43,7 +43,7 @@ export default class Edit extends Component {
         }
 
         return (
-            <div style={container}>
+            <div style={container} id='meme'>
               <div onClick={e => this.divClicked(e)} id='div1' className='text-div'></div>
               <div onClick={e => this.divClicked(e)} id='div2' className='text-div'></div>
               <div onClick={e => this.divClicked(e)} id='div3' className='text-div'></div>
