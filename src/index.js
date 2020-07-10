@@ -21,7 +21,7 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
 ReactDOM.render(
-    <BrowserRouter>
+    <BrowserRouter baseUrl="/meme-maker">
         <App />
     </BrowserRouter>,
     document.getElementById('root')
