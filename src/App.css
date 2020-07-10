@@ -1,13 +1,11 @@
 body {
-    background-color: #21D4FD; 
-    height: 100vh;
-    background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
     overflow: hidden;
 }
 
 .text-div {
-    height: 5%;
-    font-size: 25px
+    flex: 1;
+    font-size: 25px;
+    display: flex;
 }
 
 ol {
@@ -16,4 +14,15 @@ ol {
 
 li {
     padding: 6px;
+}
+
+#home {
+    background-color: #21D4FD; 
+    height: 100vh;
+    background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+}
+
+#functions {
+    display: flex;
+    justify-content: space-between;
 }

@@ -12,8 +12,8 @@ export default class Home extends Component {
             borderRadius: '6px'
         }
         return (
-            <div style={{ textAlign: 'center', color: 'white'}}>
-                <h1 style={{ color: 'white'}}>Make memes using pre-made templates.</h1>
+            <div style={{ textAlign: 'center', color: 'white'}} id='home'>
+                <div style={{ color: 'white', fontSize: '30px', padding: '5px'}}>Make memes using pre-made templates.</div>
                 <Link to='/edit'>
                     <button style={btnStyle}>Let's start</button>
                 </Link>

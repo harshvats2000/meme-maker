@@ -1,69 +1,95 @@
 import React, { Component } from 'react'
 
 export default class Edit extends Component {
-    constructor() {
-      super()
+    constructor(props) {
+      super(props)
       this.state = {
-        memes: []
+        layout: 'default'
       }
     }
     
     componentDidMount() {
       document.getElementById('meme').contentEditable = true
-      fetch('https://api.imgflip.com/get_memes')
-      .then(res => res.json())
-      .then(data => {
-        this.setState({
-          memes: data.data.memes
-        })
-      })
+      document.getElementById('functions').contentEditable = false
     }
 
     divClicked = e => {
-      console.log(e.target.offsetTop);
-      console.log(e.clientY);
       var element = document.getElementById(e.target.id)
-      element.style.paddingLeft = e.clientX + 'px'
-      element.style.paddingTop = e.clientY - e.target.offsetTop - 10 + 'px'
       var color = element.style.color
       color === 'black' ? element.style.color = 'white' : element.style.color = 'black'
     }
 
+    hideCursor = () => {
+        document.getElementById('meme').style.cursor = 'none'
+    }
+
+    toggleLayout = () => {
+        this.state.layout === 'default' ? this.setState({ layout: 'grid' }) : this.setState({ layout: 'default'})
+    }
+
+    reset = () => {
+        const layout = this.state.layout
+        if(layout === 'default') {
+            for(var i=1; i<=20; i++) {
+                document.getElementById(`div${i}`).innerHTML = ''
+            }
+        } else {
+            for(i=1; i<=20; i++) {
+                for(var j=1; j<=5; j++) {
+                    document.getElementById(`div${i}${j}`).innerHTML = ''
+                }
+            }
+        }
+    }
+
     render() {
-        const { memes } = this.state;
-        const random = Math.floor(Math.random() * (memes.length - 1)) + 1;
+        const Vdivisions = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+        const { layout } = this.state;
+        const { memes, random, nextMeme } = this.props;
+        const Hdivisions = layout === 'default' ? [1] : [1,2,3,4,5]
         const meme = memes[random] || ''
 
         const container = {
           backgroundImage: `url(${meme.url})`,
           height: '100vh',
-          backgroundSize: '100vw 100vh',
+          backgroundSize: '100vw 95vh',
+          backgroundRepeat: 'no-repeat',
           display: 'flex',
           flexDirection: 'column'
         }
 
+        const btn = {
+            border: '1px solid white',
+            height: '5vh',
+            color: 'white',
+            background: '#121212',
+        }
+
         return (
             <div style={container} id='meme'>
-              <div onClick={e => this.divClicked(e)} id='div1' className='text-div'></div>
-              <div onClick={e => this.divClicked(e)} id='div2' className='text-div'></div>
-              <div onClick={e => this.divClicked(e)} id='div3' className='text-div'></div>
-              <div onClick={e => this.divClicked(e)} id='div4' className='text-div'></div>
-              <div onClick={e => this.divClicked(e)} id='div5' className='text-div'></div>
-              <div onClick={e => this.divClicked(e)} id='div6' className='text-div'></div>
-              <div onClick={e => this.divClicked(e)} id='div7' className='text-div'></div>
-              <div onClick={e => this.divClicked(e)} id='div8' className='text-div'></div>
-              <div onClick={e => this.divClicked(e)} id='div9' className='text-div'></div>
-              <div onClick={e => this.divClicked(e)} id='div10' className='text-div'></div>
-              <div onClick={e => this.divClicked(e)} id='div11' className='text-div'></div>
-              <div onClick={e => this.divClicked(e)} id='div12' className='text-div'></div>
-              <div onClick={e => this.divClicked(e)} id='div13' className='text-div'></div>
-              <div onClick={e => this.divClicked(e)} id='div14' className='text-div'></div>
-              <div onClick={e => this.divClicked(e)} id='div15' className='text-div'></div>
-              <div onClick={e => this.divClicked(e)} id='div16' className='text-div'></div>
-              <div onClick={e => this.divClicked(e)} id='div17' className='text-div'></div>
-              <div onClick={e => this.divClicked(e)} id='div18' className='text-div'></div>
-              <div onClick={e => this.divClicked(e)} id='div19' className='text-div'></div>
-              <div onClick={e => this.divClicked(e)} id='div20' className='text-div'></div>
+              {
+                  Vdivisions.map(i => {
+                      return (
+                          <div key={i} className="text-div" id={`div${i}`}>
+                            {
+                                Hdivisions.map(j => {
+                                    return <div style={{ flex: '2 2 0%'}} key={j} onClick={e => this.divClicked(e)} id={`div${i}${j}`}></div>
+                                })
+                            }
+                          </div>
+                      )
+                  })
+              }
+              <div id='functions'>
+                  <button style={btn} onClick={() => this.hideCursor()}>Hide cursor</button>
+                  <button style={btn} onClick={() => this.toggleLayout()}>
+                      {
+                          layout === 'default' ? 'default layout' : 'grid layout'
+                      }
+                  </button>
+                  <button style={btn} onClick={() => this.reset()}>reset</button>
+                  <button style={btn} onClick={() => nextMeme(this.reset)}>Next meme</button>
+              </div>
             </div>
         )
     }
