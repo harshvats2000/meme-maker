@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "dee641f907aa4742989478bb6cc91006",
+    "revision": "9ce431013e10157a4d90fa50d5ea4276",
     "url": "/meme-maker/index.html"
   },
   {
-    "revision": "7aa9855caa368e6a27d4",
+    "revision": "9a1795817e3c5937bc66",
     "url": "/meme-maker/static/css/main.8c57a9e6.chunk.css"
   },
   {
-    "revision": "4115932f7d2f44fe755d",
-    "url": "/meme-maker/static/js/2.00bbf82b.chunk.js"
+    "revision": "2539bf98de6de21e53c4",
+    "url": "/meme-maker/static/js/2.ceb9d864.chunk.js"
   },
   {
-    "revision": "7aa9855caa368e6a27d4",
-    "url": "/meme-maker/static/js/main.2334644a.chunk.js"
+    "revision": "9a1795817e3c5937bc66",
+    "url": "/meme-maker/static/js/main.762132a3.chunk.js"
   },
   {
     "revision": "4c25e2331f57c87fa8d3",
