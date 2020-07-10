@@ -1,21 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.8461d188.chunk.css",
-    "main.js": "/static/js/main.d63a2f0b.chunk.js",
-    "main.js.map": "/static/js/main.d63a2f0b.chunk.js.map",
-    "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
-    "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
-    "static/css/2.90e428fe.chunk.css": "/static/css/2.90e428fe.chunk.css",
-    "static/js/2.7a33b977.chunk.js": "/static/js/2.7a33b977.chunk.js",
-    "static/js/2.7a33b977.chunk.js.map": "/static/js/2.7a33b977.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.21b7bb88e7815e057917f27bcb013305.js": "/precache-manifest.21b7bb88e7815e057917f27bcb013305.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/2.90e428fe.chunk.css.map": "/static/css/2.90e428fe.chunk.css.map",
-    "static/css/main.8461d188.chunk.css.map": "/static/css/main.8461d188.chunk.css.map",
-    "static/media/jaun_elia.jpeg": "/static/media/jaun_elia.78a74e89.jpeg",
-    "static/media/kumar_vishwas.jpeg": "/static/media/kumar_vishwas.d2d6d7f7.jpeg",
-    "static/media/meer_taqi_meer.jpeg": "/static/media/meer_taqi_meer.874c4332.jpeg",
-    "static/media/munawwar_rana.jpeg": "/static/media/munawwar_rana.b23f3e75.jpeg"
+    "main.css": "/meme-maker/static/css/main.8c57a9e6.chunk.css",
+    "main.js": "/meme-maker/static/js/main.626bc5f4.chunk.js",
+    "main.js.map": "/meme-maker/static/js/main.626bc5f4.chunk.js.map",
+    "runtime~main.js": "/meme-maker/static/js/runtime~main.5e175b7e.js",
+    "runtime~main.js.map": "/meme-maker/static/js/runtime~main.5e175b7e.js.map",
+    "static/js/2.00bbf82b.chunk.js": "/meme-maker/static/js/2.00bbf82b.chunk.js",
+    "static/js/2.00bbf82b.chunk.js.map": "/meme-maker/static/js/2.00bbf82b.chunk.js.map",
+    "index.html": "/meme-maker/index.html",
+    "precache-manifest.178f2774796529edb4abb1d417bef17c.js": "/meme-maker/precache-manifest.178f2774796529edb4abb1d417bef17c.js",
+    "service-worker.js": "/meme-maker/service-worker.js",
+    "static/css/main.8c57a9e6.chunk.css.map": "/meme-maker/static/css/main.8c57a9e6.chunk.css.map"
   }
 }
