@@ -4,21 +4,6 @@ import './index.css';
 import { HashRouter } from 'react-router-dom'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import firebase from 'firebase/app'
-import 'firebase/analytics'
-
-var firebaseConfig = {
-    apiKey: "AIzaSyCEMfOB5_j1hIdpxVXOduBuUMTwj5txVZo",
-    authDomain: "bestshayari-7f672.firebaseapp.com",
-    databaseURL: "https://bestshayari-7f672.firebaseio.com",
-    projectId: "bestshayari-7f672",
-    storageBucket: "bestshayari-7f672.appspot.com",
-    messagingSenderId: "1001640034721",
-    appId: "1:1001640034721:web:251a9065628579fe518be0",
-    measurementId: "G-EQP9800NT3"
-};
-firebase.initializeApp(firebaseConfig);
-firebase.analytics();
 
 ReactDOM.render(
     <HashRouter>
