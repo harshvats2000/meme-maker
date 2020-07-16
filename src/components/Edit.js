@@ -4,7 +4,7 @@ export default class Edit extends Component {
     constructor(props) {
       super(props)
       this.state = {
-        layout: 'default'
+        layout: 'grid'
       }
     }
     
